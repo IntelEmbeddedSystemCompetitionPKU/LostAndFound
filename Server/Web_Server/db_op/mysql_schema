@@ -1,0 +1,5 @@
+user(name TINYTEXT primary key,passwd TINYTEXT,usruuid char(32))
+
+lost(uuid char(32) not null primary key, lost_date DATE, description TINYTEXT, ocr TINYTEXT, usruuid char(32))
+
+user_qrcode(usruuid char(32), qrcode char(256))
