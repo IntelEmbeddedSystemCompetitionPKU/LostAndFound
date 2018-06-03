@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>manager.qml</file>
+        <file>MainActivity.qml</file>
+        <file>scanqrcode.qml</file>
+        <file>shotphoto.qml</file>
+    </qresource>
+</RCC>
