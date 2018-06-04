@@ -1,6 +1,5 @@
 ########################################################
 # DESCRIPTION:
-# (import app decorator from __init__.py)
 # sort queries and define different responses to them
 # work like a head file
 #
@@ -11,36 +10,81 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-#from Web_Server import handle_upload
-from Web_Server import app  # it means import the variable app from package app
-from . import handle
+from Web_Server import app  # import the variable app from package 'Web_Server'
+from . import handle # import package 'handle' from package 'Web_Server'
 
 from flask import request
-# render_template() can import the files under the folder 'templates'
-from flask import render_template
+from flask import render_template # render_template() can import the files under the folder 'templates'
 
 import json
-import base64
-import io
-import numpy as np
-import urllib
+#import base64
+#import io
+#import numpy as np
+#import urllib
 
 ###################
 
 
-@app.route('/upload/<file_id>/<file_size>', methods=['POST'])
-def myupload(file_id, file_size):
-    # if request.method == 'POST':
-    #data = request.get_data()
-    # print(data)
-    #json_data = json.loads(data.decode("utf-8"))
-    # print(json_data)
-    return handle.upload(file_id, file_size)
-    # else:
-    #    data = request.get_data()
-    #    print(data)
-    #    return "get it"
+@app.route('/upload/<upload_type>', methods=['POST', 'GET'])
+def handle_upload(upload_type):
+    print(upload_type)
+    if request.method == 'POST':
+        data = request.get_data()
+        print(data)
+        json_data = json.loads(data.decode("utf-8"))
+        print(json_data)
+        if upload_type == 'HD':
+            return handle.upload_HD(json_data)
+        elif upload_type == 'LD':
+            return handle.upload_LD(json_data)
+        elif upload_type == 'mask':
+            return handle.upload_mask(json_data)
+        elif upload_type == 'information':
+            return handle.upload_information(json_data)
+        elif upload_type == 'description':
+            return handle.upload_description(json_data)
+        elif upload_type == 'fetchQues':
+            return handle.upload_fetchQues(json_data)
+        elif upload_type == 'result':
+            return handle.upload_result(json_data)
 
+@app.route('/sign/<sign_type>', methods=['POST', 'GET'])
+def handle_sign(sign_type):
+    if request.method == 'POST':
+        data = request.get_data()
+        print(data)
+        json_data = json.loads(data.decode("utf-8"))
+        print(json_data)
+        if sign_type == 'signup':
+            return handle.sign_up(json_data)
+        elif sign_type == 'signin':
+            return handle.sign_in(json_data)
+
+@app.route('/query/<query_type>/<keyword>', methods=['GET'])
+def handle_query_get(query_type, keyword):
+    if request.method == 'GET':
+        if query_type == 'sketchyInfo':
+            return handle.query_sketchyInfo(keyword)
+        elif query_type == 'detailInfo':
+            return handle.query_detailInfo(keyword)
+        elif query_type == 'questions':
+            return handle.query_questions(keyword)
+        elif query_type == 'userGet':
+            return handle.query_userGet(keyword)
+
+@app.route('/query/<query_type>', methods=['POST'])
+def handle_query_post(query_type):
+    if request.method == 'POST':
+        data = request.get_data()
+        print(data)
+        json_data = json.loads(data.decode("utf-8"))
+        print(json_data)
+        if query_type == 'userInfo':
+            return handle.query_userInfo(json_data)
+        elif query_type == 'lostList':
+            return handle.query_userInfo(json_data)
+        elif query_type == 'lostQR':
+            return handle.query_lostQR(json_data)
 
 ###################
 
@@ -48,35 +92,8 @@ def myupload(file_id, file_size):
 def home():
     return render_template("index.html")
 
-
-@app.route('/signin', methods=['POST'])
-def signin():
-    # 需要从request对象读取表单内容：
-    if request.form['username'] == 'admin' and request.form['password'] == 'password':
-        return '<h3>Hello, admin!</h3>'
-    return '<h3>Bad username or password.</h3>'
-
-
-@app.route('/user/<username>')
-def show_user_profile(username):
-    # show the user profile for that user
-    return 'User %s' % username
-
-
-@app.route('/post/<int:post_id>')
-def show_post(post_id):
-    # show the post with the given id, the id is an integer
-    return 'Post %d' % post_id
-
-
-@app.route('/path/<path:subpath>')
-def show_subpath(subpath):
-    # show the subpath after /path/
-    return 'Subpath %s' % subpath
-
-
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
 
 ########

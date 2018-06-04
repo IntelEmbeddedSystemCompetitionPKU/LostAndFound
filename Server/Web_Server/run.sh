@@ -8,11 +8,9 @@
 # TIME: 2018.06.02
 ########################################################
 
-#!flask/bin/python
+#!usr/bin/bash
 # -*- coding:utf-8 -*-
 
-
-from Web_Server import app
-
-app.run(debug = True)
-#app.run()
+export FLASK_ENV=development
+export FLASK_DEBUG=1
+python3 ../run.py

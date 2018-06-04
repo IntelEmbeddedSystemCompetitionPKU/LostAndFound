@@ -1,3 +1,5 @@
+from Web_Server import app
+
 @app.route('/lost_list/<time_keywords>')
 # 搜索失物的列表(时间，关键词)(UUID json list)
 def lost_list(time_keywords):

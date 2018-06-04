@@ -16,6 +16,6 @@ app = Flask(__name__)
 
 # change the imported module(.py file) to realize different functions of the decorator
 from Web_Server import distribute
-from Web_Server import handle
+#from Web_Server.handle import handle_lost
 #from Web_Server import distribute2
 

@@ -1,1 +1,1 @@
-from .handle_upload import upload
+from .handle_upload import *
