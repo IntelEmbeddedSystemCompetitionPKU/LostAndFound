@@ -22,4 +22,6 @@
     <string name="title_activity_list">ListActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_answer">AnswerActivity</string>
+    <string name="title_activity_network_test">NetworkTestActivity</string>
 </resources>

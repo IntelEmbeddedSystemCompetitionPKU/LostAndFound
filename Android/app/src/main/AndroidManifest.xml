@@ -35,6 +35,14 @@
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AnswerActivity"
+            android:label="@string/title_activity_answer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NetworkTestActivity"
+            android:label="@string/title_activity_network_test"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

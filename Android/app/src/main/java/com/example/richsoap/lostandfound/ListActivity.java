@@ -87,13 +87,23 @@ public class ListActivity extends AppCompatActivity {
         return true;
     }
 
-    private void addObjectToList(String data) {
-        objectAdapter.addData(data);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        jsonListTask.cancel(true);
+    }
+
+    private void addObjectToList(String data, String uuid) {
+        objectAdapter.addData(new ListDataPiece(uuid, data));
     }
 
     private void tryToGetUUIDList() {
         uuidListTask = new UUIDListTask(date, keywords, mProcess);
         uuidListTask.execute();
+    }
+
+    public void cancleTask() {
+        jsonListTask.cancel(true);
     }
 
     private void tryToGetUUIDDetail() {
@@ -153,7 +163,10 @@ public class ListActivity extends AppCompatActivity {
             Log.d(TAG, "doInBackground: " + Integer.toString(keys[0].size()));
             for(int i = 0;i < keys[0].size();i ++) {
                 String result = NetworkManager.getUUIDDetail(keys[0].get(i));
-                publishProgress(result);
+                publishProgress(result, keys[0].get(i));
+                if(isCancelled()) {
+                    return null;
+                }
             }
             return null;
         }
@@ -161,8 +174,15 @@ public class ListActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... details) {
             Log.d(TAG, "onProgressUpdate: " + details[0]);
-            addObjectToList(details[0]);
+            addObjectToList(details[0], details[1]);
         }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Log.d(TAG, "onCancelled: ");
+        }
+        
 
     }
 

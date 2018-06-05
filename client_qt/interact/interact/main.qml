@@ -30,7 +30,7 @@ ApplicationWindow {
             when: inputPanel.active
             PropertyChanges {
                 target: inputPanel
-                y: window.height - inputPanel.height
+                y: rootwindow.height - inputPanel.height
             }
         }
         transitions: Transition {

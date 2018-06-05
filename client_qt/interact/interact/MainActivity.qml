@@ -23,7 +23,7 @@ Item{
                 font.pixelSize: 20
             }
             onClicked: {
-
+                manager.showPage("ShotInformationActivity.qml")
             }
         }
         Button {

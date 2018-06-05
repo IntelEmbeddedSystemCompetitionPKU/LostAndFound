@@ -1,5 +1,5 @@
 import QtQuick 2.0
-
+import user.DataManager 1.0
 Item {
     id: manager
     anchors.fill: parent
@@ -9,6 +9,9 @@ Item {
 
     Component.onCompleted: {
        showPage("MainActivity.qml");
+    }
+    DataManager {
+        id: mydata
     }
 
     function prePage() {
@@ -29,6 +32,20 @@ Item {
         }
         pageLoader.setSource(lastPages[lastPages.length-1]);
         __currentIndex = lastPages.length-1;
+    }
+
+
+    function setUUID() {
+        mydata.setUUID()
+    }
+    function getDir() {
+        return mydata.getDir()
+    }
+    function processImage() {
+        mydata.processImage()
+    }
+    function addDesc(desc) {
+        mydata.addDescription(desc)
     }
 
     Loader {

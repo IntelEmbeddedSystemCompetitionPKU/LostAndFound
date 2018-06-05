@@ -58,4 +58,36 @@ public class NetworkManager {
         return uuid + "--" + uuid + "--" + uuid;
     }
 
+    static public List<String> getImageList(String uuid) {
+        List<String> imgList = new ArrayList<>();
+        for(int i = 0;i < 10;i ++) {
+            imgList.add(Integer.toString(i));
+        }
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e) {
+
+        }
+        return imgList;
+    }
+
+    static public String getImage(String uuid) {
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e) {
+
+        }
+        return uuid + "\n" + uuid + "\n" + uuid;
+    }
+
+    static public List<Blanks> getBlanksList(String uuid) {
+        List<Blanks> list = new ArrayList<>();
+        for(int i = 0;i < 3;i ++) {
+            list.add(new Blanks(UUID.randomUUID().toString(), i + 2, Blanks.useforwhat.DATAPIECE));
+        }
+        return list;
+    }
+
 }

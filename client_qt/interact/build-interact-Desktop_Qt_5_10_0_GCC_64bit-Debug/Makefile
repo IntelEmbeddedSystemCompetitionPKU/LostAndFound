@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQZXING_LIBRARY -DZXING_ICONV_CONST -DDISABLE_LIBRARY_FEATURES -DQZXING_MULTIMEDIA -DQZXING_QML -DNOFMAXL -DNO_ICONV -DQT_QUICK_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_QML_DEBUG
+DEFINES       = -DQZXING_LIBRARY -DZXING_ICONV_CONST -DDISABLE_LIBRARY_FEATURES -DQZXING_MULTIMEDIA -DQZXING_QML -DNOFMAXL -DNO_ICONV -DQT_DEPRECATED_WARNINGS -DQT_QUICK_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_QML_DEBUG
 CFLAGS        = -pipe -g -fPIC -D_REENTRANT -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -fPIC -std=gnu++11 -D_REENTRANT -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../interact -I. -I../../../../qzxing/src -I../../../../qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../interact -I. -I../interact -I../../../../qzxing/src -I../../../../qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++
 QMAKE         = /opt/Qt5.10.0/5.10.0/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -162,10 +162,12 @@ SOURCES       = ../../../../qzxing/src/CameraImageWrapper.cpp \
 		../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.cpp \
 		../../../../qzxing/src/QZXingFilter.cpp \
 		../../../../qzxing/src/QZXingImageProvider.cpp \
+		../interact/datamanager.cpp \
 		../interact/main.cpp qrc_qml.cpp \
 		moc_ImageHandler.cpp \
 		moc_QZXing.cpp \
-		moc_QZXingFilter.cpp
+		moc_QZXingFilter.cpp \
+		moc_datamanager.cpp
 OBJECTS       = CameraImageWrapper.o \
 		QZXing.o \
 		ImageHandler.o \
@@ -278,11 +280,13 @@ OBJECTS       = CameraImageWrapper.o \
 		ReedSolomonEncoder.o \
 		QZXingFilter.o \
 		QZXingImageProvider.o \
+		datamanager.o \
 		main.o \
 		qrc_qml.o \
 		moc_ImageHandler.o \
 		moc_QZXing.o \
-		moc_QZXingFilter.o
+		moc_QZXingFilter.o \
+		moc_datamanager.o
 DIST          = /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/common/linux.conf \
@@ -591,7 +595,8 @@ DIST          = /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.h \
 		../../../../qzxing/src/zxing/zxing/common/Types.h \
 		../../../../qzxing/src/QZXingFilter.h \
-		../../../../qzxing/src/QZXingImageProvider.h ../../../../qzxing/src/CameraImageWrapper.cpp \
+		../../../../qzxing/src/QZXingImageProvider.h \
+		../interact/datamanager.h ../../../../qzxing/src/CameraImageWrapper.cpp \
 		../../../../qzxing/src/QZXing.cpp \
 		../../../../qzxing/src/ImageHandler.cpp \
 		../../../../qzxing/src/zxing/zxing/ResultIO.cpp \
@@ -703,6 +708,7 @@ DIST          = /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.cpp \
 		../../../../qzxing/src/QZXingFilter.cpp \
 		../../../../qzxing/src/QZXingImageProvider.cpp \
+		../interact/datamanager.cpp \
 		../interact/main.cpp
 QMAKE_TARGET  = interact
 DESTDIR       = 
@@ -1114,8 +1120,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../interact/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../../../qzxing/src/QZXing_global.h ../../../../qzxing/src/CameraImageWrapper.h ../../../../qzxing/src/ImageHandler.h ../../../../qzxing/src/QZXing.h ../../../../qzxing/src/zxing/zxing/ZXing.h ../../../../qzxing/src/zxing/zxing/IllegalStateException.h ../../../../qzxing/src/zxing/zxing/InvertedLuminanceSource.h ../../../../qzxing/src/zxing/zxing/ChecksumException.h ../../../../qzxing/src/zxing/zxing/ResultPointCallback.h ../../../../qzxing/src/zxing/zxing/ResultPoint.h ../../../../qzxing/src/zxing/zxing/Result.h ../../../../qzxing/src/zxing/zxing/ReaderException.h ../../../../qzxing/src/zxing/zxing/Reader.h ../../../../qzxing/src/zxing/zxing/NotFoundException.h ../../../../qzxing/src/zxing/zxing/MultiFormatReader.h ../../../../qzxing/src/zxing/zxing/LuminanceSource.h ../../../../qzxing/src/zxing/zxing/FormatException.h ../../../../qzxing/src/zxing/zxing/Exception.h ../../../../qzxing/src/zxing/zxing/DecodeHints.h ../../../../qzxing/src/zxing/zxing/BinaryBitmap.h ../../../../qzxing/src/zxing/zxing/Binarizer.h ../../../../qzxing/src/zxing/zxing/BarcodeFormat.h ../../../../qzxing/src/zxing/zxing/aztec/AztecReader.h ../../../../qzxing/src/zxing/zxing/aztec/AztecDetectorResult.h ../../../../qzxing/src/zxing/zxing/aztec/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/aztec/detector/Detector.h ../../../../qzxing/src/zxing/zxing/common/StringUtils.h ../../../../qzxing/src/zxing/zxing/common/Str.h ../../../../qzxing/src/zxing/zxing/common/Point.h ../../../../qzxing/src/zxing/zxing/common/PerspectiveTransform.h ../../../../qzxing/src/zxing/zxing/common/IllegalArgumentException.h ../../../../qzxing/src/zxing/zxing/common/HybridBinarizer.h ../../../../qzxing/src/zxing/zxing/common/GridSampler.h ../../../../qzxing/src/zxing/zxing/common/GreyscaleRotatedLuminanceSource.h ../../../../qzxing/src/zxing/zxing/common/GreyscaleLuminanceSource.h ../../../../qzxing/src/zxing/zxing/common/GlobalHistogramBinarizer.h ../../../../qzxing/src/zxing/zxing/common/DetectorResult.h ../../../../qzxing/src/zxing/zxing/common/DecoderResult.h ../../../../qzxing/src/zxing/zxing/common/Counted.h ../../../../qzxing/src/zxing/zxing/common/CharacterSetECI.h ../../../../qzxing/src/zxing/zxing/common/BitSource.h ../../../../qzxing/src/zxing/zxing/common/BitMatrix.h ../../../../qzxing/src/zxing/zxing/common/BitArray.h ../../../../qzxing/src/zxing/zxing/common/Array.h ../../../../qzxing/src/zxing/zxing/common/detector/MathUtils.h ../../../../qzxing/src/zxing/zxing/common/detector/JavaMath.h ../../../../qzxing/src/zxing/zxing/common/detector/WhiteRectangleDetector.h ../../../../qzxing/src/zxing/zxing/common/detector/MonochromeRectangleDetector.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonException.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGFPoly.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGF.h ../../../../qzxing/src/zxing/zxing/datamatrix/Version.h ../../../../qzxing/src/zxing/zxing/datamatrix/DataMatrixReader.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DecodedBitStreamParser.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataBlock.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/BitMatrixParser.h ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DetectorException.h ../../../../qzxing/src/zxing/zxing/datamatrix/detector/Detector.h ../../../../qzxing/src/zxing/zxing/datamatrix/detector/CornerPoint.h ../../../../qzxing/src/zxing/zxing/oned/UPCEReader.h ../../../../qzxing/src/zxing/zxing/oned/UPCEANReader.h ../../../../qzxing/src/zxing/zxing/oned/UPCAReader.h ../../../../qzxing/src/zxing/zxing/oned/OneDResultPoint.h ../../../../qzxing/src/zxing/zxing/oned/OneDReader.h ../../../../qzxing/src/zxing/zxing/oned/MultiFormatUPCEANReader.h ../../../../qzxing/src/zxing/zxing/oned/MultiFormatOneDReader.h ../../../../qzxing/src/zxing/zxing/oned/ITFReader.h ../../../../qzxing/src/zxing/zxing/oned/EAN13Reader.h ../../../../qzxing/src/zxing/zxing/oned/EAN8Reader.h ../../../../qzxing/src/zxing/zxing/oned/Code128Reader.h ../../../../qzxing/src/zxing/zxing/oned/Code39Reader.h ../../../../qzxing/src/zxing/zxing/oned/CodaBarReader.h ../../../../qzxing/src/zxing/zxing/oned/Code93Reader.h ../../../../qzxing/src/zxing/zxing/qrcode/Version.h ../../../../qzxing/src/zxing/zxing/qrcode/QRCodeReader.h ../../../../qzxing/src/zxing/zxing/qrcode/FormatInformation.h ../../../../qzxing/src/zxing/zxing/qrcode/ErrorCorrectionLevel.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/Mode.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/DecodedBitStreamParser.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/DataMask.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/DataBlock.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/BitMatrixParser.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/FinderPatternInfo.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/FinderPatternFinder.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/FinderPattern.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/Detector.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/AlignmentPatternFinder.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/AlignmentPattern.h ../../../../qzxing/src/zxing/zxing/multi/MultipleBarcodeReader.h ../../../../qzxing/src/zxing/zxing/multi/GenericMultipleBarcodeReader.h ../../../../qzxing/src/zxing/zxing/multi/ByQuadrantReader.h ../../../../qzxing/src/zxing/zxing/multi/qrcode/QRCodeMultiReader.h ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.h ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiDetector.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ErrorCorrection.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusGF.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusPoly.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/BitMatrixParser.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/DecodedBitStreamParser.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/pdf417/detector/Detector.h ../../../../qzxing/src/zxing/zxing/pdf417/detector/LinesSampler.h ../../../../qzxing/src/zxing/zxing/pdf417/PDF417Reader.h ../../../../qzxing/src/zxing/bigint/NumberlikeArray.hh ../../../../qzxing/src/zxing/bigint/BigUnsignedInABase.hh ../../../../qzxing/src/zxing/bigint/BigUnsigned.hh ../../../../qzxing/src/zxing/bigint/BigIntegerUtils.hh ../../../../qzxing/src/zxing/bigint/BigIntegerLibrary.hh ../../../../qzxing/src/zxing/bigint/BigIntegerAlgorithms.hh ../../../../qzxing/src/zxing/bigint/BigInteger.hh ../../../../qzxing/src/zxing/zxing/qrcode/encoder/BlockPair.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/ByteMatrix.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/Encoder.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MaskUtil.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MatrixUtil.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/QRCode.h ../../../../qzxing/src/zxing/zxing/WriterException.h ../../../../qzxing/src/zxing/zxing/EncodeHint.h ../../../../qzxing/src/zxing/zxing/UnsupportedEncodingException.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.h ../../../../qzxing/src/zxing/zxing/common/Types.h ../../../../qzxing/src/QZXingFilter.h ../../../../qzxing/src/QZXingImageProvider.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../../../qzxing/src/CameraImageWrapper.cpp ../../../../qzxing/src/QZXing.cpp ../../../../qzxing/src/ImageHandler.cpp ../../../../qzxing/src/zxing/zxing/ResultIO.cpp ../../../../qzxing/src/zxing/zxing/InvertedLuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/ChecksumException.cpp ../../../../qzxing/src/zxing/zxing/ResultPointCallback.cpp ../../../../qzxing/src/zxing/zxing/ResultPoint.cpp ../../../../qzxing/src/zxing/zxing/Result.cpp ../../../../qzxing/src/zxing/zxing/Reader.cpp ../../../../qzxing/src/zxing/zxing/MultiFormatReader.cpp ../../../../qzxing/src/zxing/zxing/LuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/FormatException.cpp ../../../../qzxing/src/zxing/zxing/Exception.cpp ../../../../qzxing/src/zxing/zxing/DecodeHints.cpp ../../../../qzxing/src/zxing/zxing/BinaryBitmap.cpp ../../../../qzxing/src/zxing/zxing/Binarizer.cpp ../../../../qzxing/src/zxing/zxing/BarcodeFormat.cpp ../../../../qzxing/src/zxing/zxing/aztec/AztecReader.cpp ../../../../qzxing/src/zxing/zxing/aztec/AztecDetectorResult.cpp ../../../../qzxing/src/zxing/zxing/common/StringUtils.cpp ../../../../qzxing/src/zxing/zxing/common/Str.cpp ../../../../qzxing/src/zxing/zxing/common/PerspectiveTransform.cpp ../../../../qzxing/src/zxing/zxing/common/IllegalArgumentException.cpp ../../../../qzxing/src/zxing/zxing/common/HybridBinarizer.cpp ../../../../qzxing/src/zxing/zxing/common/GridSampler.cpp ../../../../qzxing/src/zxing/zxing/common/GreyscaleRotatedLuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/common/GreyscaleLuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/common/GlobalHistogramBinarizer.cpp ../../../../qzxing/src/zxing/zxing/common/DetectorResult.cpp ../../../../qzxing/src/zxing/zxing/common/DecoderResult.cpp ../../../../qzxing/src/zxing/zxing/common/CharacterSetECI.cpp ../../../../qzxing/src/zxing/zxing/common/BitSource.cpp ../../../../qzxing/src/zxing/zxing/common/BitMatrix.cpp ../../../../qzxing/src/zxing/zxing/common/BitArray.cpp ../../../../qzxing/src/zxing/zxing/common/BitArrayIO.cpp ../../../../qzxing/src/zxing/zxing/common/detector/WhiteRectangleDetector.cpp ../../../../qzxing/src/zxing/zxing/common/detector/MonochromeRectangleDetector.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonException.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGFPoly.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGF.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/DataMatrixReader.cpp ../../../../qzxing/src/zxing/zxing/oned/UPCEReader.cpp ../../../../qzxing/src/zxing/zxing/oned/UPCEANReader.cpp ../../../../qzxing/src/zxing/zxing/oned/UPCAReader.cpp ../../../../qzxing/src/zxing/zxing/oned/OneDResultPoint.cpp ../../../../qzxing/src/zxing/zxing/oned/OneDReader.cpp ../../../../qzxing/src/zxing/zxing/oned/MultiFormatUPCEANReader.cpp ../../../../qzxing/src/zxing/zxing/oned/MultiFormatOneDReader.cpp ../../../../qzxing/src/zxing/zxing/oned/ITFReader.cpp ../../../../qzxing/src/zxing/zxing/oned/EAN13Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/EAN8Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/Code128Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/Code39Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/CodaBarReader.cpp ../../../../qzxing/src/zxing/zxing/oned/Code93Reader.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRCodeReader.cpp ../../../../qzxing/src/zxing/zxing/multi/MultipleBarcodeReader.cpp ../../../../qzxing/src/zxing/zxing/multi/GenericMultipleBarcodeReader.cpp ../../../../qzxing/src/zxing/zxing/multi/ByQuadrantReader.cpp ../../../../qzxing/src/zxing/zxing/multi/qrcode/QRCodeMultiReader.cpp ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.cpp ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiDetector.cpp ../../../../qzxing/src/zxing/zxing/aztec/decoder/AztecDecoder.cpp ../../../../qzxing/src/zxing/zxing/aztec/detector/AztecDetector.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/DataMatrixVersion.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixDecoder.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixBitMatrixParser.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixDataBlock.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixDecodedBitStreamParser.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DataMatrixCornerPoint.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DataMatrixDetector.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DataMatrixDetectorException.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRBitMatrixParser.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDataBlock.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDataMask.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDecodedBitStreamParser.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDecoder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRMode.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRAlignmentPattern.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRAlignmentPatternFinder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRDetector.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRFinderPattern.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRFinderPatternFinder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRFinderPatternInfo.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRVersion.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRFormatInformation.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRErrorCorrectionLevel.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ErrorCorrection.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusGF.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusPoly.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/PDF417BitMatrixParser.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/PDF417DecodedBitStreamParser.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/PDF417Decoder.cpp ../../../../qzxing/src/zxing/zxing/pdf417/detector/PDF417Detector.cpp ../../../../qzxing/src/zxing/zxing/pdf417/detector/LinesSampler.cpp ../../../../qzxing/src/zxing/zxing/pdf417/PDF417Reader.cpp ../../../../qzxing/src/zxing/bigint/BigUnsignedInABase.cc ../../../../qzxing/src/zxing/bigint/BigUnsigned.cc ../../../../qzxing/src/zxing/bigint/BigIntegerUtils.cc ../../../../qzxing/src/zxing/bigint/BigIntegerAlgorithms.cc ../../../../qzxing/src/zxing/bigint/BigInteger.cc ../../../../qzxing/src/zxing/zxing/qrcode/encoder/ByteMatrix.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/QREncoder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MaskUtil.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MatrixUtil.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/QRCode.cpp ../../../../qzxing/src/zxing/zxing/EncodeHint.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.cpp ../../../../qzxing/src/QZXingFilter.cpp ../../../../qzxing/src/QZXingImageProvider.cpp ../interact/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../../../qzxing/src/QZXing_global.h ../../../../qzxing/src/CameraImageWrapper.h ../../../../qzxing/src/ImageHandler.h ../../../../qzxing/src/QZXing.h ../../../../qzxing/src/zxing/zxing/ZXing.h ../../../../qzxing/src/zxing/zxing/IllegalStateException.h ../../../../qzxing/src/zxing/zxing/InvertedLuminanceSource.h ../../../../qzxing/src/zxing/zxing/ChecksumException.h ../../../../qzxing/src/zxing/zxing/ResultPointCallback.h ../../../../qzxing/src/zxing/zxing/ResultPoint.h ../../../../qzxing/src/zxing/zxing/Result.h ../../../../qzxing/src/zxing/zxing/ReaderException.h ../../../../qzxing/src/zxing/zxing/Reader.h ../../../../qzxing/src/zxing/zxing/NotFoundException.h ../../../../qzxing/src/zxing/zxing/MultiFormatReader.h ../../../../qzxing/src/zxing/zxing/LuminanceSource.h ../../../../qzxing/src/zxing/zxing/FormatException.h ../../../../qzxing/src/zxing/zxing/Exception.h ../../../../qzxing/src/zxing/zxing/DecodeHints.h ../../../../qzxing/src/zxing/zxing/BinaryBitmap.h ../../../../qzxing/src/zxing/zxing/Binarizer.h ../../../../qzxing/src/zxing/zxing/BarcodeFormat.h ../../../../qzxing/src/zxing/zxing/aztec/AztecReader.h ../../../../qzxing/src/zxing/zxing/aztec/AztecDetectorResult.h ../../../../qzxing/src/zxing/zxing/aztec/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/aztec/detector/Detector.h ../../../../qzxing/src/zxing/zxing/common/StringUtils.h ../../../../qzxing/src/zxing/zxing/common/Str.h ../../../../qzxing/src/zxing/zxing/common/Point.h ../../../../qzxing/src/zxing/zxing/common/PerspectiveTransform.h ../../../../qzxing/src/zxing/zxing/common/IllegalArgumentException.h ../../../../qzxing/src/zxing/zxing/common/HybridBinarizer.h ../../../../qzxing/src/zxing/zxing/common/GridSampler.h ../../../../qzxing/src/zxing/zxing/common/GreyscaleRotatedLuminanceSource.h ../../../../qzxing/src/zxing/zxing/common/GreyscaleLuminanceSource.h ../../../../qzxing/src/zxing/zxing/common/GlobalHistogramBinarizer.h ../../../../qzxing/src/zxing/zxing/common/DetectorResult.h ../../../../qzxing/src/zxing/zxing/common/DecoderResult.h ../../../../qzxing/src/zxing/zxing/common/Counted.h ../../../../qzxing/src/zxing/zxing/common/CharacterSetECI.h ../../../../qzxing/src/zxing/zxing/common/BitSource.h ../../../../qzxing/src/zxing/zxing/common/BitMatrix.h ../../../../qzxing/src/zxing/zxing/common/BitArray.h ../../../../qzxing/src/zxing/zxing/common/Array.h ../../../../qzxing/src/zxing/zxing/common/detector/MathUtils.h ../../../../qzxing/src/zxing/zxing/common/detector/JavaMath.h ../../../../qzxing/src/zxing/zxing/common/detector/WhiteRectangleDetector.h ../../../../qzxing/src/zxing/zxing/common/detector/MonochromeRectangleDetector.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonException.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGFPoly.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGF.h ../../../../qzxing/src/zxing/zxing/datamatrix/Version.h ../../../../qzxing/src/zxing/zxing/datamatrix/DataMatrixReader.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DecodedBitStreamParser.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataBlock.h ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/BitMatrixParser.h ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DetectorException.h ../../../../qzxing/src/zxing/zxing/datamatrix/detector/Detector.h ../../../../qzxing/src/zxing/zxing/datamatrix/detector/CornerPoint.h ../../../../qzxing/src/zxing/zxing/oned/UPCEReader.h ../../../../qzxing/src/zxing/zxing/oned/UPCEANReader.h ../../../../qzxing/src/zxing/zxing/oned/UPCAReader.h ../../../../qzxing/src/zxing/zxing/oned/OneDResultPoint.h ../../../../qzxing/src/zxing/zxing/oned/OneDReader.h ../../../../qzxing/src/zxing/zxing/oned/MultiFormatUPCEANReader.h ../../../../qzxing/src/zxing/zxing/oned/MultiFormatOneDReader.h ../../../../qzxing/src/zxing/zxing/oned/ITFReader.h ../../../../qzxing/src/zxing/zxing/oned/EAN13Reader.h ../../../../qzxing/src/zxing/zxing/oned/EAN8Reader.h ../../../../qzxing/src/zxing/zxing/oned/Code128Reader.h ../../../../qzxing/src/zxing/zxing/oned/Code39Reader.h ../../../../qzxing/src/zxing/zxing/oned/CodaBarReader.h ../../../../qzxing/src/zxing/zxing/oned/Code93Reader.h ../../../../qzxing/src/zxing/zxing/qrcode/Version.h ../../../../qzxing/src/zxing/zxing/qrcode/QRCodeReader.h ../../../../qzxing/src/zxing/zxing/qrcode/FormatInformation.h ../../../../qzxing/src/zxing/zxing/qrcode/ErrorCorrectionLevel.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/Mode.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/DecodedBitStreamParser.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/DataMask.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/DataBlock.h ../../../../qzxing/src/zxing/zxing/qrcode/decoder/BitMatrixParser.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/FinderPatternInfo.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/FinderPatternFinder.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/FinderPattern.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/Detector.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/AlignmentPatternFinder.h ../../../../qzxing/src/zxing/zxing/qrcode/detector/AlignmentPattern.h ../../../../qzxing/src/zxing/zxing/multi/MultipleBarcodeReader.h ../../../../qzxing/src/zxing/zxing/multi/GenericMultipleBarcodeReader.h ../../../../qzxing/src/zxing/zxing/multi/ByQuadrantReader.h ../../../../qzxing/src/zxing/zxing/multi/qrcode/QRCodeMultiReader.h ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.h ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiDetector.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ErrorCorrection.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusGF.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusPoly.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/BitMatrixParser.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/DecodedBitStreamParser.h ../../../../qzxing/src/zxing/zxing/pdf417/decoder/Decoder.h ../../../../qzxing/src/zxing/zxing/pdf417/detector/Detector.h ../../../../qzxing/src/zxing/zxing/pdf417/detector/LinesSampler.h ../../../../qzxing/src/zxing/zxing/pdf417/PDF417Reader.h ../../../../qzxing/src/zxing/bigint/NumberlikeArray.hh ../../../../qzxing/src/zxing/bigint/BigUnsignedInABase.hh ../../../../qzxing/src/zxing/bigint/BigUnsigned.hh ../../../../qzxing/src/zxing/bigint/BigIntegerUtils.hh ../../../../qzxing/src/zxing/bigint/BigIntegerLibrary.hh ../../../../qzxing/src/zxing/bigint/BigIntegerAlgorithms.hh ../../../../qzxing/src/zxing/bigint/BigInteger.hh ../../../../qzxing/src/zxing/zxing/qrcode/encoder/BlockPair.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/ByteMatrix.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/Encoder.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MaskUtil.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MatrixUtil.h ../../../../qzxing/src/zxing/zxing/qrcode/encoder/QRCode.h ../../../../qzxing/src/zxing/zxing/WriterException.h ../../../../qzxing/src/zxing/zxing/EncodeHint.h ../../../../qzxing/src/zxing/zxing/UnsupportedEncodingException.h ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.h ../../../../qzxing/src/zxing/zxing/common/Types.h ../../../../qzxing/src/QZXingFilter.h ../../../../qzxing/src/QZXingImageProvider.h ../interact/datamanager.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../../../qzxing/src/CameraImageWrapper.cpp ../../../../qzxing/src/QZXing.cpp ../../../../qzxing/src/ImageHandler.cpp ../../../../qzxing/src/zxing/zxing/ResultIO.cpp ../../../../qzxing/src/zxing/zxing/InvertedLuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/ChecksumException.cpp ../../../../qzxing/src/zxing/zxing/ResultPointCallback.cpp ../../../../qzxing/src/zxing/zxing/ResultPoint.cpp ../../../../qzxing/src/zxing/zxing/Result.cpp ../../../../qzxing/src/zxing/zxing/Reader.cpp ../../../../qzxing/src/zxing/zxing/MultiFormatReader.cpp ../../../../qzxing/src/zxing/zxing/LuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/FormatException.cpp ../../../../qzxing/src/zxing/zxing/Exception.cpp ../../../../qzxing/src/zxing/zxing/DecodeHints.cpp ../../../../qzxing/src/zxing/zxing/BinaryBitmap.cpp ../../../../qzxing/src/zxing/zxing/Binarizer.cpp ../../../../qzxing/src/zxing/zxing/BarcodeFormat.cpp ../../../../qzxing/src/zxing/zxing/aztec/AztecReader.cpp ../../../../qzxing/src/zxing/zxing/aztec/AztecDetectorResult.cpp ../../../../qzxing/src/zxing/zxing/common/StringUtils.cpp ../../../../qzxing/src/zxing/zxing/common/Str.cpp ../../../../qzxing/src/zxing/zxing/common/PerspectiveTransform.cpp ../../../../qzxing/src/zxing/zxing/common/IllegalArgumentException.cpp ../../../../qzxing/src/zxing/zxing/common/HybridBinarizer.cpp ../../../../qzxing/src/zxing/zxing/common/GridSampler.cpp ../../../../qzxing/src/zxing/zxing/common/GreyscaleRotatedLuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/common/GreyscaleLuminanceSource.cpp ../../../../qzxing/src/zxing/zxing/common/GlobalHistogramBinarizer.cpp ../../../../qzxing/src/zxing/zxing/common/DetectorResult.cpp ../../../../qzxing/src/zxing/zxing/common/DecoderResult.cpp ../../../../qzxing/src/zxing/zxing/common/CharacterSetECI.cpp ../../../../qzxing/src/zxing/zxing/common/BitSource.cpp ../../../../qzxing/src/zxing/zxing/common/BitMatrix.cpp ../../../../qzxing/src/zxing/zxing/common/BitArray.cpp ../../../../qzxing/src/zxing/zxing/common/BitArrayIO.cpp ../../../../qzxing/src/zxing/zxing/common/detector/WhiteRectangleDetector.cpp ../../../../qzxing/src/zxing/zxing/common/detector/MonochromeRectangleDetector.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonException.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGFPoly.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/GenericGF.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/DataMatrixReader.cpp ../../../../qzxing/src/zxing/zxing/oned/UPCEReader.cpp ../../../../qzxing/src/zxing/zxing/oned/UPCEANReader.cpp ../../../../qzxing/src/zxing/zxing/oned/UPCAReader.cpp ../../../../qzxing/src/zxing/zxing/oned/OneDResultPoint.cpp ../../../../qzxing/src/zxing/zxing/oned/OneDReader.cpp ../../../../qzxing/src/zxing/zxing/oned/MultiFormatUPCEANReader.cpp ../../../../qzxing/src/zxing/zxing/oned/MultiFormatOneDReader.cpp ../../../../qzxing/src/zxing/zxing/oned/ITFReader.cpp ../../../../qzxing/src/zxing/zxing/oned/EAN13Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/EAN8Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/Code128Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/Code39Reader.cpp ../../../../qzxing/src/zxing/zxing/oned/CodaBarReader.cpp ../../../../qzxing/src/zxing/zxing/oned/Code93Reader.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRCodeReader.cpp ../../../../qzxing/src/zxing/zxing/multi/MultipleBarcodeReader.cpp ../../../../qzxing/src/zxing/zxing/multi/GenericMultipleBarcodeReader.cpp ../../../../qzxing/src/zxing/zxing/multi/ByQuadrantReader.cpp ../../../../qzxing/src/zxing/zxing/multi/qrcode/QRCodeMultiReader.cpp ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.cpp ../../../../qzxing/src/zxing/zxing/multi/qrcode/detector/MultiDetector.cpp ../../../../qzxing/src/zxing/zxing/aztec/decoder/AztecDecoder.cpp ../../../../qzxing/src/zxing/zxing/aztec/detector/AztecDetector.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/DataMatrixVersion.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixDecoder.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixBitMatrixParser.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixDataBlock.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/decoder/DataMatrixDecodedBitStreamParser.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DataMatrixCornerPoint.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DataMatrixDetector.cpp ../../../../qzxing/src/zxing/zxing/datamatrix/detector/DataMatrixDetectorException.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRBitMatrixParser.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDataBlock.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDataMask.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDecodedBitStreamParser.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRDecoder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/decoder/QRMode.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRAlignmentPattern.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRAlignmentPatternFinder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRDetector.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRFinderPattern.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRFinderPatternFinder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/detector/QRFinderPatternInfo.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRVersion.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRFormatInformation.cpp ../../../../qzxing/src/zxing/zxing/qrcode/QRErrorCorrectionLevel.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ErrorCorrection.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusGF.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/ec/ModulusPoly.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/PDF417BitMatrixParser.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/PDF417DecodedBitStreamParser.cpp ../../../../qzxing/src/zxing/zxing/pdf417/decoder/PDF417Decoder.cpp ../../../../qzxing/src/zxing/zxing/pdf417/detector/PDF417Detector.cpp ../../../../qzxing/src/zxing/zxing/pdf417/detector/LinesSampler.cpp ../../../../qzxing/src/zxing/zxing/pdf417/PDF417Reader.cpp ../../../../qzxing/src/zxing/bigint/BigUnsignedInABase.cc ../../../../qzxing/src/zxing/bigint/BigUnsigned.cc ../../../../qzxing/src/zxing/bigint/BigIntegerUtils.cc ../../../../qzxing/src/zxing/bigint/BigIntegerAlgorithms.cc ../../../../qzxing/src/zxing/bigint/BigInteger.cc ../../../../qzxing/src/zxing/zxing/qrcode/encoder/ByteMatrix.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/QREncoder.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MaskUtil.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/MatrixUtil.cpp ../../../../qzxing/src/zxing/zxing/qrcode/encoder/QRCode.cpp ../../../../qzxing/src/zxing/zxing/EncodeHint.cpp ../../../../qzxing/src/zxing/zxing/common/reedsolomon/ReedSolomonEncoder.cpp ../../../../qzxing/src/QZXingFilter.cpp ../../../../qzxing/src/QZXingImageProvider.cpp ../interact/datamanager.cpp ../interact/main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1146,8 +1152,11 @@ compiler_rcc_clean:
 qrc_qml.cpp: ../interact/qml.qrc \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/rcc \
 		../interact/manager.qml \
+		../interact/ShotInformationActivity.qml \
+		../interact/DescribeActivity.qml \
 		../interact/scanqrcode.qml \
 		../interact/MainActivity.qml \
+		../interact/ShotShapeActivity.qml \
 		../interact/shotphoto.qml \
 		../interact/main.qml
 	/opt/Qt5.10.0/5.10.0/gcc_64/bin/rcc -name qml ../interact/qml.qrc -o qrc_qml.cpp
@@ -1158,9 +1167,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -fPIC -std=gnu++11 -dM -E -o moc_predefs.h /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_ImageHandler.cpp moc_QZXing.cpp moc_QZXingFilter.cpp
+compiler_moc_header_make_all: moc_ImageHandler.cpp moc_QZXing.cpp moc_QZXingFilter.cpp moc_datamanager.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ImageHandler.cpp moc_QZXing.cpp moc_QZXingFilter.cpp
+	-$(DEL_FILE) moc_ImageHandler.cpp moc_QZXing.cpp moc_QZXingFilter.cpp moc_datamanager.cpp
 moc_ImageHandler.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobjectdefs.h \
@@ -1243,7 +1252,7 @@ moc_ImageHandler.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		../../../../qzxing/src/ImageHandler.h \
 		moc_predefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
-	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/ImageHandler.h -o moc_ImageHandler.cpp
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/ImageHandler.h -o moc_ImageHandler.cpp
 
 moc_QZXing.cpp: ../../../../qzxing/src/QZXing_global.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QtGlobal \
@@ -1324,7 +1333,7 @@ moc_QZXing.cpp: ../../../../qzxing/src/QZXing_global.h \
 		../../../../qzxing/src/QZXing.h \
 		moc_predefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
-	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXing.h -o moc_QZXing.cpp
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXing.h -o moc_QZXing.cpp
 
 moc_QZXingFilter.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject.h \
@@ -1432,7 +1441,65 @@ moc_QZXingFilter.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		../../../../qzxing/src/QZXingFilter.h \
 		moc_predefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
-	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXingFilter.h -o moc_QZXingFilter.cpp
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXingFilter.h -o moc_QZXingFilter.cpp
+
+moc_datamanager.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QString \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QUuid \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject_impl.h \
+		../interact/datamanager.h \
+		moc_predefs.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../interact/datamanager.h -o moc_datamanager.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -4022,9 +4089,10 @@ QZXingImageProvider.o: ../../../../qzxing/src/QZXingImageProvider.cpp ../../../.
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o QZXingImageProvider.o ../../../../qzxing/src/QZXingImageProvider.cpp
 
-main.o: ../interact/main.cpp /opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/QGuiApplication \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qtguiglobal.h \
+datamanager.o: ../interact/datamanager.cpp ../interact/datamanager.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QString \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qchar.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qglobal.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qconfig.h \
@@ -4046,10 +4114,6 @@ main.o: ../interact/main.cpp /opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/QGuiAppli
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qmutex.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qnumeric.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qversiontagging.h \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcoreapplication.h \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstring.h \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qchar.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qbytearray.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qrefcount.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qnamespace.h \
@@ -4058,6 +4122,9 @@ main.o: ../interact/main.cpp /opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/QGuiAppli
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringalgorithms.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringview.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QUuid \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobjectdefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
@@ -4076,6 +4143,87 @@ main.o: ../interact/main.cpp /opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/QGuiAppli
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcontainerfwd.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QDir \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qdir.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qfileinfo.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QDebug \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsharedpointer_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datamanager.o ../interact/datamanager.cpp
+
+main.o: ../interact/main.cpp ../interact/datamanager.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QString \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QUuid \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/QGuiApplication \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qguiapplication.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcoreapplication.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qeventloop.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qwindowdefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qwindowdefs_win.h \
@@ -4117,7 +4265,6 @@ main.o: ../interact/main.cpp /opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/QGuiAppli
 		../../../../qzxing/src/QZXing.h \
 		../../../../qzxing/src/QZXing_global.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QtGlobal \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/QImage \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qimage.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui/qcolor.h \
@@ -4148,30 +4295,23 @@ moc_QZXing.o: moc_QZXing.cpp
 moc_QZXingFilter.o: moc_QZXingFilter.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_QZXingFilter.o moc_QZXingFilter.cpp
 
+moc_datamanager.o: moc_datamanager.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_datamanager.o moc_datamanager.cpp
+
 ####### Install
 
 install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/opt/interact/bin || mkdir -p $(INSTALL_ROOT)/opt/interact/bin
-	-$(QINSTALL_PROGRAM) $(QMAKE_TARGET) $(INSTALL_ROOT)/opt/interact/bin/$(QMAKE_TARGET)
+	@test -d $(INSTALL_ROOT)/lib || mkdir -p $(INSTALL_ROOT)/lib
+	-$(QINSTALL_PROGRAM) $(QMAKE_TARGET) $(INSTALL_ROOT)/lib/$(QMAKE_TARGET)
 
 uninstall_target: FORCE
-	-$(DEL_FILE) $(INSTALL_ROOT)/opt/interact/bin/$(QMAKE_TARGET)
-	-$(DEL_DIR) $(INSTALL_ROOT)/opt/interact/bin/ 
+	-$(DEL_FILE) $(INSTALL_ROOT)/lib/$(QMAKE_TARGET)
+	-$(DEL_DIR) $(INSTALL_ROOT)/lib/ 
 
 
-install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/opt/interact/bin || mkdir -p $(INSTALL_ROOT)/opt/interact/bin
-	-$(QINSTALL_PROGRAM) $(QMAKE_TARGET) $(INSTALL_ROOT)/opt/interact/bin/$(QMAKE_TARGET)
+install: install_target  FORCE
 
-uninstall_target: FORCE
-	-$(DEL_FILE) $(INSTALL_ROOT)/opt/interact/bin/$(QMAKE_TARGET) 
-	 -$(DEL_FILE) $(INSTALL_ROOT)/opt/interact/bin/$(QMAKE_TARGET)
-	-$(DEL_DIR) $(INSTALL_ROOT)/opt/interact/bin/ 
-
-
-install: install_target install_target  FORCE
-
-uninstall: uninstall_target uninstall_target  FORCE
+uninstall: uninstall_target  FORCE
 
 FORCE:
 

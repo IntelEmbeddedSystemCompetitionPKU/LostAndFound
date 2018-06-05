@@ -17,21 +17,21 @@ import java.util.List;
  */
 
 public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHolder> {
-    private List<String> mStringList;
-    private Context mContext;
+    private List<ListDataPiece> mStringList;
+    private ListActivity mContext;
 
-    public ObjectAdapter(Context context) {
+    public ObjectAdapter(ListActivity activity) {
         mStringList = new ArrayList<>();
-        mContext = context;
+        mContext = activity;
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<ListDataPiece> list) {
         mStringList.clear();
         mStringList.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void addData(String dataPiece) {
+    public void addData(ListDataPiece dataPiece) {
         mStringList.add(dataPiece);
         notifyItemInserted(mStringList.size());
     }
@@ -45,12 +45,16 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder viewHolder, int position) {
-        viewHolder.textView.setText(mStringList.get(position));
+    public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
+        viewHolder.textView.setText(mStringList.get(position).getDetail());
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, viewHolder.textView.getText().toString(), Toast.LENGTH_SHORT).show();
+                mContext.cancleTask();
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("UUID", mStringList.get(position).getUuid());
+                intent.putExtra("Detail", mStringList.get(position).getDetail());
+                mContext.startActivity(intent);
             }
         });
     }
