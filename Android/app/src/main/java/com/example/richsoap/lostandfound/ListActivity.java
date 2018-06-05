@@ -1,5 +1,6 @@
 package com.example.richsoap.lostandfound;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.os.Build.VERSION_CODES.O;
 
@@ -98,7 +100,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void tryToGetUUIDList() {
-        uuidListTask = new UUIDListTask(date, keywords, mProcess);
+        uuidListTask = new UUIDListTask(date, keywords, mProcess, this);
         uuidListTask.execute();
     }
 
@@ -107,7 +109,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void tryToGetUUIDDetail() {
-        jsonListTask = new JsonListTask();
+        jsonListTask = new JsonListTask(this);
         if(uuidList.size() - stopIndex > 10) {
             jsonListTask.execute(uuidList.subList(stopIndex,10 + stopIndex));
             stopIndex += 10;
@@ -122,11 +124,12 @@ public class ListActivity extends AppCompatActivity {
         private String date;
         private String keywords;
         private View mProcess;
-
-        public UUIDListTask(String date, String keywords, View mProcess) {
+        private Context context;
+        public UUIDListTask(String date, String keywords, View mProcess, Context context) {
             this.date = date;
             this.keywords = keywords;
             this.mProcess = mProcess;
+            this.context = context;
         }
 
         @Override
@@ -136,7 +139,7 @@ public class ListActivity extends AppCompatActivity {
 
         @Override
         protected List<String> doInBackground(Void... keys) {
-            return NetworkManager.getUUIDList(date, keywords);
+            return NetworkManager.getUUIDList(date, keywords, context);
         }
 
         @Override
@@ -154,15 +157,16 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private class JsonListTask extends AsyncTask<List<String>, String, Void> {
-
-        public JsonListTask() {
+        private Context context;
+        public JsonListTask(Context context) {
+            this.context = context;
         }
 
         @Override
         protected Void doInBackground(List<String>... keys) {
             Log.d(TAG, "doInBackground: " + Integer.toString(keys[0].size()));
             for(int i = 0;i < keys[0].size();i ++) {
-                String result = NetworkManager.getUUIDDetail(keys[0].get(i));
+                String result = NetworkManager.getUUIDDetail(keys[0].get(i), context);
                 publishProgress(result, keys[0].get(i));
                 if(isCancelled()) {
                     return null;

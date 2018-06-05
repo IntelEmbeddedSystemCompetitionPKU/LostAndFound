@@ -1,5 +1,6 @@
 package com.example.richsoap.lostandfound;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private void getBlanksList() {
-        blanksListTask = new BlanksListTask();
+        blanksListTask = new BlanksListTask(this);
         blanksListTask.execute(uuid);
     }
 
@@ -86,15 +87,17 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private class BlanksListTask extends AsyncTask<String, Blanks, Void> {
+        private Context context;
 
-        public BlanksListTask() {
+        public BlanksListTask(Context context) {
+            this.context = context;
         }
 
         @Override
         protected Void doInBackground(String... keys) {
-            blanksList = NetworkManager.getBlanksList(keys[0]);
+            blanksList = NetworkManager.getBlanksList(keys[0], context);
             for(int i = 0;i < blanksList.size();i ++) {
-                String result = NetworkManager.getImage(blanksList.get(i).getImageUUID());
+                String result = NetworkManager.getImage(blanksList.get(i).getImageUUID(), context);
                 blanksList.get(i).setImage(result);
                 blanksList.get(i).setType(Blanks.useforwhat.IMAGE);
                 publishProgress(blanksList.get(i));

@@ -1,8 +1,15 @@
 package com.example.richsoap.lostandfound;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.ImageView;
 
-import org.json.JSONObject;
+import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.rest.ImageRequest;
+import com.yanzhenjie.nohttp.rest.Response;
+import com.yanzhenjie.nohttp.rest.SyncRequestExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +24,8 @@ public class NetworkManager {
     public enum LoginResult {
         SUCCESS, ERRORPASSWORD;
     }
-    static public LoginResult isValidUser(String userName, String password) {
+
+    static public LoginResult isValidUser(String userName, String password, Context mContext) {
         try {
             Thread.sleep(2000);
         }
@@ -33,7 +41,7 @@ public class NetworkManager {
         }
     }
 
-    static public List<String> getUUIDList(String date, String keywords) {
+    static public List<String> getUUIDList(String date, String keywords, Context mContext) {
         try{
             Thread.sleep(2000);
         }
@@ -48,7 +56,7 @@ public class NetworkManager {
         return list;
     }
 
-    static public String getUUIDDetail(String uuid) {
+    static public String getUUIDDetail(String uuid, Context mContext) {
         try {
             Thread.sleep(2000);
         }
@@ -58,7 +66,7 @@ public class NetworkManager {
         return uuid + "--" + uuid + "--" + uuid;
     }
 
-    static public List<String> getImageList(String uuid) {
+    static public List<String> getImageList(String uuid, Context mContext) {
         List<String> imgList = new ArrayList<>();
         for(int i = 0;i < 10;i ++) {
             imgList.add(Integer.toString(i));
@@ -72,7 +80,7 @@ public class NetworkManager {
         return imgList;
     }
 
-    static public String getImage(String uuid) {
+    static public String getImage(String uuid, Context mContext) {
         try {
             Thread.sleep(2000);
         }
@@ -82,12 +90,23 @@ public class NetworkManager {
         return uuid + "\n" + uuid + "\n" + uuid;
     }
 
-    static public List<Blanks> getBlanksList(String uuid) {
+    static public List<Blanks> getBlanksList(String uuid, Context mContext) {
         List<Blanks> list = new ArrayList<>();
         for(int i = 0;i < 3;i ++) {
             list.add(new Blanks(UUID.randomUUID().toString(), i + 2, Blanks.useforwhat.DATAPIECE));
         }
         return list;
+    }
+
+    static public Bitmap getImageByUrl(String url, Context mContext) {
+        NoHttp.initialize(mContext);
+        ImageRequest req = new ImageRequest(url,RequestMethod.GET,1280,1280, Bitmap.Config.RGB_565, ImageView.ScaleType.CENTER);
+        Response<Bitmap> response = SyncRequestExecutor.INSTANCE.execute(req);
+        if (response.isSucceed()) {
+            return response.get();
+        } else {
+            return null;
+        }
     }
 
 }

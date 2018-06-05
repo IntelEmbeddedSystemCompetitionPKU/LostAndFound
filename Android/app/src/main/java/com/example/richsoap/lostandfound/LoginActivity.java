@@ -256,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            switch (NetworkManager.isValidUser(mEmail, mPassword)) {
+            switch (NetworkManager.isValidUser(mEmail, mPassword, mContext)) {
                 case SUCCESS:
                     return true;
                 default:

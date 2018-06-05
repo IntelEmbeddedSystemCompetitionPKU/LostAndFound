@@ -1,5 +1,6 @@
 package com.example.richsoap.lostandfound;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -56,12 +57,12 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getImageList() {
-        listTask = new ImageListTask();
+        listTask = new ImageListTask(this);
         listTask.execute(uuid);
     }
 
     private void getImages() {
-        imageTask = new ImageTask();
+        imageTask = new ImageTask(this);
         imageTask.execute(imgList);
     }
     private void addImageToList(String img) {
@@ -103,13 +104,14 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private class ImageListTask extends AsyncTask<String, Void, List<String>> {
-
-        public ImageListTask() {
+        private Context context;
+        public ImageListTask(Context context) {
+            this.context = context;
         }
 
         @Override
         protected List<String> doInBackground(String... keys) {
-            return NetworkManager.getImageList(keys[0]);
+            return NetworkManager.getImageList(keys[0], context);
         }
 
         @Override
@@ -121,15 +123,16 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private class ImageTask extends AsyncTask<List<String>, String, Void> {
-
-        public ImageTask() {
+        private Context context;
+        public ImageTask(Context context) {
+            this.context = context;
         }
 
         @Override
         protected Void doInBackground(List<String>... keys) {
             Log.d(TAG, "doInBackground: " + Integer.toString(keys[0].size()));
             for(int i = 0;i < keys[0].size();i ++) {
-                String result = NetworkManager.getImage(keys[0].get(i));
+                String result = NetworkManager.getImage(keys[0].get(i), context);
                 publishProgress(result);
                 if(isCancelled()) {
                     return null;
