@@ -11,11 +11,11 @@ for the one who found lost things
 #### other objects
 * n photos from different angles
 #### todo(qml)
-- [] qt camera control
-- [] a list to show photos and ocr result
-- [] decode qrcode via camera
-- [] use scripts from fcg
-- [] uuid name for project
+- [x] qt camera control
+- [ ] a list to show photos and ocr result(delete)
+- [x] decode qrcode via camera
+- [ ] use scripts from fcg
+- [x] uuid name for project
 ## upload
 ### tar.gz
 tar.gz all the photos and ocr results
@@ -23,7 +23,7 @@ tar.gz all the photos and ocr results
 upload tar file via http
 ### todo
 - [x] python 'Requests'
-- [] qt process
+- [ ] qt process
 - [x] post data via python
 - [x] post remove via python
 ## database
@@ -31,4 +31,4 @@ this is used to store information which is still in chest
 ### xml
 uuid-location
 ### todo
-- [] Qxml
+- [ ] Qxml
