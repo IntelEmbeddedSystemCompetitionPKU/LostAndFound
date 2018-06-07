@@ -4,6 +4,7 @@ def signup():
     jdata = json.loads(request.data)
     print(jdata['name']+' trys to sign up with password '+jdata['passwd'])
     #若不冲突且合法则存入数据库
+    
     return 'True'
 
 
