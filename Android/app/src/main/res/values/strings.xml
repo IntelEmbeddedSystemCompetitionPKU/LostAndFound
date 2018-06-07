@@ -24,4 +24,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_answer">AnswerActivity</string>
     <string name="title_activity_network_test">NetworkTestActivity</string>
+    <string name="title_activity_set_server">SetServerActivity</string>
 </resources>

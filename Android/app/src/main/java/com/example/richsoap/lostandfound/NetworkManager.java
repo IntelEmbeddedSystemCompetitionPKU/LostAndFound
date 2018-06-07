@@ -8,8 +8,11 @@ import android.widget.ImageView;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.ImageRequest;
+import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
 import com.yanzhenjie.nohttp.rest.SyncRequestExecutor;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,24 +24,47 @@ import java.util.UUID;
 
 public class NetworkManager {
     private static final String TAG = "NetworkManager";
+    private static String ip = "127.0.0.1";
+    private static String port = "22";
     public enum LoginResult {
-        SUCCESS, ERRORPASSWORD;
+        SUCCESS, ERRORPASSWORD, NETERROR;
+    }
+
+    static public void setServer(String _ip, String _port) {
+        ip = _ip;
+        port = _port;
+
     }
 
     static public LoginResult isValidUser(String userName, String password, Context mContext) {
-        try {
-            Thread.sleep(2000);
-        }
-        catch (InterruptedException e) {
-            //return LoginResult.ERRORPASSWORD;
-        }
-        if(password.equals("testing")) {
-            Log.w(TAG, "isValidUser: Right Password");
-            return LoginResult.SUCCESS;
-        } else {
-            Log.w(TAG, "isValidUser: Wrong Password " + password);
-            return LoginResult.ERRORPASSWORD;
-        }
+        NoHttp.initialize(mContext);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", userName);
+
+        String url = "http://" + ip + ":" + port +"/sign/signup";
+        String result = null;
+		Request<String> request = NoHttp.createStringRequest(url, RequestMethod.POST);
+		if(request.isSucceed()) {
+			result = request.get();
+		}
+		else {
+			return NETERROR;
+		}
+		if(result.equals("1")) {
+			return SUCCESS;
+		}
+		url = "http://" + ip + ":" + port + "/sign/signin";
+		request = NoHttp.createStringRequest(url, RequestMethod.POST);
+		if(request.isSucceed()) {
+			result = request.get();
+		}
+		else {
+			return NETERROR;
+		}
+		if(result.equals("1")) {
+			return SUCCESS;
+		}
+		return ERRORPASSWORD;
     }
 
     static public List<String> getUUIDList(String date, String keywords, Context mContext) {

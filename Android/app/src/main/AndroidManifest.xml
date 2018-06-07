@@ -42,6 +42,10 @@
         <activity
             android:name=".NetworkTestActivity"
             android:label="@string/title_activity_network_test"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SetServerActivity"
+            android:label="@string/title_activity_set_server"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
