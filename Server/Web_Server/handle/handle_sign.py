@@ -1,5 +1,7 @@
 import uuid
-from db_op.sqlconnect import *
+import sys
+sys.path.append(r'../db_op')  
+from sqlconnect import *
 
 @app.route('/signup', methods=['POST'])
 # 注册(用户名，密码(MD5，用公钥加密))(True,False)
