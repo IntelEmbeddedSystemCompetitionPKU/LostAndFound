@@ -12,7 +12,7 @@ def signup():
     useruuid = uuid.uuid1().__str__().replace('_','')
     db,c = cnnct()
     try:
-        c.execute('insert into user values('+username+','+passwd+','+useruuid+');')
+        c.execute('insert into User values('+username+','+passwd+','+useruuid+');')
     except:
         return 'False'
     return 'True'
@@ -27,7 +27,7 @@ def signin():
     passwd=jdata['passwd']
     db,c = cnnct()
     try:
-        r=c.execute('select * from user where username="'+username+'" and passwd="'+passwd+'";')
+        r=c.execute('select * from User where username="'+username+'" and passwd="'+passwd+'";')
         if r==1:
             return
     except:
