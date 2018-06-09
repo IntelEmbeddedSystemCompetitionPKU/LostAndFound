@@ -3,7 +3,7 @@
 
 # In[20]:
 
-
+import numpy as np
 import json
 import os
 import argparse
@@ -19,13 +19,17 @@ def start_process_new(rootdir):
     # step2 resize images in './HD' and './ocr', and save them to './LD'
     # step3 upload photos
 
-    base_url = load_config('/etc/upload.json', test = True)
-    os.mkdir(rootdir + '/mask/')
-    os.mkdir(rootdir + '/LD/')
+    base_url = load_config('/etc/upload.json', test = False)
+    try: 
+        os.mkdir(rootdir + 'mask/')
+        os.mkdir(rootdir + 'LD/')
+    except IOError:
+        print('file exists')
     print('start process')
     for root, dirs, files in os.walk(rootdir + 'ocr/'):
         for filename in files:
-            process_image(os.path.join(root, filename), os.path.join(root, 'mask/'))
+            i =1
+            #process_image(os.path.join(root, filename), os.path.join(root, 'mask/'))
     # step 1 done
     
     for root, dirs, files in os.walk(rootdir + 'HD/'):
@@ -40,10 +44,10 @@ def start_process_new(rootdir):
     
 def resize_image(srcdir, tardir):
     img = cv2.imread(srcdir)
-    if img == None:
-        return
-    img = cv2.resize(img, (width, height))
-    cv2.imwrite(tardir + srcdir.split('/')[-1],img)
+    print(srcdir)
+    cv2.imshow("tst",img)
+    img = cv2.resize(img, (200, 300), interpolation=cv2.INTER_CUBIC)
+    cv2.imwrite(tardir + srcdir[-8:],img)
     
 def load_config(config_dir, test=False):
     if(test == True):
@@ -51,28 +55,58 @@ def load_config(config_dir, test=False):
     else:
         with open(config_dir, 'r') as f:
             data = json.load(f)
-    if(not data.has_key('ip')):
-        data['ip'] = '10.127.171..75'
-    if(not data.has_key('port')):
-        data['port'] = '22'
-    return 'http://' + data['ip'] + ':' + data['port'] + '/upload/'
+        return 'http://' + data['ip'] + ':' + data['port'] + '/upload/compress'
 
 def upload_targz(base_url, rootdir):
     generate_data(rootdir)
     targz_data(rootdir)
     with open(rootdir + 'upload.tar.gz','rb') as f:
+        files = f.read()
         body = {
             'uuid':rootdir.split('/')[-1],
-            'file':f
         }
-        response = requests.post(base_url, json=body)
+        response = requests.post(base_url, json=body, files=f)
 
 def generate_data(rootdir):
-    
+    with open(rootdir + 'data.txt', 'w') as f:
+        body = {}
+        body['uuid'] = rootdir[-21:-1]
+        with open(rootdir + 'desc.txt','r') as des:
+            body['description'] = des.read()
+        body['time'] = time.asctime(time.localtime(time.time()))
+        for root, dirs, files in os.walk(rootdir + 'HD/'):
+            i = 0
+            for filename in files:
+                i += 1
+            body['HD_num'] = str(i)
+        for root, dirs, files in os.walk(rootdir + 'LD/'):
+            i = 0
+            for filename in files:
+                i += 1
+            body['LD_num'] = str(i)
+        for root,dirs, files in os.walk(rootdir + 'mask/'):
+            i = 0
+            for filename in files:
+                filename[-4:] = '.txt'
+                tempbody = {}
+                with open(filename, 'r') as f:
+                    j = 0
+                    for lines in f:
+                        j += 1
+                        tempbody['block' + str(j)] = lines
+                i += 1
+                tempbody['block_num'] = str(j)
+                body['mask' + str(i)] = tempbody
+            body['mask_num'] = str(i)
+        body['fecth_num'] = str(0)
+        json.dump(body, f)
+
+                
+
     
     
 def targz_data(rootdir):
-    os.system('tar cvf ' + rootdir + 'upload.tar ' + rootdir + 'data.txt ' + rootdir + 'HD ' + rootdir + 'mask LD')
+    os.system('tar -C' + rootdir +' -cvf ' + rootdir +'upload.tar data.txt/ HD/ mask/ LD/')
     os.system('gzip ' + rootdir + 'upload.tar')
     
 
@@ -149,7 +183,13 @@ def upload_fetch(base_url, imgdir):
 
 # In[19]:
 
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-srcdir',type=str)
+    parser.add_argument('-mode',type=str)
+    args = parser.parse_args()
+    if(args.mode == 'new'):
+        start_process_new(args.srcdir)
 
-tarurl = load_config('./config.txt', test=True)
-upload_new(tarurl, './testdata/')
+
 

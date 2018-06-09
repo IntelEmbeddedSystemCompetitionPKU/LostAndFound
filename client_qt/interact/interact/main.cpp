@@ -6,6 +6,7 @@
 
 QUuid datamanager::nowUUID = NULL;
 QString datamanager::description = NULL;
+myProcess* datamanager::process = NULL;
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
