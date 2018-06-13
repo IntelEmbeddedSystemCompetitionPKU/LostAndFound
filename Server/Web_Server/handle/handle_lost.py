@@ -1,16 +1,37 @@
 from Web_Server import app
+from flask import request
+import json
+import os
+import pymysql
 
-@app.route('/lost_list/<time_keywords>')
-# 搜索失物的列表(时间，关键词)(UUID json list)
-def lost_list(time_keywords):
+basepath = '/home/ykx/Server_File/'
+
+#################
+## Query MySQL ##
+#################
+
+def query_mysql(contents, table):
+    conn = pymysql.connect("localhost", user='root', passwd='ykx970910', db='LostFound', charset='utf8')
+    cursor = conn.cursor()
+    cursor.execute("SELECT " + contents + " FROM " + table)
+    results = cursor.fetchall() # type(results) == tuple
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return results
+
+@app.route('/query/lostlist', methods=['POST'])
+# date, keyword
+def handle_query_lostlist():
+    data = request.get_data()
+    json_data = json.loads(data.decode('utf-8'))
+
     time_keywords_dict=time_keywords.split('_')
-    print(time_keywords_dict)
-    return 'list'
 
 
 @app.route('/lost_sketch/<lost_uuid>')
 # 得到失物的粗略信息(UUID)(低清图片，描述信息)
-def show_post(lost_uuid):
+def show_post_sketch(lost_uuid):
     return '{"image":"image","description":"PKU_红色_校园卡"}'
 
 
