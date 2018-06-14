@@ -1,5 +1,7 @@
 package com.example.richsoap.lostandfound;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by richsoap on 18-6-3.
  */
@@ -7,12 +9,11 @@ package com.example.richsoap.lostandfound;
 public class Blanks {
     private String imageUUID;
     private int number;
-    private useforwhat type;
     private String image;
-    public Blanks(String uuid, int number, useforwhat type) {
+    //private Bitmap image;
+    public Blanks(String uuid, int number) {
         imageUUID = uuid;
         this.number = number;
-        this.type = type;
         image = null;
     }
 
@@ -32,14 +33,6 @@ public class Blanks {
         this.number = number;
     }
 
-    public useforwhat getType() {
-        return type;
-    }
-
-    public void setType(useforwhat type) {
-        this.type = type;
-    }
-
     public String getImage() {
         return image;
     }
@@ -48,7 +41,4 @@ public class Blanks {
         this.image = image;
     }
 
-    public enum useforwhat {
-        DATAPIECE, IMAGE, EDIT;
-    }
 }

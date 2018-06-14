@@ -20,6 +20,7 @@
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +47,10 @@
         <activity
             android:name=".SetServerActivity"
             android:label="@string/title_activity_set_server"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AnswerResultActivity"
+            android:label="@string/title_activity_answer_result"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -26,6 +26,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.os.Build.VERSION_CODES.O;
 
+/**
+ * This Activity is design for displaying search results
+ * Step1, get uuid list which is suit for the date and keywords passed from SearchActivity
+ * Step2, get bitmap(LD) and description(String) for each uuid in uuid list, and display them in a recyclerview
+ * Step3, if there is any one, which user is interested in, jump to DetailActivity
+ */
+
 public class ListActivity extends AppCompatActivity {
 
     private String date;

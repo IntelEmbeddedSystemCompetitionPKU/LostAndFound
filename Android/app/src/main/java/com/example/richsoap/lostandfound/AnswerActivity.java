@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import java.util.List;
 
+/**
+ * This Activity is designed for user to answer questions about the object
+ * Step1, get resource id list for this uuid
+ * Step2, get blank photo and set it to BlanksAdapter
+ */
+
 public class AnswerActivity extends AppCompatActivity {
     private String uuid;
     private List<Blanks> blanksList;
@@ -59,9 +65,6 @@ public class AnswerActivity extends AppCompatActivity {
 
     private void addBlankToList(Blanks blanks) {
         adapter.addData(blanks);
-        for(int i = 0;i < blanks.getNumber();i ++) {
-            adapter.addEditor();
-        }
     }
 
 
@@ -98,9 +101,10 @@ public class AnswerActivity extends AppCompatActivity {
             blanksList = NetworkManager.getBlanksList(keys[0], context);
             for(int i = 0;i < blanksList.size();i ++) {
                 String result = NetworkManager.getImage(blanksList.get(i).getImageUUID(), context);
-                blanksList.get(i).setImage(result);
-                blanksList.get(i).setType(Blanks.useforwhat.IMAGE);
-                publishProgress(blanksList.get(i));
+                if(result != null) {
+                    blanksList.get(i).setImage(result);
+                    publishProgress(blanksList.get(i));
+                }
                 if(isCancelled()) {
                     return null;
                 }

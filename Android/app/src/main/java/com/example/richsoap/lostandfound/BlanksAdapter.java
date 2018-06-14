@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class BlanksAdapter extends RecyclerView.Adapter<BlanksAdapter.MyViewHolder> {
     private List<Blanks> blanksList;
-    private List<EditText> editTextList;
+    private List<EditText> editTextList;// a list to store every edittext, so that we can get the answers easily
     private Context mContext;
 
     public BlanksAdapter(Context context) {
@@ -37,10 +38,6 @@ public class BlanksAdapter extends RecyclerView.Adapter<BlanksAdapter.MyViewHold
         notifyItemInserted(blanksList.size());
     }
 
-    public void addEditor() {
-        blanksList.add(new Blanks(null, 1, Blanks.useforwhat.EDIT));
-        notifyItemChanged(blanksList.size());
-    }
 
     public List<String> getStrings() {
         List<String> result = new ArrayList<>();
@@ -51,33 +48,30 @@ public class BlanksAdapter extends RecyclerView.Adapter<BlanksAdapter.MyViewHold
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-        EditText editText;
+        TextView imageView;
+        LinearLayout linearLayout;
         public MyViewHolder(View view) {
             super(view);
-            textView = (TextView)view.findViewById(R.id.answer_cardview_tips);
-            editText = (EditText)view.findViewById(R.id.answer_cardview_text);
+            imageView = (TextView) view.findViewById(R.id.answer_cardview_image);
+            linearLayout = (LinearLayout) view.findViewById(R.id.answer_cardview_linearlayout);
         }
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
-        switch (blanksList.get(position).getType()) {
-            case EDIT:
-                editTextList.add(viewHolder.editText);
-                viewHolder.editText.setVisibility(View.VISIBLE);
-                viewHolder.textView.setVisibility(View.GONE);
-            break;
-            case IMAGE:
-                viewHolder.textView.setText(blanksList.get(position).getImage());
-                viewHolder.editText.setVisibility(View.GONE);
-                viewHolder.textView.setVisibility(View.VISIBLE);
+        Blanks blank = blanksList.get(position);
+        viewHolder.imageView.setText(blank.getImage());
+        for(int i = 0;i < blank.getNumber();i ++) {
+            EditText editText = new EditText(mContext);
+            editText.setMaxLines(1);
+            editTextList.add(editText);
+            viewHolder.linearLayout.addView(editText);
         }
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_answer_cardview_img, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_answer_cardview, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
