@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+/**
+* This Activity is designed for searching uuid list from server via date and key words, and this activity will jump to ListActivity.
+* */
 public class SearchActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView mDateText;

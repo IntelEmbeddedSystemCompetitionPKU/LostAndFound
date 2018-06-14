@@ -39,7 +39,8 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
- */
+* This activity is designed to login
+* */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -255,8 +256,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
-            switch (NetworkManager.isValidUser(mEmail, mPassword, mContext)) {
+            NetworkManager.setUserInfo(mEmail, mPassword);
+            switch (NetworkManager.isValidUser(mContext)) {
                 case SUCCESS:
                     return true;
                 default:

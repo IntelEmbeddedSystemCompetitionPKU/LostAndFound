@@ -17,6 +17,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * This Activity is designed for showing some detail information for objects, which is selected by user
+ * Step1, get resource list for the uuid passed by ListActivity
+ * Step2, display every HD photo in a recycerview, which works with DetailImageAdapter
+ * Step3, if user want to answer questions about this object, click the OK button at topright on the screen, and jump to AnswerActivity
+ */
+
 public class DetailActivity extends AppCompatActivity {
     private static final String TAG = "DetailActivity";
 

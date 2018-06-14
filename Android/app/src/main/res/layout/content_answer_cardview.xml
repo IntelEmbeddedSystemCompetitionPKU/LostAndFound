@@ -8,16 +8,14 @@
     android:id="@+id/answer_cardview"
     app:layout_constraintCircleRadius="4dp">
     <LinearLayout
+        android:id="@+id/answer_cardview_linearlayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/answer_cardview_text"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:maxLines="1"/>
+            android:id="@+id/answer_cardview_image"/>
 
     </LinearLayout>
 
