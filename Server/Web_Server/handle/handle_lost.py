@@ -25,15 +25,16 @@ def query_mysql(contents, table):
 def handle_query_lostlist():
     data = request.get_data()
     json_data = json.loads(data.decode('utf-8'))
-
+    print(json_data)
     #time_keywords_dict=time_keywords.split('_')
     lostlist = query_mysql("objuuid", "Lost")
     print(lostlist)
     
-    json_list = "{"
+    json_list = '{"uuid_num":' + str(len(lostlist)) + ','
     for k in range(0, len(lostlist)):
         json_list = json_list + '"uuid' + str(k) + '":' + lostlist[k][0] + ","
     json_list = json_list + "}"
+    print(type(json_list))
     return(json_list.encode('utf-8'))
 
 @app.route('/lost_sketch/<lost_uuid>')

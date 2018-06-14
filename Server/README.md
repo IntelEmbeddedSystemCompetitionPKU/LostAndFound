@@ -70,7 +70,7 @@
 
 2. 返回值
 
-   body: {"uuid_num": <uuid_num>, "uuid1": <uuid>, "uuid2": <uuid>, ...}
+   body: {"uuid_num": <uuid_num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}
 
 ## 1.5 查询失物粗略信息
 
@@ -116,7 +116,7 @@
    
    method: POST
    
-   body: {"num_block": <num_block>, "block1": <block1>, "block2": <block2>, ...}
+   body: {"num_block": <num_block>, "block0": <block>, "block1": <block>, ...}
 
 2. 返回值
 
@@ -175,7 +175,7 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "LD_num": <num>, "LD1": <picture>, "LD2": <picture>, ...}
+   body: {"uuid": <uuid>, "LD_num": <num>, "LD0": <picture>, "LD1": <picture>, ...}
 
 2. 返回值
 
@@ -189,7 +189,7 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "HD_num": <num>, "HD1": <picture>, "HD2": <picture>, ...}
+   body: {"uuid": <uuid>, "HD_num": <num>, "HD0": <picture>, "HD1": <picture>, ...}
 
 2. 返回值
   
@@ -203,7 +203,7 @@ waiting...
 
    method: POST
 
-   body: {"uuid": <uuid>, "mask_num": <num>, "mask1":{"picture": <picture>, "block_num": <num>, "block1": <block>, "block2": <block>, ...}, "mask2":{...}, ... }
+   body: {"uuid": <uuid>, "mask_num": <num>, "mask0":{"picture": <picture>, "block_num": <num>, "block0": <block>, "block1": <block>, ...}, "mask1":{...}, ... }
 
 2. 返回值
 
@@ -218,7 +218,7 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "fetch_num": <num>, "fetch1": <picture>, "fetch2": <picture>, ...}
+   body: {"uuid": <uuid>, "fetch_num": <num>, "fetch0": <picture>, "fetch1": <picture>, ...}
 
 2. 返回值
 
@@ -251,14 +251,14 @@ waiting...
        ├── data.txt
        ├── fetch
        ├── HD
-       │   ├── picture1.jpg
-       │   └── picture2.jpg
+       │   ├── picture0.jpg
+       │   └── picture1.jpg
        ├── LD
-       │   ├── picture1.jpg
-       │   └── picture2.jpg
+       │   ├── picture0.jpg
+       │   └── picture1.jpg
        └── mask
-           ├── picture1.jpg
-           └── picture2.jpg
+           ├── picture0.jpg
+           └── picture1.jpg
    ~~~
 
    ~~~
@@ -271,15 +271,15 @@ waiting...
        "HD_num": <HD_num>,  //高清图数量
        "mask_num": <mask_num>,  //打码图数量
        "mask": {
-           mask1":{
+           mask0":{
                "block_num": <block_num>,  //打码图1中block数量
-               "block1": <block>,    //打码图1中block1内容
-               "block2": <block>,
+               "block0": <block>,    //打码图1中block1内容
+               "block1": <block>,
                ...
            }
-           "mask2":{
-               "block2": <block>,
-               "block2": <block>,
+           "mask1":{
+               "block0": <block>,
+               "block1": <block>,
                ...
            }
            ...
