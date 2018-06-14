@@ -26,8 +26,15 @@ def handle_query_lostlist():
     data = request.get_data()
     json_data = json.loads(data.decode('utf-8'))
 
-    time_keywords_dict=time_keywords.split('_')
-
+    #time_keywords_dict=time_keywords.split('_')
+    lostlist = query_mysql("objuuid", "Lost")
+    print(lostlist)
+    
+    json_list = "{"
+    for k in range(0, len(lostlist)):
+        json_list = json_list + '"uuid' + str(k) + '":' + lostlist[k][0] + ","
+    json_list = json_list + "}"
+    return(json_list.encode('utf-8'))
 
 @app.route('/lost_sketch/<lost_uuid>')
 # 得到失物的粗略信息(UUID)(低清图片，描述信息)

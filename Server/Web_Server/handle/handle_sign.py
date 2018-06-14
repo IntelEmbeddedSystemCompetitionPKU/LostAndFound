@@ -1,6 +1,8 @@
+from Web_Server import app
+from flask import request
 import uuid
 import sys
-sys.path.append(r'../db_op')  
+sys.path.append(r'../db_op/')  
 from sqlconnect import *
 
 @app.route('/signup', methods=['POST'])
@@ -34,4 +36,4 @@ def signin():
             return
     except:
         return 'False'
-    return 'False'
+    return 'True'

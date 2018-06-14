@@ -12,6 +12,9 @@
 >    查询... -> query(GET)
 >
 >    发送... -> upload
+>
+>
+> 3. 标记有`*`表示功能基本完成能ping/pong
 
 ## 1.1 注册
 
@@ -55,19 +58,19 @@
 
    image
 
-## 1.4 获取失物列表
+## 1.4 获取失物列表 *
 
 1. 请求
 
-   url: `http://<ip>:<port>/query/lostList`
+   url: `http://<ip>:<port>/query/lostlist`
    
    method: POST
    
-   body: {"username": <username>, "password": <password>} 
+   body: {"description": <description>, "date": <date>} 
 
 2. 返回值
 
-   json
+   body: {"uuid_num": <uuid_num>, "uuid1": <uuid>, "uuid2": <uuid>, ...}
 
 ## 1.5 查询失物粗略信息
 
@@ -225,15 +228,15 @@ waiting...
 
 waiting...
 
-## 2.7 发送完整压缩文件
+## 2.7 发送完整压缩文件 *
 
 1. 请求
 
-   url: `http://<ip>:<port>/upload/compress`
+   url: `http://<ip>:<port>/upload/compress/<uuid>`
 
    method: POST
 
-   body: {"uuid": <uuid>, "file": <file>]}
+   body: {"file": <file>]}
 
 2. 返回值
 
@@ -263,23 +266,25 @@ waiting...
    {
        "uuid": <uuid>,
        "description": <description>,
-       "time": <time>,  //上交失物时间
+       "date": <date>,  //上交失物时间
        "LD_num": <LD_num>,  //低清图数量
        "HD_num": <HD_num>,  //高清图数量
        "mask_num": <mask_num>,  //打码图数量
-       "mask1":{
-       	"block_num": <block_num>,  //打码图1中block数量
-           "block1": <block>,    //打码图1中block1内容
-           "block2": <block>,
+       "mask": {
+           mask1":{
+               "block_num": <block_num>,  //打码图1中block数量
+               "block1": <block>,    //打码图1中block1内容
+               "block2": <block>,
+               ...
+           }
+           "mask2":{
+               "block2": <block>,
+               "block2": <block>,
+               ...
+           }
            ...
+           "mask*":{...}  //打码图n
        }
-       "mask2":{
-           "block2": <block>,
-           "block2": <block>,
-           ...
-       }
-       ...
-       "mask*":{...}  //打码图n
        "fetch_num": <fetch_num>  //取物成功后上传图数量
    }
    ~~~
