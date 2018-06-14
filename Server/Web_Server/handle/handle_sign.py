@@ -2,7 +2,7 @@ from Web_Server import app
 from flask import request
 import uuid
 import sys
-sys.path.append(r'../db_op/')  
+sys.path.append(r'/home/ykx/EmbeddedSystem/LostAndFound/Server/Web_Server/db_op')  
 from sqlconnect import *
 
 @app.route('/signup', methods=['POST'])
@@ -33,7 +33,7 @@ def signin():
     try:
         r=c.execute('select * from User where username="'+username+'" and passwd="'+passwd+'";')
         if r==1:
-            return
+            return 'True'
     except:
         return 'False'
     return 'True'

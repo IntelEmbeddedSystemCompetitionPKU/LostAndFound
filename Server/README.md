@@ -14,13 +14,13 @@
 >    发送... -> upload
 >
 >
-> 3. 标记有`*`表示功能基本完成能ping/pong
+> 3. 标记有`*`表示功能基本完成能ping/pong，标记有`?`表示本地未见bug但不知远程调用情况
 
-## 1.1 注册
+## 1.1 注册 ? (fcg给的url是/signup)
 
 1. 请求
 
-    url: `http://<ip>:<port>/sign/signup`
+    url: `http://<ip>:<port>/signup`
     
     method: POST
     
@@ -30,11 +30,11 @@
 
    1(True)/0(False)
 
-## 1.2 登录
+## 1.2 登录 ? (url是/signin)
 
 1. 请求
 
-   url: `http://<ip>:<port>/sign/signin`
+   url: `http://<ip>:<port>/signin`
    
    method: POST
    
