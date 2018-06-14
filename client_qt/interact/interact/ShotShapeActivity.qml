@@ -7,26 +7,22 @@ import user.DataManager 1.0
 import "."
 Item{
     anchors.fill: parent
-    property var savepath: null
     Camera {
         id: camera
-
-        imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
-
-        exposure  {
-            exposureCompensation: -1.0
-        }
-
         imageCapture {
         }
     }
 
-    VideoOutput {
-        source: camera
-        anchors.fill: parent
-        focus: visible
+    Item {
+        anchors.centerIn: parent
+        height: parent.height / 2
+        width: parent.width / 2
+        VideoOutput {
+            source: camera
+            anchors.fill: parent
+            focus: visible
+        }
     }
-
     Button {
         id: shotbutton
         width: 400
@@ -34,6 +30,7 @@ Item{
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
+            var savepath = manager.getDir() + "HD/"
             camera.imageCapture.captureToLocation(savepath)
             textLabel.text = camera.imageCapture.capturedImagePath
         }
@@ -71,7 +68,7 @@ Item{
         }
     }
     Component.onCompleted: {
-        savepath = manager.getDir() + "not_for_ocr/"
+
     }
 
 }

@@ -7,24 +7,23 @@ import user.DataManager 1.0
 import "."
 Item{
     anchors.fill: parent
-    property var savepath: null
+    property int camstate : 0
     Camera {
         id: camera
-
-        imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
-
-        exposure  {
-            exposureCompensation: -1.0
-        }
-
-        imageCapture {
+          imageCapture {
+              onImageSaved:
+                  textLabel.text = camera.imageCapture.capturedImagePath
         }
     }
-
-    VideoOutput {
-        source: camera
-        anchors.fill: parent
-        focus: visible
+    Item {
+        anchors.centerIn: parent
+        height: parent.height / 2
+        width: parent.width / 2
+        VideoOutput {
+            source: camera
+            anchors.fill: parent
+            focus: visible
+        }
     }
 
     Button {
@@ -34,8 +33,18 @@ Item{
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
-            camera.imageCapture.captureToLocation(savepath)
-            textLabel.text = camera.imageCapture.capturedImagePath
+            if(camera.imageCapture.ready) {
+            var savepath
+            if(camstate === 0) {
+               savepath = manager.getDir() + "ocr/"
+            }
+            else if(camstate === 1){
+                savepath = manager.getDir() + "HD/"
+            }
+            else{
+                camstate = 0
+            }
+            camera.imageCapture.captureToLocation(savepath)}
         }
         Text {
             id: textLabel
@@ -63,16 +72,20 @@ Item{
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         onClicked: {
-            manager.showPage("ShotShapeActivity.qml")
+            if(camstate === 0) {
+                camstate = 1
+            }
+            else{
+                manager.showPage("DescribeActivity.qml")
+            }
         }
         Text {
             anchors.centerIn: parent
             text: "Finished"
         }
     }
-
     Component.onCompleted: {
         manager.setUUID()
-        savepath = manager.getDir() + "wait_for_ocr/"
+        camstate = 0
     }
 }

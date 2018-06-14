@@ -154,30 +154,17 @@ waiting...
 1. 请求
 
    url: `http://<ip>:<port>/upload/information`
-   
+
    method: POST
-   
-   body: {"uuid": <uuid>, "description": <description>, "picture": <picture>, "block": {"num_block": <num_block>, "block1": <block1>, ...} }
 
-2. 返回值
-
-   1(succeed)/0(error)
-
-## 2.2 发送失物描述
-
-1. 请求
-
-   url: `http://<ip>:<port>/upload/description`
-   
-   method: POST
-   
    body: {"uuid": <uuid>, "description": <description>, "time": <time>}
 
 2. 返回值
 
-   1/0
+   1(succeed)
 
-## 2.3 发送失物低清图（LD）
+
+## 2.2 发送失物低清图（LD）
 
 1. 请求
 
@@ -185,13 +172,13 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "LD": <picture>}
+   body: {"uuid": <uuid>, "LD_num": <num>, "LD1": <picture>, "LD2": <picture>, ...}
 
 2. 返回值
 
-   1/0
+   1/0(there is no filepath for that uuid)
 
-## 2.4 发送失物高清图（HD）
+## 2.3 发送失物高清图（HD）
 
 1. 请求
 
@@ -199,27 +186,28 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "HD": <picture>}
+   body: {"uuid": <uuid>, "HD_num": <num>, "HD1": <picture>, "HD2": <picture>, ...}
 
 2. 返回值
   
-   1/0
+   1/0(there is no filepath for that uuid)
 
-## 2.5 发送事物打码图（mask）
+## 2.4 发送失物打码图（mask）
 
 1. 请求
 
    url: `http://<ip>:<port>/upload/mask`
-   
+
    method: POST
-   
-   body: {"uuid": <uuid>, "mask": <picture>}
+
+   body: {"uuid": <uuid>, "mask_num": <num>, "mask1":{"picture": <picture>, "block_num": <num>, "block1": <block>, "block2": <block>, ...}, "mask2":{...}, ... }
 
 2. 返回值
-  
+
    1/0
 
-## 2.6 发送领取图片（fetch）
+
+## 2.5 发送领取图片（fetch）
 
 1. 请求
 
@@ -227,15 +215,76 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "fetch": <picture>}
+   body: {"uuid": <uuid>, "fetch_num": <num>, "fetch1": <picture>, "fetch2": <picture>, ...}
 
 2. 返回值
 
    1/0
 
-## 2.7 发送有登记二维码
+## 2.6 发送有登记二维码
 
 waiting...
+
+## 2.7 发送完整压缩文件
+
+1. 请求
+
+   url: `http://<ip>:<port>/upload/compress`
+
+   method: POST
+
+   body: {"uuid": <uuid>, "file": <file>]}
+
+2. 返回值
+
+   1/0(the uuid exists)
+
+3. 压缩内容
+
+   ~~~
+   //compress.tar.gz
+   .
+   └── uuid
+       ├── data.txt
+       ├── fetch
+       ├── HD
+       │   ├── picture1.jpg
+       │   └── picture2.jpg
+       ├── LD
+       │   ├── picture1.jpg
+       │   └── picture2.jpg
+       └── mask
+           ├── picture1.jpg
+           └── picture2.jpg
+   ~~~
+
+   ~~~
+   //data.txt
+   {
+       "uuid": <uuid>,
+       "description": <description>,
+       "time": <time>,  //上交失物时间
+       "LD_num": <LD_num>,  //低清图数量
+       "HD_num": <HD_num>,  //高清图数量
+       "mask_num": <mask_num>,  //打码图数量
+       "mask1":{
+       	"block_num": <block_num>,  //打码图1中block数量
+           "block1": <block>,    //打码图1中block1内容
+           "block2": <block>,
+           ...
+       }
+       "mask2":{
+           "block2": <block>,
+           "block2": <block>,
+           ...
+       }
+       ...
+       "mask*":{...}  //打码图n
+       "fetch_num": <fetch_num>  //取物成功后上传图数量
+   }
+   ~~~
+
+   
 
 
 # Codes(for FCG)
@@ -254,7 +303,6 @@ handle(package)
 |  |-upload_LD(json_data) -> 2.3
 |  |-upload_mask(json_data) -> 2.5
 |  |-upload_information(json_data) -> 2.1
-|  |-upload_description(json_data) -> 2.2
 |  |-upload_fetch(json_data) -> 2.6
 |  |-upload_results(json_data) -> 1.8 
 |-sign.py
@@ -275,6 +323,8 @@ handle(package)
 
 
 Rules:
+
+0. json中所有key的value都是字符串
 
 1. 如果要在handle包已有的.py文件中增加函数，只需要在添加好函数之后，在上层的distribute.py中添加对应的装饰器，装饰器用到该函数时调用方式是`handle.<function_name>`
 2. 如果要在handle包里新建一个.py文件，需要先在handle的`__init__.py`里面添加`from .<name>.py import *`，其次在distribute.py里面添加对应的装饰器，装饰器用到该函数时调用方式是`handle.<function_name>`
