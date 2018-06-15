@@ -12,12 +12,15 @@
 >    查询... -> query(GET)
 >
 >    发送... -> upload
+>
+>
+> 3. 标记有`*`表示功能基本完成能ping/pong，标记有`?`表示本地未见bug但不知远程调用情况
 
-## 1.1 注册
+## 1.1 注册 ? (fcg给的url是/signup)
 
 1. 请求
 
-    url: `http://<ip>:<port>/sign/signup`
+    url: `http://<ip>:<port>/signup`
     
     method: POST
     
@@ -27,11 +30,11 @@
 
    1(True)/0(False)
 
-## 1.2 登录
+## 1.2 登录 ? (url是/signin)
 
 1. 请求
 
-   url: `http://<ip>:<port>/sign/signin`
+   url: `http://<ip>:<port>/signin`
    
    method: POST
    
@@ -55,19 +58,19 @@
 
    image
 
-## 1.4 获取失物列表
+## 1.4 获取失物列表 *
 
 1. 请求
 
-   url: `http://<ip>:<port>/query/lostList`
+   url: `http://<ip>:<port>/query/lostlist`
    
    method: POST
    
-   body: {"username": <username>, "password": <password>} 
+   body: {"description": <description>, "date": <date>} 
 
 2. 返回值
 
-   json
+   body: {"uuid_num": <uuid_num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}
 
 ## 1.5 查询失物粗略信息
 
@@ -113,7 +116,7 @@
    
    method: POST
    
-   body: {"num_block": <num_block>, "block1": <block1>, "block2": <block2>, ...}
+   body: {"num_block": <num_block>, "block0": <block>, "block1": <block>, ...}
 
 2. 返回值
 
@@ -172,7 +175,7 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "LD_num": <num>, "LD1": <picture>, "LD2": <picture>, ...}
+   body: {"uuid": <uuid>, "LD_num": <num>, "LD0": <picture>, "LD1": <picture>, ...}
 
 2. 返回值
 
@@ -186,7 +189,7 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "HD_num": <num>, "HD1": <picture>, "HD2": <picture>, ...}
+   body: {"uuid": <uuid>, "HD_num": <num>, "HD0": <picture>, "HD1": <picture>, ...}
 
 2. 返回值
   
@@ -200,7 +203,7 @@ waiting...
 
    method: POST
 
-   body: {"uuid": <uuid>, "mask_num": <num>, "mask1":{"picture": <picture>, "block_num": <num>, "block1": <block>, "block2": <block>, ...}, "mask2":{...}, ... }
+   body: {"uuid": <uuid>, "mask_num": <num>, "mask0":{"picture": <picture>, "block_num": <num>, "block0": <block>, "block1": <block>, ...}, "mask1":{...}, ... }
 
 2. 返回值
 
@@ -215,7 +218,7 @@ waiting...
    
    method: POST
    
-   body: {"uuid": <uuid>, "fetch_num": <num>, "fetch1": <picture>, "fetch2": <picture>, ...}
+   body: {"uuid": <uuid>, "fetch_num": <num>, "fetch0": <picture>, "fetch1": <picture>, ...}
 
 2. 返回值
 
@@ -225,15 +228,15 @@ waiting...
 
 waiting...
 
-## 2.7 发送完整压缩文件
+## 2.7 发送完整压缩文件 *
 
 1. 请求
 
-   url: `http://<ip>:<port>/upload/compress`
+   url: `http://<ip>:<port>/upload/compress/<uuid>`
 
    method: POST
 
-   body: {"uuid": <uuid>, "file": <file>]}
+   body: {"file": <file>]}
 
 2. 返回值
 
@@ -248,14 +251,14 @@ waiting...
        ├── data.txt
        ├── fetch
        ├── HD
-       │   ├── picture1.jpg
-       │   └── picture2.jpg
+       │   ├── picture0.jpg
+       │   └── picture1.jpg
        ├── LD
-       │   ├── picture1.jpg
-       │   └── picture2.jpg
+       │   ├── picture0.jpg
+       │   └── picture1.jpg
        └── mask
-           ├── picture1.jpg
-           └── picture2.jpg
+           ├── picture0.jpg
+           └── picture1.jpg
    ~~~
 
    ~~~
@@ -263,23 +266,25 @@ waiting...
    {
        "uuid": <uuid>,
        "description": <description>,
-       "time": <time>,  //上交失物时间
+       "date": <date>,  //上交失物时间
        "LD_num": <LD_num>,  //低清图数量
        "HD_num": <HD_num>,  //高清图数量
        "mask_num": <mask_num>,  //打码图数量
-       "mask1":{
-       	"block_num": <block_num>,  //打码图1中block数量
-           "block1": <block>,    //打码图1中block1内容
-           "block2": <block>,
+       "mask": {
+           mask0":{
+               "block_num": <block_num>,  //打码图1中block数量
+               "block0": <block>,    //打码图1中block1内容
+               "block1": <block>,
+               ...
+           }
+           "mask1":{
+               "block0": <block>,
+               "block1": <block>,
+               ...
+           }
            ...
+           "mask*":{...}  //打码图n
        }
-       "mask2":{
-           "block2": <block>,
-           "block2": <block>,
-           ...
-       }
-       ...
-       "mask*":{...}  //打码图n
        "fetch_num": <fetch_num>  //取物成功后上传图数量
    }
    ~~~

@@ -13,8 +13,33 @@ from Web_Server import app
 from flask import request
 import json
 import os
+import pymysql
 
 basepath = '/home/ykx/Server_File/'
+
+##################
+## Insert MySQL ##
+##################
+
+def insert_mysql(uuid, path):
+    fr = open(path + '/data.txt', 'r')
+    item_info = fr.read()
+    item_info = json.loads(item_info)
+
+    # connect to mysql
+    conn = pymysql.connect("localhost", user='root', passwd='ykx970910', db='LostFound', charset='utf8')
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO Lost VALUES(" 
+            #+ item_info['uuid'] + "," 
+            + uuid + ","
+            + item_info['date'] + ","
+            + item_info['description'] + ","
+            + item_info['mask'] + ","
+            + item_info['usruuid']
+            + ")")
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 ################
 ## APP client ##
@@ -181,21 +206,31 @@ def handle_upload_fetch():
 
 
 #.tar.gz
-@app.route('/upload/compress', methods=['POST'])
-def handle_upload_compress():
-    data = request.get_data()
-    json_data = json.loads(data.decode('utf-8'))
-
-    uuid = json_data['uuid']
+@app.route('/upload/compress/<uuid>', methods=['POST'])
+def handle_upload_compress(uuid):
+    #data = request.get_data()
+    files = request.files['file']
+    #json_data = json.loads(data.decode('utf-8'))
+    print(files)
+    #print(json_data)
+    #uuid = json_data['uuid']
+    #uuid = data['uuid']
     path = basepath + uuid
-    if os.path.exists(path) == True:
-        return 0
-    os.system('mkdir ' + path)
-    fw = open(basepath + 'compress/' + uuid + '.tar.gz', 'w')
-    fw.write(json_data['file'])
-    fw.close()
+    if os.path.exists(path) == False:
+    #    return "False"
+        os.system('mkdir ' + path)
+    print ('mkdir')
+    #files.save(basepath + 'compress/' + uuid + '.tar.gz')
+    #fw = open(basepath + 'compress/' + uuid + '.tar.gz', 'w')
+    #print ('fwrite')
+    #fw.write(files)
+    #fw.close()
+    print(uuid)
+    files.save(os.path.join(basepath, 'compress/' + uuid + '.tar.gz'))
+    os.system('tar -xvf ' + basepath + 'compress/' + uuid + '.tar.gz -C ' + path)
+    insert_mysql(uuid, path)
+    #os.system('tree ' + basepath)
+    #os.system('tar -xvf ' + basepath + 'compress/' + uuid + '.tar.gz')
 
-    os.system('tar -zxvf ' + basepath + 'compress/' + uuid + '.tar.gz -C ' + path)
-
-    return 1
+    return 'True'
 

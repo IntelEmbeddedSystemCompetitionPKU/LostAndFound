@@ -14,5 +14,5 @@
 
 from Web_Server import app
 
-app.run(debug = True)
+app.run(host='162.105.91.179')
 #app.run()
