@@ -13,6 +13,14 @@ Item{
         }
     }
 
+    Text {
+        id: title
+        text: "次要照片拍摄"
+        font.pixelSize: 35
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
     Item {
         anchors.centerIn: parent
         height: parent.height / 2
@@ -34,6 +42,15 @@ Item{
             camera.imageCapture.captureToLocation(savepath)
             textLabel.text = camera.imageCapture.capturedImagePath
         }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
         Text {
             id: textLabel
         }
@@ -47,6 +64,15 @@ Item{
         anchors.left: parent.left
         onClicked: {
             manager.popToPage("MainActivity.qml")
+        }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
         }
         Text {
             anchors.centerIn: parent
@@ -62,13 +88,18 @@ Item{
         onClicked: {
             manager.showPage("DescribeActivity.qml")
         }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
         Text {
             anchors.centerIn: parent
             text: "Finished"
         }
     }
-    Component.onCompleted: {
-
-    }
-
 }

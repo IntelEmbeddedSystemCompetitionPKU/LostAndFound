@@ -31,10 +31,35 @@ Item{
         Rectangle {
             id: capturezone
             color: "red"
-            opacity: 0.2
-            width: parent.width/2
+            opacity: 0.1
             height: parent.height/2
+            width: height
             anchors.centerIn: parent
+        }
+    }
+
+    Button {
+        id: cancelbutton
+        width: 300
+        height: 200
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        onClicked: {
+            manager.popToPage("MainActivity.qml")
+        }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
+        Text {
+            anchors.centerIn: parent
+            text: "取消"
+            font.pixelSize: 20
         }
     }
 
@@ -43,7 +68,7 @@ Item{
         font.pointSize: 15
         text: dectag
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: anchors.bottom
+        anchors.bottom: parent.bottom
     }
 
     QZXingFilter {
@@ -59,6 +84,7 @@ Item{
 
             onTagFound: {
                 dectag = tag;
+                ////////// It should be more codes here
             }
 
             tryHarder: false

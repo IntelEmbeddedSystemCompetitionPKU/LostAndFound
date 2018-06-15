@@ -8,6 +8,7 @@ import "."
 Item{
     anchors.fill: parent
     property int camstate : 0
+    property int count: 0
     Camera {
         id: camera
           imageCapture {
@@ -24,6 +25,14 @@ Item{
             anchors.fill: parent
             focus: visible
         }
+    }
+
+    Text {
+        id: title
+        text: "敏感照片拍摄"
+        font.pixelSize: 35
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Button {
@@ -44,25 +53,58 @@ Item{
             else{
                 camstate = 0
             }
-            camera.imageCapture.captureToLocation(savepath)}
+            camera.imageCapture.captureToLocation(savepath)
+            count ++
+            shotcount.text = "已拍摄" + qsTr(count) +"张"
+            }
+        }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
         }
         Text {
-            id: textLabel
+            id: shottext
+            text: "拍摄"
+            font.pixelSize: 35
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        Text {
+            id: shotcount
+            text: "已拍摄0张"
+            font.pixelSize: 20
+            anchors.top: shottext.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 
     Button {
         id: cancelbutton
-        width: 300
+        width: 200
         height: 200
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         onClicked: {
             manager.popToPage("MainActivity.qml")
         }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
         Text {
             anchors.centerIn: parent
-            text: "Cancel"
+            text: "取消"
+            font.pixelSize: 20
         }
     }
     Button {
@@ -74,14 +116,26 @@ Item{
         onClicked: {
             if(camstate === 0) {
                 camstate = 1
+                shotcount.text = "已拍摄0张"
+                title.text = "次要照片拍摄"
             }
             else{
                 manager.showPage("DescribeActivity.qml")
             }
         }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
         Text {
             anchors.centerIn: parent
-            text: "Finished"
+            text: "完成"
+            font.pixelSize: 20
         }
     }
     Component.onCompleted: {
