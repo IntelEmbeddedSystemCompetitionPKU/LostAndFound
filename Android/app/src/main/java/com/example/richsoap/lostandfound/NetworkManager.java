@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.ImageRequest;
+import com.yanzhenjie.nohttp.rest.JsonObjectRequest;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
 import com.yanzhenjie.nohttp.rest.SyncRequestExecutor;
@@ -29,8 +30,8 @@ import static com.example.richsoap.lostandfound.NetworkManager.LoginResult.SUCCE
 
 public class NetworkManager {
     private static final String TAG = "NetworkManager";
-    private static String ip = "127.0.0.1";
-    private static String port = "22";
+    private static String ip = "162.105.91.179";
+    private static String port = "5000";
     private static String userName = "tester";
     private static String password = "testing";
     public enum LoginResult {
@@ -65,7 +66,8 @@ public class NetworkManager {
 		Response<String> response = NoHttp.startRequestSync(request);
 		if(response.isSucceed()) {
 			result = response.get();
-		}
+            Log.d(TAG, "isValidUser: signin " + result);
+        }
 		else {
 			return NETERROR;
 		}
@@ -77,6 +79,7 @@ public class NetworkManager {
 		response = NoHttp.startRequestSync(request);
 		if(response.isSucceed()) {
 			result = response.get();
+            Log.d(TAG, "isValidUser: signup " + result);
 		}
 		else {
 			return NETERROR;
@@ -101,35 +104,41 @@ public class NetworkManager {
         }
         return list;
 
-        /*String url = "http://" + ip + ":" + port +"/sign/signup";
+        /*NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/query/lostlist";
         JSONObject sendjsonObject = new JSONObject();
         try{
             sendjsonObject.put("date", date);
-            sendjsonObject.put("keyword", keywords);
+            sendjsonObject.put("description", keywords);
         }
         catch (JSONException e) {
             return null;
         }
-        Request<JSONObject> request = NoHttp.createJsonObjectRequest(url,  RequestMethod.POST);
+        Log.d(TAG, "getUUIDList: send json in string" + sendjsonObject.toString());
+        Request<String> request = NoHttp.createStringRequest(url,  RequestMethod.POST);
         request.setDefineRequestBodyForJson(sendjsonObject);
-        Response<JSONObject> response = NoHttp.startRequestSync(request);
+        Response<String> response = NoHttp.startRequestSync(request);
+        List<String> imageList = new ArrayList<>();
         if(response.isSucceed()) {
-            JSONObject jsonObject = response.get();
-            int count;
-            List<String> imageList = new ArrayList<>();
             try {
-                count = jsonObject.getInt("uuid_num");
+                String resString = response.get();
+                Log.d(TAG, "getUUIDList: response get " + resString);
+                JSONObject jsonObject = new JSONObject(resString);
+                int count = jsonObject.getInt("uuid_num");
+                Log.d(TAG, "getUUIDList: uuid_num = " + Integer.toString(count));
                 for(int i = 0;i < count;i ++) {
                     imageList.add(jsonObject.getString("uuid" + Integer.toString(i)));
                 }
             }
             catch (JSONException e) {
-                return null;
+                Log.d(TAG, "getUUIDList: JSONException");
+                return imageList;
             }
         }
         else {
-            return null;
-        }*/
+            Log.d(TAG, "getUUIDList: Something wrong with response");
+        }
+        return imageList;*/
     }
 
     static public String getUUIDDetail(String uuid, Context mContext) {
@@ -173,7 +182,8 @@ public class NetworkManager {
 
         }
         return imgList;
-        /*String url = "http://" + ip + ":" + port +"/sign/signup";
+        /*NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/sign/signup";
         Request<JSONObject> request = NoHttp.createJsonObjectRequest(url,  RequestMethod.POST);
         request.add("uuid",uuid);
         Response<JSONObject> response = NoHttp.startRequestSync(request);
@@ -248,8 +258,11 @@ public class NetworkManager {
 
     static public Bitmap getImageByUrl(String url, Context mContext) {// for test image download
         NoHttp.initialize(mContext);
-        ImageRequest req = new ImageRequest(url,RequestMethod.GET,1280,1280, Bitmap.Config.RGB_565, ImageView.ScaleType.CENTER);
+        /*ImageRequest req = new ImageRequest(url,RequestMethod.GET,1280,1280, Bitmap.Config.RGB_565, ImageView.ScaleType.CENTER);
         Response<Bitmap> response = SyncRequestExecutor.INSTANCE.execute(req);
+        */
+        Request<Bitmap> req = NoHttp.createImageRequest(url);
+        Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
             return response.get();
         } else {

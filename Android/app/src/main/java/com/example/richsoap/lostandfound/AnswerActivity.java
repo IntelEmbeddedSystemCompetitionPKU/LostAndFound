@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -82,8 +84,11 @@ public class AnswerActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.toolbar_ok:
-                List<String> list = adapter.getStrings();
-                Toast.makeText(this, list.get(0), Toast.LENGTH_SHORT).show();
+                JSONObject jsonObject = adapter.getStrings();
+                Intent intent = new Intent(this, AnswerResultActivity.class);
+                intent.putExtra("answer", jsonObject.toString());
+                intent.putExtra("uuid", uuid);
+                startActivity(intent);
                 break;
         }
         return true;

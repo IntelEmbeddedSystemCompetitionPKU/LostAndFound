@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -32,6 +33,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yanzhenjie.nohttp.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +61,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        Logger.setDebug(true);// Enable NoHttp debug mode
+        Logger.setTag("NoHttpListActivity");
+        SharedPreferences preferences = getSharedPreferences("userinfo", MODE_PRIVATE);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
         mPasswordView = (EditText) findViewById(R.id.password);
+        mEmailView.setText(preferences.getString("username", ""));
+        mPasswordView.setText(preferences.getString("keyword", ""));
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -139,12 +146,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return email.length() > 6;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 6 && password.length() < 20;
     }
 
     /**
@@ -272,6 +279,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
+                SharedPreferences.Editor editor = getSharedPreferences("userinfo", MODE_PRIVATE).edit();
+                editor.putString("username", mEmail);
+                editor.putString("password", mPassword);
                 startActivity(intent);
                 finish();
             } else {

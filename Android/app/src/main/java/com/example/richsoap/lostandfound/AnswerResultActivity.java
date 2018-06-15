@@ -12,7 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -25,6 +29,8 @@ import java.util.List;
 
 // TODO: Try to get QRCode for the uuid
 public class AnswerResultActivity extends AppCompatActivity {
+    private JSONObject jsonObject;
+    private TextView textView;
     private String uuid;
 
     @Override
@@ -40,7 +46,16 @@ public class AnswerResultActivity extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        uuid = intent.getStringExtra("UUID");
+        textView = (TextView)findViewById(R.id.answer_result_text);
+        textView.setText(intent.getStringExtra("answer"));
+        uuid = intent.getStringExtra("uuid");
+        try {
+            jsonObject = new JSONObject(intent.getStringExtra("answer"));
+            Toast.makeText(this,jsonObject.toString(), Toast.LENGTH_SHORT);
+        }
+        catch (JSONException e) {
+            Toast.makeText(this, "Network error", Toast.LENGTH_SHORT);
+        }
     }
 
     @Override
