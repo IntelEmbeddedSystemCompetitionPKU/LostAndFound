@@ -2,11 +2,13 @@ package com.example.richsoap.lostandfound;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,7 @@ import java.util.List;
  */
 
 public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.MyViewHolder> {
-    private List<String> mImageList;
+    private List<Bitmap> mImageList;
     private Context mContext;
     private static final String TAG = "DetailImageAdapter";
 
@@ -27,35 +29,29 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
         mContext = context;
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<Bitmap> list) {
         mImageList.clear();
         mImageList.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void addData(String dataPiece) {
+    public void addData(Bitmap dataPiece) {
         mImageList.add(dataPiece);
         notifyItemInserted(mImageList.size());
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        ImageView imageView;
         public MyViewHolder(View view) {
             super(view);
-            textView = (TextView)view.findViewById(R.id.list_cardview_text);
+            imageView = (ImageView) view.findViewById(R.id.detail_cardview_image);
         }
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
-        viewHolder.textView.setText(mImageList.get(position));
+        viewHolder.imageView.setImageBitmap(mImageList.get(position));
         Log.d(TAG, "onBindViewHolder: " + mImageList.get(position));
-        viewHolder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, viewHolder.textView.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

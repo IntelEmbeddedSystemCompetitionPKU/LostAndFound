@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QDebug>
 #include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 datamanager::datamanager(QObject *parent):QObject(parent) {}
 datamanager::~datamanager() {}
 void datamanager::setUUID() {
@@ -14,9 +16,12 @@ void datamanager::setUUID() {
     qDebug() << "dir is" << fullPath;
     qDebug() << "HD make" << dir.mkpath(fullPath + "HD/");
     qDebug() << "ocr make" << dir.mkpath(fullPath + "ocr/");
+    qDebug() << "fetch make" << dir.mkpath(fullPath + "fetch/");
+
 }
 QString datamanager::getDir() {
-    return "/home/upsquared/workspace/data/" + getUUIDString() + "/";
+    return "/home/richsoap/workspace/data/" + getUUIDString() + "/";
+    //return "/home/upsquared/workspace/data/" + getUUIDString() + "/";
 }
 void datamanager::processImage() {
     QFile file(getDir() + "desc.txt");
@@ -24,7 +29,11 @@ void datamanager::processImage() {
     std::string str = description.toStdString();
     file.write(str.c_str(), description.length());
     file.close();
-    startScripts();
+    process = new myProcess("python3");
+    process->addParam("/home/upsquared/workspace/LostAndFound/client_qt/upload/upload.py");
+    process->addParam("-mode=new");
+    process->addParam("-srcdir=" + getDir());
+    process->start();
 }
 QString datamanager::getUUIDString() {
     QString uuid = nowUUID.toString();
@@ -40,10 +49,22 @@ void datamanager::addDescription(QString desc) {
     description = desc;
 }
 
-void datamanager::startScripts(){
+bool datamanager::isExist(QString name) {
+    QString val;
+    QFile file;
+    file.setFileName("/home/upsquared/workspace/LostAndFound/client_qt/upload/log.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
+    QJsonDocument document = QJsonDocument::fromJson(val.toUtf8());
+    QJsonObject obj = document.object();
+    return obj.contains(name);
+}
+
+void datamanager::popOut(QString name) {
     process = new myProcess("python3");
     process->addParam("/home/upsquared/workspace/LostAndFound/client_qt/upload/upload.py");
-    process->addParam("-mode=new");
+    process->addParam("-mode=old");
     process->addParam("-srcdir=" + getDir());
     process->start();
 }

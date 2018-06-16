@@ -18,37 +18,67 @@ Item{
         onClicked: {
             manager.popToPage("MainActivity.qml")
         }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
         Text {
-            text: "Cancel"
+            anchors.centerIn: parent
+            text: "取消"
+            font.pixelSize: 20
         }
     }
+    Text {
+        id: title
+        text: "请输入额外描述信息"
+        font.pixelSize: 35
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
     Button {
         id: donebutton
-        width: 300
+        width: 200
         height: 200
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         onClicked: {
             var texts = textedit.getText(0,10000)
             manager.addDesc(texts)
-            //print(texts)
             manager.processImage()
             manager.popToPage("MainActivity.qml")
         }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
         Text {
-            text: "Finished"
+            anchors.centerIn: parent
+            text: "完成"
+            font.pixelSize: 20
         }
     }
 
     Rectangle {
         width: parent.width - 30
         anchors.margins: 30
-        anchors.top: parent.top
+        anchors.top: title.bottom
         anchors.bottom: donebutton.top
         anchors.horizontalCenter: parent.horizontalCenter
         color: "gray"
         TextEdit {
             id: textedit
+            font.pixelSize: 32
             anchors.fill: parent
         }
     }

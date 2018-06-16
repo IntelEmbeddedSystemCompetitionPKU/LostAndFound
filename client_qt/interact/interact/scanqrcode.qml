@@ -31,10 +31,35 @@ Item{
         Rectangle {
             id: capturezone
             color: "red"
-            opacity: 0.2
-            width: parent.width/2
+            opacity: 0.1
             height: parent.height/2
+            width: height
             anchors.centerIn: parent
+        }
+    }
+
+    Button {
+        id: cancelbutton
+        width: 300
+        height: 200
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        onClicked: {
+            manager.popToPage("MainActivity.qml")
+        }
+        style: ButtonStyle {
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 25
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "#888"
+                radius: 100
+            }
+        }
+        Text {
+            anchors.centerIn: parent
+            text: "取消"
+            font.pixelSize: 20
         }
     }
 
@@ -43,7 +68,7 @@ Item{
         font.pointSize: 15
         text: dectag
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: anchors.bottom
+        anchors.bottom: parent.bottom
     }
 
     QZXingFilter {
@@ -55,12 +80,17 @@ Item{
                                                                  0.25,0.25,0.5,0.5)));
         }
         decoder {
-            enabledDecoders: QZXing.DecoderFormat_EAN_13 | QZXing.DecoderFormat_CODE_39 | QZXing.DecoderFormat_QR_CODE
+            enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                dectag = tag;
+                if(manager.isExist(tag)) {
+                    manager.setUUID(tag)
+                    manager.showPage("ShotFaceInformation.qml")
+                }
+                else {
+                    dectag = "非法编码"
+                }
             }
-
             tryHarder: false
         }
 

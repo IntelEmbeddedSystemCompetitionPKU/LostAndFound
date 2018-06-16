@@ -2,6 +2,7 @@ package com.example.richsoap.lostandfound;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -82,8 +85,11 @@ public class AnswerActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.toolbar_ok:
-                List<String> list = adapter.getStrings();
-                Toast.makeText(this, list.get(0), Toast.LENGTH_SHORT).show();
+                JSONObject jsonObject = adapter.getStrings();
+                Intent intent = new Intent(this, AnswerResultActivity.class);
+                intent.putExtra("answer", jsonObject.toString());
+                intent.putExtra("uuid", uuid);
+                startActivity(intent);
                 break;
         }
         return true;
@@ -100,7 +106,7 @@ public class AnswerActivity extends AppCompatActivity {
         protected Void doInBackground(String... keys) {
             blanksList = NetworkManager.getBlanksList(keys[0], context);
             for(int i = 0;i < blanksList.size();i ++) {
-                String result = NetworkManager.getImage(blanksList.get(i).getImageUUID(), context);
+                Bitmap result = NetworkManager.getImage(uuid, "LD", i, context);
                 if(result != null) {
                     blanksList.get(i).setImage(result);
                     publishProgress(blanksList.get(i));

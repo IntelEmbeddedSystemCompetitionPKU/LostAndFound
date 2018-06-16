@@ -6,20 +6,72 @@ import "."
 Item{
     anchors.fill: parent
     Item {
+        id: centeranch
+        anchors.centerIn: parent
+    }
+    Rectangle{
+        anchors.bottom: timerec.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 400
+        height: 200
+        border.width: 0
+        Text {
+            id: maintitle
+            text: "无人失物招领终端"
+            anchors.centerIn: parent
+            font.pixelSize: 100
+        }
+    }
+    Rectangle{
+        id: timerec
+        anchors.bottom: centeranch.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 400
+        height: 200
+        border.width: 0
+        Text {
+            id: timeboard
+            color: "black"
+            anchors.centerIn: parent
+            text: qsTr("text")
+            font.pixelSize: 100
+        }
+    }
+
+    Item {
         id: finderButtonGroup
-        anchors.top: parent.top
+        anchors.top: centeranch.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         height: parent.height *2/3
-        width: parent.width
+        width: parent.width / 3 * 2
+        Rectangle {
+            id: divide
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            width: 2
+            height: parent.height
+        }
+
         Button {
-            id: findcard
+            id: findButton
             anchors.top: parent.top
             anchors.left: parent.left
-            width: parent.width/2
-            height: parent.height/2
+            anchors.margins: 40
+            width: 300
+            height: width
+            style: ButtonStyle {
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 25
+                    border.width: control.activeFocus ? 2 : 1
+                    border.color: "#888"
+                    radius: 150
+                }
+            }
+
             Text {
                 anchors.centerIn: parent
-                text: "Card"
+                text: "捡到东西"
                 font.pixelSize: 20
             }
             onClicked: {
@@ -27,61 +79,44 @@ Item{
             }
         }
         Button {
-            id: findwallet
+            id: lostbutton
             anchors.top: parent.top
             anchors.right: parent.right
-            width: parent.width/2
-            height: parent.height/2
+            anchors.margins: 40
+            width: 300
+            height: width
+            style: ButtonStyle {
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 25
+                    border.width: control.activeFocus ? 2 : 1
+                    border.color: "#888"
+                    radius: 150
+                }
+            }
             Text {
                 anchors.centerIn: parent
-                text: "Wallet"
+                text: "领取东西"
                 font.pixelSize: 20
             }
             onClicked: {
-                manager.showPage("shotphoto.qml")
-            }
-        }
-        Button {
-            id: findcheap
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            width: parent.width/2
-            height: parent.height/2
-            Text {
-                anchors.centerIn: parent
-                text: "Cheap"
-                font.pixelSize: 20
-            }
-        }
-        Button {
-            id: findexpensive
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            width: parent.width/2
-            height: parent.height/2
-            Text {
-                anchors.centerIn: parent
-                text: "Expensive"
-                font.pixelSize: 20
+                manager.showPage("scanqrcode.qml")
             }
         }
     }
 
-    Button {
-        id: lostbutton
-        anchors.bottom: parent.bottom
-        anchors.top: finderButtonGroup.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        onClicked: manager.showPage("scanqrcode.qml")
-    }
+
 
     Timer {
         interval: 500;
         running: true;
         repeat: true;
         onTriggered: {
-            //timeLabel.text= (new Date().toLocaleTimeString(Qt.locale(),"hh:mm"));
+            timeboard.text= (new Date().toLocaleTimeString(Qt.locale(),"hh:mm"));
         }
+    }
+
+    Component.onCompleted: {
+        timeboard.text= (new Date().toLocaleTimeString(Qt.locale(),"hh:mm"));
     }
 }

@@ -17,6 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.yanzhenjie.nohttp.Logger;
 
 import org.json.JSONObject;
 
@@ -52,6 +55,8 @@ public class ListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.list_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        Logger.setDebug(true);
+        Logger.setTag("NoHttpListActivity");
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
@@ -102,8 +107,8 @@ public class ListActivity extends AppCompatActivity {
         jsonListTask.cancel(true);
     }
 
-    private void addObjectToList(String data, String uuid) {
-        objectAdapter.addData(new ListDataPiece(uuid, data));
+    private void addObjectToList(LostObject lostObject) {
+        objectAdapter.addData(lostObject);
     }
 
     private void tryToGetUUIDList() {
@@ -117,13 +122,18 @@ public class ListActivity extends AppCompatActivity {
 
     private void tryToGetUUIDDetail() {
         jsonListTask = new JsonListTask(this);
-        if(uuidList.size() - stopIndex > 10) {
-            jsonListTask.execute(uuidList.subList(stopIndex,10 + stopIndex));
-            stopIndex += 10;
+        if(uuidList != null && uuidList.size() > stopIndex) {
+            if (uuidList.size() - stopIndex > 10) {
+                jsonListTask.execute(uuidList.subList(stopIndex, 10 + stopIndex));
+                stopIndex += 10;
+            } else {
+                jsonListTask.execute(uuidList.subList(stopIndex, uuidList.size()));
+                stopIndex = uuidList.size();
+            }
         }
         else {
-            jsonListTask.execute(uuidList.subList(stopIndex, uuidList.size()));
-            stopIndex = uuidList.size();
+            Log.d(TAG, "tryToGetUUIDDetail: " + Integer.toString(stopIndex));
+            Toast.makeText(this, "Nothing more", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -153,6 +163,12 @@ public class ListActivity extends AppCompatActivity {
         protected void onPostExecute(final List<String> lists) {
             mProcess.setVisibility(View.GONE);
             uuidList = lists;
+            if(uuidList == null) {
+                Log.d(TAG, "onPostExecute: Nothing return");
+            }
+            else {
+                Log.d(TAG, "onPostExecute: UUID List size = " + Integer.toString(uuidList.size()));
+            }
             tryToGetUUIDDetail();
         }
 
@@ -163,7 +179,8 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-    private class JsonListTask extends AsyncTask<List<String>, String, Void> {
+    // This task is used to get more information about the uuid
+    private class JsonListTask extends AsyncTask<List<String>, LostObject, Void> {
         private Context context;
         public JsonListTask(Context context) {
             this.context = context;
@@ -173,8 +190,9 @@ public class ListActivity extends AppCompatActivity {
         protected Void doInBackground(List<String>... keys) {
             Log.d(TAG, "doInBackground: " + Integer.toString(keys[0].size()));
             for(int i = 0;i < keys[0].size();i ++) {
-                String result = NetworkManager.getUUIDDetail(keys[0].get(i), context);
-                publishProgress(result, keys[0].get(i));
+                LostObject result = NetworkManager.getUUIDDetail(keys[0].get(i), context);
+                result.setPhoto(NetworkManager.getImage(result.getUuid(),"LD", 0 , context));
+                publishProgress(result);
                 if(isCancelled()) {
                     return null;
                 }
@@ -183,9 +201,11 @@ public class ListActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(String... details) {
-            Log.d(TAG, "onProgressUpdate: " + details[0]);
-            addObjectToList(details[0], details[1]);
+        protected void onProgressUpdate(LostObject... details) {
+            Log.d(TAG, "onProgressUpdate: ");
+            if(details[0].getPhoto() != null) {
+                addObjectToList(details[0]);
+            }
         }
 
         @Override

@@ -6,8 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,20 +43,32 @@ public class BlanksAdapter extends RecyclerView.Adapter<BlanksAdapter.MyViewHold
     }
 
 
-    public List<String> getStrings() {
-        List<String> result = new ArrayList<>();
-        for(int i = 0;i < editTextList.size();i ++) {
-            result.add(editTextList.get(i).getText().toString());
+    public JSONObject getStrings() {
+        JSONObject outObject = new JSONObject();
+        JSONObject tempObject;
+        int count = 0;
+        try {
+            for(int i = 0;i < blanksList.size();i ++) {
+                tempObject = new JSONObject();
+                for(int j = 0;j < blanksList.get(i).getNumber();j ++) {
+                    tempObject.put("blank" + Integer.toString(j), editTextList.get(count).getText().toString());
+                    count ++;
+                }
+                outObject.put("mask" + Integer.toString(i), tempObject.toString());
+            }
         }
-        return result;
+        catch (JSONException e) {
+            return outObject;
+        }
+        return outObject;
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView imageView;
+        ImageView imageView;
         LinearLayout linearLayout;
         public MyViewHolder(View view) {
             super(view);
-            imageView = (TextView) view.findViewById(R.id.answer_cardview_image);
+            imageView = (ImageView) view.findViewById(R.id.answer_cardview_image);
             linearLayout = (LinearLayout) view.findViewById(R.id.answer_cardview_linearlayout);
         }
     }
@@ -60,7 +76,7 @@ public class BlanksAdapter extends RecyclerView.Adapter<BlanksAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         Blanks blank = blanksList.get(position);
-        viewHolder.imageView.setText(blank.getImage());
+        viewHolder.imageView.setImageBitmap(blank.getImage());
         for(int i = 0;i < blank.getNumber();i ++) {
             EditText editText = new EditText(mContext);
             editText.setMaxLines(1);
