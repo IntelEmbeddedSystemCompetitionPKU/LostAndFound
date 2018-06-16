@@ -1,8 +1,9 @@
 from Web_Server import app
-from flask import request
+from flask import request, send_file, send_from_directory
 import json
 import os
 import pymysql
+import base64
 
 basepath = '/home/ykx/Server_File/'
 
@@ -21,7 +22,7 @@ def query_mysql(contents, table):
     return results
 
 @app.route('/query/lostlist', methods=['POST'])
-# date, keyword
+# description, date
 def handle_query_lostlist():
     data = request.get_data()
     json_data = json.loads(data.decode('utf-8'))
@@ -30,19 +31,94 @@ def handle_query_lostlist():
     lostlist = query_mysql("objuuid", "Lost")
     print(lostlist)
     
-    json_list = '{"uuid_num":' + str(len(lostlist)) + ','
+    json_list = '{"uuid_num": "' + str(len(lostlist)) + '"'
     for k in range(0, len(lostlist)):
-        json_list = json_list + '"uuid' + str(k) + '":' + lostlist[k][0] + ","
+        json_list = json_list + ',"uuid' + str(k) + '": "' + lostlist[k][0] + '"' 
     json_list = json_list + "}"
     print(type(json_list))
     return(json_list.encode('utf-8'))
 
-@app.route('/lost_sketch/<lost_uuid>')
-# 得到失物的粗略信息(UUID)(低清图片，描述信息)
-def show_post_sketch(lost_uuid):
-    return '{"image":"image","description":"PKU_红色_校园卡"}'
+# !!! need to modify !!!
+@app.route('/query/getinfo/<uuid>', methods=['GET'])
+def handle_query_getinfo(uuid):
+    path = basepath + uuid
+    if os.path.exists(path) == False:
+        return 'There is no such thing!'
+    fr = open(path + '/data.txt', 'r')
+    data = fr.read()
+    print(data)
+    jdata = json.loads(data.decode('utf-8'))
+    print(jdata)
+    response = '{"description": ' + jdata[description] + ', "date": ' + jdata['date'] + ', "LD_num": ' + jdata['LD_num'] + '}'
+    fr.close()
+    return response
+
+@app.route('/query/<uuid>/<picture_type>/<order>')
+# uuid: uuid of object
+# picture_type: LD, HD, mask
+# order: 0, 1, 2, ...
+def handle_query_LD(uuid, picture_type, order):
+    print(uuid, picture_type, order)
+    path = basepath + uuid
+    print(path)
+    if os.path.exists(path) == False:
+        return 'There is no such thing!'
+    #picture = path + '/' + picture_type + '/' + picture_type + order + '.jpg'
+    picture_dir = picture_type + order + '.jpg'
+    #img = open(picture, 'rb')
+    #resp = make_response(img, mimetype='image/jpg')
+    directory = path + '/' + picture_type + '/'
+    return send_from_directory(directory, picture_dir, as_attachment=True)
+    
+    #fr = open(picture, 'rb')
+    #img = fr.read()
+    #img64 = {"img": img}
+    #img64 = json.dumps(img64)
+    #img64 = base64.b64encode(img)
+    #files = {'file': open(picture, 'rb')}
+    #print(type(files))
+    return img64
+
+@app.route('/query/maskinfo/<uuid>')
+def handle_query_maskinfo(uuid):
+    path = basepath + uuid
+    print(path)
+    if os.path.exists(path) == False:
+        return 'There is no such thing!'
+    #picture = path + '/' + picture_type + '/' + picture_type + order + '.jpg'
+    fr = open(path + '/data.txt', 'rb')
+    jdata = fr.read()
+    mask_num = jdata['mask_num']
+    data = '{' + '"mask_num": ' + mask_num
+    for k in range(0, int(mask_num)):
+        data = data + ', "block' + str(k) + '_num": ' + json.dumps(jdata['mask']['mask' + str(k)]['block_num'])
+    data = data + '}'
+    return data
+
+@app.route('/query/maskcheck/<uuid>')
+def handle_query_maskcheck(uuid):
+    data = request.get_data()
+    json_data = json.loads(data.decode('utf-8'))
+
+    path = basepath + uuid
+    print(path)
+    if os.path.exists(path) == False:
+        return 'There is no such thing!'
+    fr = open(path + '/data.txt', 'rb')
+    answer = fr.read()
+    
+    return 'True'
+    #mask_num = int(answer['mask_num'])
+    #for k in range(0, mask_num):
+    #    if (json_data['mask'] != answer['mask']):
+    #        return 'False'
+    #    else:
+    #        return 'True'
 
 
+
+#############################
+#############################
 @app.route('/lost_details/<lost_uuid>')
 # 得到失物详细信息(UUID)(很多张高清图片)
 def show_post(lost_uuid):

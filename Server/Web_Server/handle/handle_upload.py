@@ -29,13 +29,14 @@ def insert_mysql(uuid, path):
     # connect to mysql
     conn = pymysql.connect("localhost", user='root', passwd='ykx970910', db='LostFound', charset='utf8')
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO Lost VALUES(" 
+    # !!! need to modify !!!
+    cursor.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES(" 
             #+ item_info['uuid'] + "," 
             + uuid + ","
-            + item_info['date'] + ","
-            + item_info['description'] + ","
-            + item_info['mask'] + ","
-            + item_info['usruuid']
+            + item_info['time'] + ","
+            + item_info['description']# + ","
+            #+ item_info['mask_num'] + ","
+            #+ item_info['usruuid']
             + ")")
     conn.commit()
     cursor.close()
@@ -216,6 +217,8 @@ def handle_upload_compress(uuid):
     #uuid = json_data['uuid']
     #uuid = data['uuid']
     path = basepath + uuid
+    if os.path.exists(basepath + 'compress') == False:
+        os.system('mkdir ' + basepath + 'compress')
     if os.path.exists(path) == False:
     #    return "False"
         os.system('mkdir ' + path)

@@ -16,11 +16,11 @@
 >
 > 3. 标记有`*`表示功能基本完成能ping/pong，标记有`?`表示本地未见bug但不知远程调用情况
 
-## 1.1 注册 ? (fcg给的url是/signup)
+## 1.1 注册 *
 
 1. 请求
 
-    url: `http://<ip>:<port>/signup`
+    url: `http://<ip>:<port>/sign/signup`
     
     method: POST
     
@@ -28,13 +28,13 @@
 
 2. 返回值
 
-   1(True)/0(False)
+   'True'/'False'
 
-## 1.2 登录 ? (url是/signin)
+## 1.2 登录 *
 
 1. 请求
 
-   url: `http://<ip>:<port>/signin`
+   url: `http://<ip>:<port>/sign/signin`
    
    method: POST
    
@@ -42,7 +42,70 @@
 
 2. 返回值
 
-   1/0
+   'True'/'False'
+
+## 1.3 获取失物列表 *
+
+1. 请求
+
+   url: `http://<ip>:<port>/query/lostlist`
+   
+   method: POST
+   
+   body: {"description": <description>, "date": <date>} 
+
+2. 返回值
+
+   body: {"uuid_num": <uuid_num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}
+
+## 1.4 获取物品粗略信息 *
+
+1. 请求
+
+   url: `http://<ip>:<port>/query/getinfo/<uuid>`
+   
+   method: GET
+   
+2. 返回值
+
+    str({"description": <description>, "date", <date> "LD_num": <num>})
+
+## 1.5 获取图片 ×
+
+1. 请求
+
+   url: `http://<ip>:<port>/query/<uuid>/<picture_type>/<order>`
+   
+   method: GET
+   
+2. 返回值
+
+    file(picture)
+
+## 1.6 获取物品所有mask基本信息 *
+
+1. 请求
+
+   url: `http://<ip>:<port>/query/maskinfo/<uuid>`
+   
+   method: GET
+   
+2. 返回值
+
+    str({"mask_num", "block0_num", "block1_num", ...})
+
+## 1.7 验证mask信息 ?
+
+1. 请求
+
+   url: `http://<ip>:<port>/query/maskcheck/<uuid>`
+   
+   method: GET
+   
+2. 返回值
+
+    'True'
+
 
 ## 1.3 获取用户信息二维码
 
@@ -57,20 +120,6 @@
 2. 返回值
 
    image
-
-## 1.4 获取失物列表 *
-
-1. 请求
-
-   url: `http://<ip>:<port>/query/lostlist`
-   
-   method: POST
-   
-   body: {"description": <description>, "date": <date>} 
-
-2. 返回值
-
-   body: {"uuid_num": <uuid_num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}
 
 ## 1.5 查询失物粗略信息
 
@@ -240,7 +289,7 @@ waiting...
 
 2. 返回值
 
-   1/0(the uuid exists)
+   'True'/'False'(the uuid exists)
 
 3. 压缩内容
 
@@ -266,12 +315,12 @@ waiting...
    {
        "uuid": <uuid>,
        "description": <description>,
-       "date": <date>,  //上交失物时间
+       "time": <time>,  //上交失物时间
        "LD_num": <LD_num>,  //低清图数量
        "HD_num": <HD_num>,  //高清图数量
        "mask_num": <mask_num>,  //打码图数量
        "mask": {
-           mask0":{
+           "mask0":{
                "block_num": <block_num>,  //打码图1中block数量
                "block0": <block>,    //打码图1中block1内容
                "block1": <block>,
@@ -304,16 +353,11 @@ handle(package)
 |-__init__.py
 |-upload.py
 |  |
-|  |-upload_HD(json_data) -> 2.4
-|  |-upload_LD(json_data) -> 2.3
-|  |-upload_mask(json_data) -> 2.5
-|  |-upload_information(json_data) -> 2.1
-|  |-upload_fetch(json_data) -> 2.6
-|  |-upload_results(json_data) -> 1.8 
+|  |-handle_upload_compress(uuid) -> 2.7
 |-sign.py
 |  |
-|  |-sign_up(json_data) -> 1.1
-|  |-sign_in(json_data) -> 1.2
+|  |-handle_sign_up() -> 1.1
+|  |-handle_sign_in() -> 1.2
 |-query.py
    |
    |-query_sketchyInfo(uuid) -> 1.5
