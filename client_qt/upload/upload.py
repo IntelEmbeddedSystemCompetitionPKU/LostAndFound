@@ -10,6 +10,7 @@ import argparse
 import time
 import requests
 import cv2
+import gpio
 
 height = 200
 width = 300
@@ -34,23 +35,22 @@ def start_process_new(rootdir):
             #fakeocr(os.path.join(root, filename), os.path.join(root, 'mask/'))
     
     # step 1 done
-    
+    count = 0
     for root, dirs, files in os.walk(rootdir + 'HD/'):
         for filename in files:
-            resize_image(os.path.join(root, filename), os.path.join(root, 'LD/'))
+            resize_image(os.path.join(root, filename), os.path.join(root, 'LD/'), count)
     for root, dirs, files in os.walk(rootdir + 'ocr/'):
         for filename in files:
-            resize_image(os.path.join(root, filename), os.path.join(root, 'LD/'))
+            resize_image(os.path.join(root, filename), os.path.join(root, 'LD/'), count)
     # step 2 done
     #upload_new(base_url, rootdir)
     upload_targz(base_url, rootdir)
     
-def resize_image(srcdir, tardir):
+def resize_image(srcdir, tardir, count):
     img = cv2.imread(srcdir)
     print(srcdir)
-    cv2.imshow("tst",img)
     img = cv2.resize(img, (300, 200), interpolation=cv2.INTER_CUBIC)
-    cv2.imwrite(tardir + srcdir[-8:],img)
+    cv2.imwrite(tardir + 'LD' + str(count) + '.jpg',img)
     
 def load_config(config_dir, test=False):
     if(test == True):
@@ -66,8 +66,9 @@ def upload_targz(base_url, rootdir):
     with open(rootdir + 'upload.tar.gz','rb') as f:
         files = f.read()
         body = {
-            'uuid':rootdir.split('/')[-1],
+            'uuid':rootdir.split('/')[-2],
         }
+        base_url = base_url + '/' + body['uuid']
         response = requests.post(base_url, json=body, files=f)
 
 def generate_data(rootdir):
@@ -131,7 +132,11 @@ if __name__ == '__main__':
     parser.add_argument('-mode',type=str)
     args = parser.parse_args()
     if(args.mode == 'new'):
+        #gpio.save_item(0)
         start_process_new(args.srcdir)
+    elif(args.mode == 'old'):
+        gpio.save_item(0)
+
 
 
 
