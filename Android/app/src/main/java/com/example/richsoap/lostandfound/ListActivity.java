@@ -107,8 +107,8 @@ public class ListActivity extends AppCompatActivity {
         jsonListTask.cancel(true);
     }
 
-    private void addObjectToList(String data, String uuid) {
-        objectAdapter.addData(new ListDataPiece(uuid, data));
+    private void addObjectToList(LostObject lostObject) {
+        objectAdapter.addData(lostObject);
     }
 
     private void tryToGetUUIDList() {
@@ -180,7 +180,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     // This task is used to get more information about the uuid
-    private class JsonListTask extends AsyncTask<List<String>, String, Void> {
+    private class JsonListTask extends AsyncTask<List<String>, LostObject, Void> {
         private Context context;
         public JsonListTask(Context context) {
             this.context = context;
@@ -190,8 +190,9 @@ public class ListActivity extends AppCompatActivity {
         protected Void doInBackground(List<String>... keys) {
             Log.d(TAG, "doInBackground: " + Integer.toString(keys[0].size()));
             for(int i = 0;i < keys[0].size();i ++) {
-                String result = NetworkManager.getUUIDDetail(keys[0].get(i), context);
-                publishProgress(result, keys[0].get(i));
+                LostObject result = NetworkManager.getUUIDDetail(keys[0].get(i), context);
+                result.setPhoto(NetworkManager.getImage(result.getUuid(),"LD", 0 , context));
+                publishProgress(result);
                 if(isCancelled()) {
                     return null;
                 }
@@ -200,9 +201,11 @@ public class ListActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(String... details) {
-            Log.d(TAG, "onProgressUpdate: " + details[0]);
-            addObjectToList(details[0], details[1]);
+        protected void onProgressUpdate(LostObject... details) {
+            Log.d(TAG, "onProgressUpdate: ");
+            if(details[0].getPhoto() != null) {
+                addObjectToList(details[0]);
+            }
         }
 
         @Override

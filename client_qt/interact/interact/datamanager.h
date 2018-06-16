@@ -36,7 +36,8 @@ public:
     Q_INVOKABLE static QString getDir();
     Q_INVOKABLE static void processImage();
     Q_INVOKABLE static void addDescription(QString desc);
-    Q_INVOKABLE static void startScripts();
+    Q_INVOKABLE static bool isExist(QString name);
+    Q_INVOKABLE static void popOut(QString name);
     static QString getUUIDString();
     static void deleteLater();
 };

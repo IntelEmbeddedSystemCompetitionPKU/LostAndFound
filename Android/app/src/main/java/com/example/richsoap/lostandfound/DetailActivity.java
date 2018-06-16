@@ -2,6 +2,7 @@ package com.example.richsoap.lostandfound;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -28,11 +29,12 @@ public class DetailActivity extends AppCompatActivity {
     private static final String TAG = "DetailActivity";
 
     private List<String> imgList;
-    private String detail;
+    private String description;
+    private String date;
+    private int number;
     private RecyclerView recyclerView;
     private String uuid;
     private DetailImageAdapter adapter;
-    private ImageListTask listTask;
     private ImageTask imageTask;
 
     @Override
@@ -49,39 +51,32 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         uuid = intent.getStringExtra("UUID");
-        detail = intent.getStringExtra("Detail");
-        TextView textView = findViewById(R.id.detail_detail);
-        textView.setText(detail);
+        description = intent.getStringExtra("Description");
+        date = intent.getStringExtra("Date");
+        number = intent.getIntExtra("Number", 0);
+        TextView textView = findViewById(R.id.detail_description);
+        textView.setText(description);
         recyclerView = (RecyclerView) findViewById(R.id.detail_recyclerview);
         adapter = new DetailImageAdapter(this);
         recyclerView.setAdapter(adapter);
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        getImageList();
-
+        getImages();
     }
 
-    private void getImageList() {
-        listTask = new ImageListTask(this);
-        listTask.execute(uuid);
-    }
 
     private void getImages() {
         imageTask = new ImageTask(this);
-        imageTask.execute(imgList);
+        imageTask.execute();
     }
-    private void addImageToList(String img) {
+    private void addImageToList(Bitmap img) {
         adapter.addData(img);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if(listTask != null) {
-            listTask.cancel(true);
-        }
         if(imageTask != null) {
             imageTask.cancel(true);
         }
@@ -110,36 +105,17 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
-    private class ImageListTask extends AsyncTask<String, Void, List<String>> {
-        private Context context;
-        public ImageListTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected List<String> doInBackground(String... keys) {
-            return NetworkManager.getImageList(keys[0], context);
-        }
-
-        @Override
-        protected void onPostExecute(final List<String> lists) {
-            imgList = lists;
-            getImages();
-        }
-
-    }
-
-    private class ImageTask extends AsyncTask<List<String>, String, Void> {
+    private class ImageTask extends AsyncTask<Void, Bitmap, Void> {
         private Context context;
         public ImageTask(Context context) {
             this.context = context;
         }
 
         @Override
-        protected Void doInBackground(List<String>... keys) {
-            Log.d(TAG, "doInBackground: " + Integer.toString(keys[0].size()));
-            for(int i = 0;i < keys[0].size();i ++) {
-                String result = NetworkManager.getImage(keys[0].get(i), context);
+        protected Void doInBackground(Void... keys) {
+            Log.d(TAG, "doInBackground: " + Integer.toString(number));
+            for(int i = 0;i < number;i ++) {
+                Bitmap result = NetworkManager.getImage(uuid, "LD", i, context);
                 publishProgress(result);
                 if(isCancelled()) {
                     return null;
@@ -149,7 +125,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(String... details) {
+        protected void onProgressUpdate(Bitmap... details) {
             Log.d(TAG, "onProgressUpdate: " + details[0]);
             addImageToList(details[0]);
         }

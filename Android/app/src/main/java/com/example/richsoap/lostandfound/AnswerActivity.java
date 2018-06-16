@@ -2,6 +2,7 @@ package com.example.richsoap.lostandfound;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -105,7 +106,7 @@ public class AnswerActivity extends AppCompatActivity {
         protected Void doInBackground(String... keys) {
             blanksList = NetworkManager.getBlanksList(keys[0], context);
             for(int i = 0;i < blanksList.size();i ++) {
-                String result = NetworkManager.getImage(blanksList.get(i).getImageUUID(), context);
+                Bitmap result = NetworkManager.getImage(uuid, "LD", i, context);
                 if(result != null) {
                     blanksList.get(i).setImage(result);
                     publishProgress(blanksList.get(i));

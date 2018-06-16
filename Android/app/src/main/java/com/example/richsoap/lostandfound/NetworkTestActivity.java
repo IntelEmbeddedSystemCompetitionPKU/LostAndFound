@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ public class NetworkTestActivity extends AppCompatActivity {
     private EditText editText;
     private ImageView imageView;
     private ImageTask task;
+    private static final String TAG = "NetworkTestActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,6 @@ public class NetworkTestActivity extends AppCompatActivity {
         button = findViewById(R.id.test_button);
         editText = findViewById(R.id.test_edit);
         imageView = findViewById(R.id.test_image);
-        task = new ImageTask(this);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,7 @@ public class NetworkTestActivity extends AppCompatActivity {
     }
 
     private void tryToGetImage(String url) {
+        task = new ImageTask(this);
         task.execute(url);
     }
 
@@ -62,6 +64,7 @@ public class NetworkTestActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final Bitmap result) {
             if(result != null){
+                Log.d(TAG, "onPostExecute: Set Image");
                 imageView.setImageBitmap(result);
             }
         }

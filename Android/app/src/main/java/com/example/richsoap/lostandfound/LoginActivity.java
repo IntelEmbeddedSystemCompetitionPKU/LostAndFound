@@ -66,8 +66,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         SharedPreferences preferences = getSharedPreferences("userinfo", MODE_PRIVATE);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
-        mEmailView.setText(preferences.getString("username", ""));
-        mPasswordView.setText(preferences.getString("keyword", ""));
+        String oldUsername = preferences.getString("username", "");
+        if(!oldUsername.equals("")) {
+            mEmailView.setText(preferences.getString("username", ""));
+            mPasswordView.requestFocus();
+        }
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -282,6 +285,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 SharedPreferences.Editor editor = getSharedPreferences("userinfo", MODE_PRIVATE).edit();
                 editor.putString("username", mEmail);
                 editor.putString("password", mPassword);
+                editor.apply();
                 startActivity(intent);
                 finish();
             } else {

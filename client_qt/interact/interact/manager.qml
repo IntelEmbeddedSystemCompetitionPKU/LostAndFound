@@ -47,6 +47,9 @@ Item {
     function addDesc(desc) {
         mydata.addDescription(desc)
     }
+    function isExist(name) {
+        return mydata.isExist(name)
+    }
 
     Loader {
         id: pageLoader

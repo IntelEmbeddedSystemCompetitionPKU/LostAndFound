@@ -9,9 +9,23 @@
     tools:showIn="@layout/activity_detail">
 
     <TextView
-        android:id="@+id/detail_detail"
+        android:id="@+id/detail_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/detail_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_date"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/detail_recyclerview"
@@ -19,7 +33,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_detail">
+        app:layout_constraintTop_toBottomOf="@id/detail_description">
 
     </android.support.v7.widget.RecyclerView>
 

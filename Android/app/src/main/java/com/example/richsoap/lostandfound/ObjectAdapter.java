@@ -2,10 +2,12 @@ package com.example.richsoap.lostandfound;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,43 +19,49 @@ import java.util.List;
  */
 
 public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHolder> {
-    private List<ListDataPiece> mStringList;
+    private List<LostObject> lostObjectList;
     private ListActivity mContext;
 
     public ObjectAdapter(ListActivity activity) {
-        mStringList = new ArrayList<>();
+        lostObjectList = new ArrayList<>();
         mContext = activity;
     }
 
-    public void setData(List<ListDataPiece> list) {
-        mStringList.clear();
-        mStringList.addAll(list);
+    public void setData(List<LostObject> list) {
+        lostObjectList.clear();
+        lostObjectList.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void addData(ListDataPiece dataPiece) {
-        mStringList.add(dataPiece);
-        notifyItemInserted(mStringList.size());
+    public void addData(LostObject dataPiece) {
+        lostObjectList.add(dataPiece);
+        notifyItemInserted(lostObjectList.size());
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView dateText;
+        TextView descriptionText;
+        ImageView image;
+        CardView cardView;
         public MyViewHolder(View view) {
             super(view);
-            textView = (TextView)view.findViewById(R.id.list_cardview_text);
+            cardView = (CardView)view.findViewById(R.id.list_cardview);
+            dateText = (TextView)view.findViewById(R.id.list_cardview_date);
+            descriptionText = (TextView)view.findViewById(R.id.list_cardview_description);
+            image = (ImageView)view.findViewById(R.id.list_cardview_image);
         }
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
-        viewHolder.textView.setText(mStringList.get(position).getDetail());
-        viewHolder.textView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mContext.cancleTask();
                 Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra("UUID", mStringList.get(position).getUuid());
-                intent.putExtra("Detail", mStringList.get(position).getDetail());
+                intent.putExtra("UUID", lostObjectList.get(position).getUuid());
+                intent.putExtra("Description", lostObjectList.get(position).getDescription());
+                intent.putExtra("Number", lostObjectList.get(position).getNumber());
                 mContext.startActivity(intent);
             }
         });
@@ -68,6 +76,6 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return mStringList.size();
+        return lostObjectList.size();
     }
 }

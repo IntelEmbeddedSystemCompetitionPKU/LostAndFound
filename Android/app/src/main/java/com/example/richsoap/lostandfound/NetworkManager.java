@@ -50,6 +50,7 @@ public class NetworkManager {
 
     static public LoginResult isValidUser(Context mContext) {
         // login with input userName and password, if not exists, register it
+        //return SUCCESS;/*
         NoHttp.initialize(mContext);
         JSONObject jsonObject = new JSONObject();
         try {
@@ -61,7 +62,8 @@ public class NetworkManager {
         }
         String url = "http://" + ip + ":" + port +"/sign/signup";
         String result = null;
-		Request<String> request = NoHttp.createStringRequest(url, RequestMethod.POST);
+        Log.d(TAG, "isValidUser: " + jsonObject.toString());
+        Request<String> request = NoHttp.createStringRequest(url, RequestMethod.POST);
 		request.setDefineRequestBodyForJson(jsonObject);
 		Response<String> response = NoHttp.startRequestSync(request);
 		if(response.isSucceed()) {
@@ -71,7 +73,7 @@ public class NetworkManager {
 		else {
 			return NETERROR;
 		}
-		if(result.equals("1")) {
+		if(result.equals("True")) {
 			return SUCCESS;
 		}
 		url = "http://" + ip + ":" + port + "/sign/signin";
@@ -84,14 +86,14 @@ public class NetworkManager {
 		else {
 			return NETERROR;
 		}
-		if(result.equals("1")) {
+		if(result.equals("True")) {
 			return SUCCESS;
 		}
 		return ERRORPASSWORD;
     }
 
     static public List<String> getUUIDList(String date, String keywords, Context mContext) {
-        try{
+        /*try{
             Thread.sleep(500);
         }
         catch (InterruptedException e) {
@@ -102,9 +104,9 @@ public class NetworkManager {
             list.add(UUID.randomUUID().toString());
             list.add(UUID.randomUUID().toString());
         }
-        return list;
+        return list;*/
 
-        /*NoHttp.initialize(mContext);
+        NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/query/lostlist";
         JSONObject sendjsonObject = new JSONObject();
         try{
@@ -138,28 +140,36 @@ public class NetworkManager {
         else {
             Log.d(TAG, "getUUIDList: Something wrong with response");
         }
-        return imageList;*/
+        return imageList;
     }
 
-    static public String getUUIDDetail(String uuid, Context mContext) {
-        try {
+    static public LostObject getUUIDDetail(String uuid, Context mContext) {
+        /*try {
             Thread.sleep(500);
         }
         catch (InterruptedException e) {
 
         }
-        return uuid + "--" + uuid + "--" + uuid;
-        /*NoHttp.initialize(mContext);
+        return new LostObject(uuid);*/
+        NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/sign/signup";
         Request<JSONObject> request = NoHttp.createJsonObjectRequest(url,  RequestMethod.POST);
         request.add("uuid", "uuid");
         Response<JSONObject> response = NoHttp.startRequestSync(request);
         if(response.isSucceed()) {
             JSONObject jsonObject = response.get();
-            String result;
             try {
-                result = jsonObject.getString("Detail");
-                return result;
+                String date;
+                String description;
+                int number;
+                date = jsonObject.getString("date");
+                description = jsonObject.getString("description");
+                number = jsonObject.getInt("number");
+                LostObject lostObject = new LostObject(uuid);
+                lostObject.setDate(date);
+                lostObject.setDescription(description);
+                lostObject.setNumber(number);
+                return lostObject;
             }
             catch (JSONException e) {
                 return null;
@@ -167,7 +177,7 @@ public class NetworkManager {
         }
         else {
             return null;
-        }*/
+        }
     }
 
     static public List<String> getImageList(String uuid, Context mContext) {// For HD image list
@@ -206,24 +216,17 @@ public class NetworkManager {
         }*/
     }
 
-    static public String getImage(String uuid, Context mContext) {// For every image from server
-        try {
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e) {
-
-        }
-        return uuid + "\n" + uuid + "\n" + uuid;
-        /*NoHttp.initialize(mContext);
-        String url = "http://" + ip + ":" + port +"/sign/signup";
+    static public Bitmap getImage(String uuid, String kind, int number, Context mContext) {// For every image from server
         NoHttp.initialize(mContext);
-        ImageRequest req = new ImageRequest(url,RequestMethod.GET,1280,1280, Bitmap.Config.RGB_565, ImageView.ScaleType.CENTER);
-        Response<Bitmap> response = SyncRequestExecutor.INSTANCE.execute(req);
+        String url = "http://" + ip + ":" + port +"/query/" + uuid + "/" + kind + "/" + Integer.toString(number);
+        NoHttp.initialize(mContext);
+        Request<Bitmap> req = NoHttp.createImageRequest(url);
+        Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
             return response.get();
         } else {
             return null;
-        }*/
+        }
     }
 
     static public List<Blanks> getBlanksList(String uuid, Context mContext) {// get blank id list from server
@@ -264,10 +267,16 @@ public class NetworkManager {
         Request<Bitmap> req = NoHttp.createImageRequest(url);
         Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
+            Log.d(TAG, "getImageByUrl: Success");
             return response.get();
         } else {
+            Log.d(TAG, "getImageByUrl: Null");
             return null;
         }
+    }
+
+    static public boolean tryToValid(String uuid, JSONObject jsonObject, Context mContext) {
+        return true;
     }
 
 }

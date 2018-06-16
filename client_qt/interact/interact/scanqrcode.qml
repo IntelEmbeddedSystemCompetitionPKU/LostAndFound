@@ -80,13 +80,17 @@ Item{
                                                                  0.25,0.25,0.5,0.5)));
         }
         decoder {
-            enabledDecoders: QZXing.DecoderFormat_EAN_13 | QZXing.DecoderFormat_CODE_39 | QZXing.DecoderFormat_QR_CODE
+            enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                dectag = tag;
-                ////////// It should be more codes here
+                if(manager.isExist(tag)) {
+                    manager.setUUID(tag)
+                    manager.showPage("ShotFaceInformation.qml")
+                }
+                else {
+                    dectag = "非法编码"
+                }
             }
-
             tryHarder: false
         }
 

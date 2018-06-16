@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,11 +64,11 @@ public class BlanksAdapter extends RecyclerView.Adapter<BlanksAdapter.MyViewHold
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView imageView;
+        ImageView imageView;
         LinearLayout linearLayout;
         public MyViewHolder(View view) {
             super(view);
-            imageView = (TextView) view.findViewById(R.id.answer_cardview_image);
+            imageView = (ImageView) view.findViewById(R.id.answer_cardview_image);
             linearLayout = (LinearLayout) view.findViewById(R.id.answer_cardview_linearlayout);
         }
     }
@@ -75,7 +76,7 @@ public class BlanksAdapter extends RecyclerView.Adapter<BlanksAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         Blanks blank = blanksList.get(position);
-        viewHolder.imageView.setText(blank.getImage());
+        viewHolder.imageView.setImageBitmap(blank.getImage());
         for(int i = 0;i < blank.getNumber();i ++) {
             EditText editText = new EditText(mContext);
             editText.setMaxLines(1);

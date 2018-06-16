@@ -2,6 +2,7 @@ package com.example.richsoap.lostandfound;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -10,8 +11,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +36,9 @@ public class AnswerResultActivity extends AppCompatActivity {
     private JSONObject jsonObject;
     private TextView textView;
     private String uuid;
-
+    private ProgressBar progressBar;
+    private static final String TAG = "AnswerResultActivity";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,18 +50,29 @@ public class AnswerResultActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
         }
+        progressBar = (ProgressBar) findViewById(R.id.answer_result_progress);
+        progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
-        textView = (TextView)findViewById(R.id.answer_result_text);
-        textView.setText(intent.getStringExtra("answer"));
-        uuid = intent.getStringExtra("uuid");
+        uuid = intent.getStringExtra("UUID");
         try {
             jsonObject = new JSONObject(intent.getStringExtra("answer"));
-            Toast.makeText(this,jsonObject.toString(), Toast.LENGTH_SHORT);
+            startValid(uuid, jsonObject);
         }
         catch (JSONException e) {
             Toast.makeText(this, "Network error", Toast.LENGTH_SHORT);
         }
+    }
+
+    public void showQRCode() {
+        Intent intent = new Intent(this, ObjectQRActivity.class);
+        intent.putExtra("UUID", uuid);
+        startActivity(intent);
+        finish();
+    }
+
+    public void showOptions() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -79,5 +96,38 @@ public class AnswerResultActivity extends AppCompatActivity {
         return true;
     }
 
+    public void startValid(String uuid, JSONObject jsonObject) {
+        ValidTask task = new ValidTask(this, uuid, jsonObject);
+        task.execute();
+    }
 
+    private class ValidTask extends AsyncTask<Void, Void, Boolean> {
+        private Context context;
+        private String uuid;
+        private JSONObject jsonObject;
+        public ValidTask(Context context, String uuid, JSONObject jsonObject) {
+            this.context = context;
+            this.uuid = uuid;
+            this.jsonObject = jsonObject;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... keys) {
+            return NetworkManager.tryToValid(uuid, jsonObject, context);
+        }
+
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if(success) {
+                showQRCode();
+            }
+            else {
+                showOptions();
+            }
+        }
+
+
+
+    }
 }

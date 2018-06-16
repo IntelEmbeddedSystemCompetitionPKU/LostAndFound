@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
 public class Blanks {
     private String imageUUID;
     private int number;
-    private String image;
+    private Bitmap image;
     //private Bitmap image;
     public Blanks(String uuid, int number) {
         imageUUID = uuid;
@@ -33,11 +33,11 @@ public class Blanks {
         this.number = number;
     }
 
-    public String getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
