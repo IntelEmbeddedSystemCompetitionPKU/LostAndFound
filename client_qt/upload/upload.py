@@ -26,10 +26,13 @@ def start_process_new(rootdir):
     except IOError:
         print('file exists')
     print('start process')
+    count = 0
     for root, dirs, files in os.walk(rootdir + 'ocr/'):
         for filename in files:
-            i =1
-            #process_image(os.path.join(root, filename), os.path.join(root, 'mask/'))
+            os.rename(os.path.join(root, filename), os.path.join(root, 'mask' + str(0) + '.jpg'))
+            #ocr(os.path.join(root, filename), os.path.join(root, 'mask/'))
+            #fakeocr(os.path.join(root, filename), os.path.join(root, 'mask/'))
+    
     # step 1 done
     
     for root, dirs, files in os.walk(rootdir + 'HD/'):
@@ -46,7 +49,7 @@ def resize_image(srcdir, tardir):
     img = cv2.imread(srcdir)
     print(srcdir)
     cv2.imshow("tst",img)
-    img = cv2.resize(img, (200, 300), interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(img, (300, 200), interpolation=cv2.INTER_CUBIC)
     cv2.imwrite(tardir + srcdir[-8:],img)
     
 def load_config(config_dir, test=False):
@@ -106,69 +109,8 @@ def generate_data(rootdir):
     
     
 def targz_data(rootdir):
-    os.system('tar -C' + rootdir +' -cvf ' + rootdir +'upload.tar data.txt/ HD/ mask/ LD/')
-    os.system('gzip ' + rootdir + 'upload.tar')
+    os.system('tar -C' + rootdir +' -cvf ' + rootdir +'upload.tar.gz data.txt/ HD/ mask/ LD/')
     
-
-def upload_new(base_url, rootdir):
-    uuid = rootdir.split('/')[-1]
-    desc_url = base_url + 'description'
-    body = {}
-# step1 upload basic item information
-    print('start upload basic information')
-    with open(rootdir + 'description.txt', 'r') as f:
-        desc = ''
-        for lines in f:
-            desc += lines
-        body = {'uuid':uuid,
-            'time':time.asctime( time.localtime(time.time())),
-           'description':desc}
-
-# step2 upload ld photos
-    ld_url = base_url + 'LD'
-    print('start upload LD images')
-    for root, dirs, files in os.walk(rootdir + 'LD/'):
-        i = 0
-        for openfile in files:
-            f = open(os.path.join(root, openfile),'rb')
-            body['LD' + str(i)] = f
-            i += 1
-        body['LDnum'] = str(i)
-                
-# step3 upload hd photos
-    hd_url = base_url + 'HD'
-    print('start upload HD images')
-    for root, dirs, files in os.walk(rootdir + 'HD/'):
-        i = 0
-        for openfile in files:
-            f = open(os.path.join(root, openfile), 'rb')
-            body['HD' + str()] = f
-            i += 1
-        body['HDnum'] = str(i)
-            
-
-# step4 upload mask photos
-############################### 
-#upload blanks at the same time?
-###############################
-    mask_url = base_url + 'mask'
-    print('start upload mask images')
-    for root, dirs, files in os.walk(rootdir + 'mask/'):
-        i = 0
-        for openfile in files:
-            tempbody = {}
-            if(openfile.endswith('jpg')):
-                imgfile = open(os.path.join(root, openfile))
-                blankfilename = openfile
-                blankfilename[-4:] = '.txt'
-                tempbody['image'] = f
-                with open(os.path.join(root, blankfilename), 'r') as blankfile:
-                    j = 0
-                    for lines in blankfile:
-                        tempbody['blank' + str(i)] = lines
-                    tempbody['blanknum'] = str(i)
-                
-
         
 def upload_fetch(base_url, imgdir):
     fetch_url = base_url + 'fetch'
