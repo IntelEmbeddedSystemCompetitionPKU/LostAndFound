@@ -12,7 +12,7 @@ Item{
     Rectangle{
         anchors.bottom: timerec.top
         anchors.horizontalCenter: parent.horizontalCenter
-        width: 400
+        width: 0
         height: 200
         border.width: 0
         Text {
@@ -26,7 +26,7 @@ Item{
         id: timerec
         anchors.bottom: centeranch.top
         anchors.horizontalCenter: parent.horizontalCenter
-        width: 400
+        width: 0
         height: 200
         border.width: 0
         Text {
