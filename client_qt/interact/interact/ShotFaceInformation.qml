@@ -12,8 +12,11 @@ Item{
     Camera {
         id: camera
           imageCapture {
-              onImageSaved:
-                  textLabel.text = camera.imageCapture.capturedImagePath
+              onImageSaved:{
+                  manager.popOut("test")
+                  manager.popToPage("MainActivity.qml")
+              }
+                  ///////////////////////////////////////////////////////////////////////////////
         }
     }
     Item {
@@ -29,7 +32,7 @@ Item{
 
     Text {
         id: title
-        text: "敏感照片拍摄"
+        text: "照片拍摄"
         font.pixelSize: 35
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -45,7 +48,6 @@ Item{
             if(camera.imageCapture.ready) {
                 var savepath = manager.getDir() + "fetch/"
                 camera.imageCapture.captureToLocation(savepath)
-                manager.
             }
         }
         style: ButtonStyle {

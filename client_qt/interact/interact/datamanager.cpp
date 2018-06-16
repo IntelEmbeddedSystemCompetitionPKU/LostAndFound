@@ -20,8 +20,8 @@ void datamanager::setUUID() {
 
 }
 QString datamanager::getDir() {
-    return "/home/richsoap/workspace/data/" + getUUIDString() + "/";
-    //return "/home/upsquared/workspace/data/" + getUUIDString() + "/";
+    //return "/home/richsoap/workspace/data/" + getUUIDString() + "/";
+    return "/home/upsquared/workspace/data/" + getUUIDString() + "/";
 }
 void datamanager::processImage() {
     QFile file(getDir() + "desc.txt");
@@ -50,6 +50,7 @@ void datamanager::addDescription(QString desc) {
 }
 
 bool datamanager::isExist(QString name) {
+    return true;
     QString val;
     QFile file;
     file.setFileName("/home/upsquared/workspace/LostAndFound/client_qt/upload/log.json");
@@ -65,6 +66,7 @@ void datamanager::popOut(QString name) {
     process = new myProcess("python3");
     process->addParam("/home/upsquared/workspace/LostAndFound/client_qt/upload/upload.py");
     process->addParam("-mode=old");
+    qDebug() << "Start get item";
     process->addParam("-srcdir=" + getDir());
     process->start();
 }
