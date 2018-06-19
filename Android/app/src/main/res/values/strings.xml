@@ -27,4 +27,7 @@
     <string name="title_activity_set_server">SetServerActivity</string>
     <string name="title_activity_answer_result">AnswerResultActivity</string>
     <string name="title_activity_item_qr">ItemQRActivity</string>
+    <string name="title_activity_user_list">UserList</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="title_activity_adduser">AdduserActivity</string>
 </resources>

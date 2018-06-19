@@ -1,4 +1,4 @@
-package com.example.richsoap.lostandfound;
+package com.example.richsoap.lostandfound.NormalObject;
 
 import android.graphics.Bitmap;
 

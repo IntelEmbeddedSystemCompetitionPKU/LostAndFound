@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.richsoap.lostandfound.Adapters.DetailImageAdapter;
+
 import java.util.List;
 
 /**
