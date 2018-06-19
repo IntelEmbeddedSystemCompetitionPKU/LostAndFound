@@ -3,15 +3,13 @@ package com.example.richsoap.lostandfound;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.ImageView;
 
+import com.example.richsoap.lostandfound.NormalObject.Blanks;
+import com.example.richsoap.lostandfound.NormalObject.LostObject;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
-import com.yanzhenjie.nohttp.rest.ImageRequest;
-import com.yanzhenjie.nohttp.rest.JsonObjectRequest;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
-import com.yanzhenjie.nohttp.rest.SyncRequestExecutor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -150,7 +148,7 @@ public class NetworkManager {
         catch (InterruptedException e) {
 
         }
-        return new LostObject(uuid);*/
+        return new GettableLostObject(uuid);*/
         NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/sign/signup";
         Request<JSONObject> request = NoHttp.createJsonObjectRequest(url,  RequestMethod.POST);
@@ -219,6 +217,19 @@ public class NetworkManager {
     static public Bitmap getImage(String uuid, String kind, int number, Context mContext) {// For every image from server
         NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/query/" + uuid + "/" + kind + "/" + Integer.toString(number);
+        NoHttp.initialize(mContext);
+        Request<Bitmap> req = NoHttp.createImageRequest(url);
+        Response<Bitmap> response = NoHttp.startRequestSync(req);
+        if (response.isSucceed()) {
+            return response.get();
+        } else {
+            return null;
+        }
+    }
+
+    static public Bitmap getQRImage(String uuid, Context mContext) {// For every image from server
+        NoHttp.initialize(mContext);/////////need more logic here
+        String url = "http://" + ip + ":" + port +"/query/" + uuid + "/" + userName;
         NoHttp.initialize(mContext);
         Request<Bitmap> req = NoHttp.createImageRequest(url);
         Response<Bitmap> response = NoHttp.startRequestSync(req);

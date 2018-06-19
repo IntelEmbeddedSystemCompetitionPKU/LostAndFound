@@ -2,15 +2,11 @@ package com.example.richsoap.lostandfound;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,15 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.richsoap.lostandfound.Adapters.ObjectAdapter;
+import com.example.richsoap.lostandfound.NormalObject.LostObject;
 import com.yanzhenjie.nohttp.Logger;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import static android.os.Build.VERSION_CODES.O;
 
 /**
  * This Activity is design for displaying search results
@@ -108,7 +100,9 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void addObjectToList(LostObject lostObject) {
-        objectAdapter.addData(lostObject);
+        if(lostObject.getPhoto() != null) {
+            objectAdapter.addData(lostObject);
+        }
     }
 
     private void tryToGetUUIDList() {

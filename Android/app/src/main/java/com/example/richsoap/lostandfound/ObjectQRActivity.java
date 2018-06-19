@@ -33,7 +33,9 @@ public class ObjectQRActivity extends AppCompatActivity {
     }
 
     public void setImage(Bitmap bitmap) {
-        imageView.setImageBitmap(bitmap);
+        if(bitmap != null) {
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
 
@@ -68,7 +70,7 @@ public class ObjectQRActivity extends AppCompatActivity {
 
         @Override
         protected Bitmap doInBackground(Void... keys) {
-            Bitmap result = NetworkManager.getImage(uuid, "LD", 0, context);
+            Bitmap result = NetworkManager.getQRImage(uuid, context);
             return result;
         }
 

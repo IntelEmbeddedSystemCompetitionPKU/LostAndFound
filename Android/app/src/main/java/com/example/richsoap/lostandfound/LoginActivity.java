@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.yanzhenjie.nohttp.Logger;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlowManager.init(this);
         setContentView(R.layout.activity_login);
         // Set up the login form.
         Logger.setDebug(true);// Enable NoHttp debug mode
