@@ -106,11 +106,11 @@
 
     'True'
 
-## 1.8 获取用户信息二维码
+## 1.8 获取用户信息二维码 ?
 
 1. 请求
 
-   url: `http://<ip>:<port>/query/userQR`
+   url: `http://<ip>:<port>/query/qrcode`
    
    method: POST
    
@@ -120,15 +120,15 @@
 
    image
 
-## 1.9 获取指定失物二维码
+## 1.9 获取指定失物二维码 ?
 
 1. 请求
 
-   url: `http://<ip>:<port>/query/itemQR`
+   url: `http://<ip>:<port>/query/qrcode`
    
    method: POST
    
-   body: {"useruuid": <useruuid>, "uuid": <uuid>}
+   body: {"useruuid": <useruuid>, "itemuuid": <itemuuid>}
 
 2. 返回值
 
