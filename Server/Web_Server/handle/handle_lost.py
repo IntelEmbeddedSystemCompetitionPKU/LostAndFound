@@ -1,5 +1,6 @@
 from Web_Server import app
 from flask import request, send_file, send_from_directory
+#from flask.ext.cachecontrol import cache, cache_for, dont_cache, FlaskCacheControl
 import json
 import os
 import pymysql
@@ -47,9 +48,10 @@ def handle_query_getinfo(uuid):
     fr = open(path + '/data.txt', 'r')
     data = fr.read()
     print(data)
-    jdata = json.loads(data.decode('utf-8'))
+    jdata = json.loads(data)
     print(jdata)
-    response = '{"description": ' + jdata[description] + ', "date": ' + jdata['date'] + ', "LD_num": ' + jdata['LD_num'] + '}'
+    response = '{"description": "' + jdata['description'] + '", "time": "' + jdata['time'] + '", "LD_num": "' + jdata['LD_num'] + '"}'
+    print(response)
     fr.close()
     return response
 
@@ -87,11 +89,11 @@ def handle_query_maskinfo(uuid):
         return 'There is no such thing!'
     #picture = path + '/' + picture_type + '/' + picture_type + order + '.jpg'
     fr = open(path + '/data.txt', 'rb')
-    jdata = fr.read()
+    jdata = json.loads(fr.read().decode('utf-8'))
     mask_num = jdata['mask_num']
-    data = '{' + '"mask_num": ' + mask_num
+    data = '{' + '"mask_num": "' + mask_num + '"'
     for k in range(0, int(mask_num)):
-        data = data + ', "block' + str(k) + '_num": ' + json.dumps(jdata['mask']['mask' + str(k)]['block_num'])
+        data = data + ', "block' + str(k) + '_num": "' + json.dumps(jdata['mask']['mask' + str(k)]['block_num']) + '"'
     data = data + '}'
     return data
 

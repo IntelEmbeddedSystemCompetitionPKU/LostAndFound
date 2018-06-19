@@ -1,5 +1,7 @@
+from Web_Server import app
+from flask import request, send_file, send_from_directory
 import crypt
-from Crypto.L
+#from Crypto.L
 import uuid
 import qrcode
 import json
@@ -24,3 +26,17 @@ def get_usr_qr_code():
         # return json.dumps({})
     except:
         return 'False'
+
+@app.route('/query/qrcode', methods=['POST'])
+def handle_query_qrcode():
+    data = request.get_data()
+    jdata = json.loads(data.decode('utf-8'))
+    info = jdata['test']
+    img = qrcode.make(info)
+    img.get_image().show()
+    print(img)
+    img.save('/home/ykx/testqrcode.png')
+    directory = '/home/ykx/'
+    picture_dir = 'testqrcode.png'
+    print(directory)
+    return send_from_directory(directory, picture_dir, as_attachment=True)

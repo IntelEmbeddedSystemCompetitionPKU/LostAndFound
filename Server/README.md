@@ -70,7 +70,7 @@
 
     str({"description": <description>, "date", <date> "LD_num": <num>})
 
-## 1.5 获取图片 ×
+## 1.5 获取图片 *
 
 1. 请求
 
@@ -106,12 +106,11 @@
 
     'True'
 
-
-## 1.3 获取用户信息二维码
+## 1.8 获取用户信息二维码 ?
 
 1. 请求
 
-   url: `http://<ip>:<port>/query/userQR`
+   url: `http://<ip>:<port>/query/qrcode`
    
    method: POST
    
@@ -121,65 +120,15 @@
 
    image
 
-## 1.5 查询失物粗略信息
+## 1.9 获取指定失物二维码 ?
 
 1. 请求
 
-   url: `http://<ip>:<port>/query/sketchyInfo/<uuid>`
-   
-   method: GET
-   
-2. 返回值
-
-   json
-
-## 1.6 查询失物详细信息
-
-1. 请求
-
-   url: `http://<ip>:<port>/query/DetailInfo/<uuid>`
-   
-   method: GET
-   
-2. 返回值
-
-   json
-
-## 1.7 查询失物验证填空题
-
-1. 请求
-
-   url: `http://<ip>:<port>/query/questions/<uuid>`
-   
-   method: GET
-   
-2. 返回值
-
-   json
-
-## 1.8 发送事物填空题结果
-
-1. 请求
-
-   url: `http://<ip>:<port>/upload/results`
+   url: `http://<ip>:<port>/query/qrcode`
    
    method: POST
    
-   body: {"num_block": <num_block>, "block0": <block>, "block1": <block>, ...}
-
-2. 返回值
-
-   1(True)/0(False or Error)
-
-## 1.9 获取指定失物二维码
-
-1. 请求
-
-   url: `http://<ip>:<port>/query/lostQR`
-   
-   method: POST
-   
-   body: {"userID": <userID>, "uuid": <uuid>}
+   body: {"useruuid": <useruuid>, "itemuuid": <itemuuid>}
 
 2. 返回值
 
@@ -201,83 +150,7 @@
 
 waiting...
 
-## 2.1 发送失物信息
-
-1. 请求
-
-   url: `http://<ip>:<port>/upload/information`
-
-   method: POST
-
-   body: {"uuid": <uuid>, "description": <description>, "time": <time>}
-
-2. 返回值
-
-   1(succeed)
-
-
-## 2.2 发送失物低清图（LD）
-
-1. 请求
-
-   url: `http://<ip>:<port>/upload/LD`
-   
-   method: POST
-   
-   body: {"uuid": <uuid>, "LD_num": <num>, "LD0": <picture>, "LD1": <picture>, ...}
-
-2. 返回值
-
-   1/0(there is no filepath for that uuid)
-
-## 2.3 发送失物高清图（HD）
-
-1. 请求
-
-   url: `http://<ip>:<port>/upload/HD`
-   
-   method: POST
-   
-   body: {"uuid": <uuid>, "HD_num": <num>, "HD0": <picture>, "HD1": <picture>, ...}
-
-2. 返回值
-  
-   1/0(there is no filepath for that uuid)
-
-## 2.4 发送失物打码图（mask）
-
-1. 请求
-
-   url: `http://<ip>:<port>/upload/mask`
-
-   method: POST
-
-   body: {"uuid": <uuid>, "mask_num": <num>, "mask0":{"picture": <picture>, "block_num": <num>, "block0": <block>, "block1": <block>, ...}, "mask1":{...}, ... }
-
-2. 返回值
-
-   1/0
-
-
-## 2.5 发送领取图片（fetch）
-
-1. 请求
-
-   url: `http://<ip>:<port>/upload/fetch`
-   
-   method: POST
-   
-   body: {"uuid": <uuid>, "fetch_num": <num>, "fetch0": <picture>, "fetch1": <picture>, ...}
-
-2. 返回值
-
-   1/0
-
-## 2.6 发送有登记二维码
-
-waiting...
-
-## 2.7 发送完整压缩文件 *
+## 2.0 发送完整压缩文件 *
 
 1. 请求
 
