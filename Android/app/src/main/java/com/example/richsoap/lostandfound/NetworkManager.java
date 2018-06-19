@@ -6,8 +6,12 @@ import android.util.Log;
 
 import com.example.richsoap.lostandfound.NormalObject.Blanks;
 import com.example.richsoap.lostandfound.NormalObject.LostObject;
+import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.cache.DBCacheStore;
+import com.yanzhenjie.nohttp.cookie.DBCookieStore;
+import com.yanzhenjie.nohttp.rest.CacheMode;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
 
@@ -90,20 +94,7 @@ public class NetworkManager {
 		return ERRORPASSWORD;
     }
 
-    static public List<String> getUUIDList(String date, String keywords, Context mContext) {
-        /*try{
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e) {
-
-        }
-        List<String> list = new ArrayList<>();
-        for(int i = 0;i <7;i ++) {
-            list.add(UUID.randomUUID().toString());
-            list.add(UUID.randomUUID().toString());
-        }
-        return list;*/
-
+    static public List<String> getUUIDList(String date, String keywords, Context mContext) { //PASS
         NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/query/lostlist";
         JSONObject sendjsonObject = new JSONObject();
@@ -141,28 +132,21 @@ public class NetworkManager {
         return imageList;
     }
 
-    static public LostObject getUUIDDetail(String uuid, Context mContext) {
-        /*try {
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e) {
-
-        }
-        return new GettableLostObject(uuid);*/
+    static public LostObject getUUIDDetail(String uuid, Context mContext) { //PASS
         NoHttp.initialize(mContext);
-        String url = "http://" + ip + ":" + port +"/sign/signup";
-        Request<JSONObject> request = NoHttp.createJsonObjectRequest(url,  RequestMethod.POST);
-        request.add("uuid", "uuid");
-        Response<JSONObject> response = NoHttp.startRequestSync(request);
+        String url = "http://" + ip + ":" + port +"/query/getinfo/" + uuid;
+        Request<String> request = NoHttp.createStringRequest(url,  RequestMethod.GET);
+        Response<String> response = NoHttp.startRequestSync(request);
         if(response.isSucceed()) {
-            JSONObject jsonObject = response.get();
             try {
+                Log.d(TAG, "getUUIDDetail: " + response.get());
+                JSONObject jsonObject = new JSONObject(response.get());
                 String date;
                 String description;
                 int number;
-                date = jsonObject.getString("date");
+                date = jsonObject.getString("time");
                 description = jsonObject.getString("description");
-                number = jsonObject.getInt("number");
+                number = jsonObject.getInt("LD_num");
                 LostObject lostObject = new LostObject(uuid);
                 lostObject.setDate(date);
                 lostObject.setDescription(description);
@@ -170,104 +154,90 @@ public class NetworkManager {
                 return lostObject;
             }
             catch (JSONException e) {
+                Log.d(TAG, "getUUIDDetail: JSONException");
                 return null;
             }
         }
         else {
+            Log.d(TAG, "getUUIDDetail: Unsucceed");
             return null;
         }
-    }
-
-    static public List<String> getImageList(String uuid, Context mContext) {// For HD image list
-        List<String> imgList = new ArrayList<>();
-        for(int i = 0;i < 10;i ++) {
-            imgList.add(Integer.toString(i));
-        }
-        try {
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e) {
-
-        }
-        return imgList;
-        /*NoHttp.initialize(mContext);
-        String url = "http://" + ip + ":" + port +"/sign/signup";
-        Request<JSONObject> request = NoHttp.createJsonObjectRequest(url,  RequestMethod.POST);
-        request.add("uuid",uuid);
-        Response<JSONObject> response = NoHttp.startRequestSync(request);
-        if(response.isSucceed()) {
-            JSONObject jsonObject = response.get();
-            int count;
-            List<String> imageList = new ArrayList<>();
-            try {
-                count = jsonObject.getInt("img_num");
-                for(int i = 0;i < count;i ++) {
-                    imageList.add(jsonObject.getString("img" + Integer.toString(i)));
-                }
-            }
-            catch (JSONException e) {
-                return null;
-            }
-        }
-        else {
-            return null;
-        }*/
     }
 
     static public Bitmap getImage(String uuid, String kind, int number, Context mContext) {// For every image from server
-        NoHttp.initialize(mContext);
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(true))
+                .cookieStore(new DBCookieStore(mContext).setEnable(true))
+                .build();
+        NoHttp.initialize(initializationConfig);
+        //NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/query/" + uuid + "/" + kind + "/" + Integer.toString(number);
         NoHttp.initialize(mContext);
+        Log.d(TAG, "getImage: Try to get " + url);
         Request<Bitmap> req = NoHttp.createImageRequest(url);
+        req.setCacheMode(CacheMode.NONE_CACHE_REQUEST_NETWORK);
         Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
+            Log.d(TAG, "getImage: Get image success");
             return response.get();
         } else {
+            Log.d(TAG, "getImage: Get image fail");
             return null;
         }
     }
 
     static public Bitmap getQRImage(String uuid, Context mContext) {// For every image from server
         NoHttp.initialize(mContext);/////////need more logic here
-        String url = "http://" + ip + ":" + port +"/query/" + uuid + "/" + userName;
+        String url = "http://" + ip + ":" + port +"/query/qrcode";
         NoHttp.initialize(mContext);
-        Request<Bitmap> req = NoHttp.createImageRequest(url);
+        Log.d(TAG, "getQRImage: Try to get QRcode:" + url);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("useruuid", userName);
+            jsonObject.put("itemuuid", uuid);
+        }
+        catch (JSONException e) {
+            return null;
+        }
+        Log.d(TAG, "getQRImage: json is: " + jsonObject.toString());
+        Request<Bitmap> req = NoHttp.createImageRequest(url, RequestMethod.POST);
+        req.setDefineRequestBodyForJson(jsonObject);
         Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
+            Log.d(TAG, "getQRImage: Success");
             return response.get();
         } else {
+            Log.d(TAG, "getQRImage: Fail");
             return null;
         }
     }
 
     static public List<Blanks> getBlanksList(String uuid, Context mContext) {// get blank id list from server
-        List<Blanks> list = new ArrayList<>();
-        for(int i = 0;i < 3;i ++) {
-            list.add(new Blanks(UUID.randomUUID().toString(), i + 2));
-        }
-        return list;
-        /*String url = "http://" + ip + ":" + port +"/sign/signup";
+        String url = "http://" + ip + ":" + port + "/query/maskinfo/" + uuid;
         NoHttp.initialize(mContext);
-        Request<JSONObject> request = NoHttp.createJsonObjectRequest(url,  RequestMethod.POST);
-        request.add("uuid",uuid);
-        Response<JSONObject> response = NoHttp.startRequestSync(request);
+        Request<String> request = NoHttp.createStringRequest(url,  RequestMethod.GET);
+        Response<String> response = NoHttp.startRequestSync(request);
         if(response.isSucceed()) {
-            JSONObject jsonObject = response.get();
+
             int count;
-            List<String> imageList = new ArrayList<>();
+            List<Blanks> maskList = new ArrayList<>();
             try {
-                count = jsonObject.getInt("block_num");
+                JSONObject jsonObject = new JSONObject(response.get());
+                count = jsonObject.getInt("mask_num");
                 for(int i = 0;i < count;i ++) {
-                    imageList.add(jsonObject.getString("block" + Integer.toString(i)));
+                    maskList.add(new Blanks(jsonObject.getInt("block" + Integer.toString(i) + "_num"))); // knowing how many blanks for each mask is enough
                 }
             }
             catch (JSONException e) {
+                Log.d(TAG, "getBlanksList: " + response.get());
+                Log.d(TAG, "getBlanksList: JSONException");
                 return null;
             }
+            return maskList;
         }
         else {
             return null;
-        }*/
+        }
     }
 
     static public Bitmap getImageByUrl(String url, Context mContext) {// for test image download

@@ -49,13 +49,18 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
-        viewHolder.imageView.setImageBitmap(mImageList.get(position));
-        Log.d(TAG, "onBindViewHolder: " + mImageList.get(position));
+        Log.d(TAG, "onBindViewHolder: " + Integer.toString(position));
+        if(mImageList.get(position) == null) {
+            Log.d(TAG, "onBindViewHolder: Null Object");
+        }
+        else {
+            viewHolder.imageView.setImageBitmap(mImageList.get(position));
+        }
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_list_cardview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_detail_cardview, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }

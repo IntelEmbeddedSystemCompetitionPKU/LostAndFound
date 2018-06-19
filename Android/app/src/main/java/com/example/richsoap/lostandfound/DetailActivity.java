@@ -73,7 +73,7 @@ public class DetailActivity extends AppCompatActivity {
         imageTask.execute();
     }
     private void addImageToList(Bitmap img) {
-        adapter.addData(img);
+        adapter.addData(Bitmap.createBitmap(img));
     }
 
     @Override
@@ -117,6 +117,7 @@ public class DetailActivity extends AppCompatActivity {
         protected Void doInBackground(Void... keys) {
             Log.d(TAG, "doInBackground: " + Integer.toString(number));
             for(int i = 0;i < number;i ++) {
+                Log.d(TAG, "doInBackground: Start getting image " + Integer.toString(i));
                 Bitmap result = NetworkManager.getImage(uuid, "LD", i, context);
                 publishProgress(result);
                 if(isCancelled()) {
@@ -129,7 +130,9 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Bitmap... details) {
             Log.d(TAG, "onProgressUpdate: " + details[0]);
-            addImageToList(details[0]);
+            if(details[0] != null) {
+                addImageToList(details[0]);
+            }
         }
 
     }

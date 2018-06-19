@@ -43,7 +43,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:ems="10"
+        android:textSize="15dp"
         android:inputType="textPersonName"
         android:hint="Key words"
         android:maxLines="1"

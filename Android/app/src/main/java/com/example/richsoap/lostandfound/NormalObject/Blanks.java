@@ -7,22 +7,12 @@ import android.graphics.Bitmap;
  */
 
 public class Blanks {
-    private String imageUUID;
     private int number;
     private Bitmap image;
     //private Bitmap image;
-    public Blanks(String uuid, int number) {
-        imageUUID = uuid;
+    public Blanks(int number) {
         this.number = number;
         image = null;
-    }
-
-    public String getImageUUID() {
-        return imageUUID;
-    }
-
-    public void setImageUUID(String imageUUID) {
-        this.imageUUID = imageUUID;
     }
 
     public int getNumber() {

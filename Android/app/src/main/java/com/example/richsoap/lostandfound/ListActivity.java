@@ -84,7 +84,6 @@ public class ListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(TAG, "onOptionsItemSelected: " + Integer.toString(item.getItemId()) + "----" + R.id.home);
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -185,8 +184,13 @@ public class ListActivity extends AppCompatActivity {
             Log.d(TAG, "doInBackground: " + Integer.toString(keys[0].size()));
             for(int i = 0;i < keys[0].size();i ++) {
                 LostObject result = NetworkManager.getUUIDDetail(keys[0].get(i), context);
-                result.setPhoto(NetworkManager.getImage(result.getUuid(),"LD", 0 , context));
-                publishProgress(result);
+                if(result != null) {
+                    result.setPhoto(NetworkManager.getImage(result.getUuid(), "LD", 0, context));
+                    publishProgress(result);
+                }
+                else {
+                    Log.d(TAG, "doInBackground: Nothing in " + keys[0].get(i));
+                }
                 if(isCancelled()) {
                     return null;
                 }
@@ -196,7 +200,6 @@ public class ListActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(LostObject... details) {
-            Log.d(TAG, "onProgressUpdate: ");
             if(details[0].getPhoto() != null) {
                 addObjectToList(details[0]);
             }

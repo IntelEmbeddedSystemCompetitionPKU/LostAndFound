@@ -29,7 +29,11 @@ public class ObjectQRActivity extends AppCompatActivity {
         imageView = findViewById(R.id.objectqr_image);
         Intent intent = getIntent();
         uuid = intent.getStringExtra("UUID");
-
+        startGetQRcode();
+    }
+    public void startGetQRcode() {
+        ImageTask imageTask = new ImageTask(this, uuid);
+        imageTask.execute();
     }
 
     public void setImage(Bitmap bitmap) {
