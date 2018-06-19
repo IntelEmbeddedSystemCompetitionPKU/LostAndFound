@@ -13,7 +13,7 @@ Item{
         id: camera
           imageCapture {
               onImageSaved:
-                  textLabel.text = camera.imageCapture.capturedImagePath
+                    shotcount.text = "已拍摄" + String(count) +"张"
         }
     }
     Item {
@@ -55,7 +55,7 @@ Item{
             }
             camera.imageCapture.captureToLocation(savepath)
             count ++
-            shotcount.text = "已拍摄" + qsTr(count) +"张"
+
             }
         }
         style: ButtonStyle {
@@ -118,6 +118,7 @@ Item{
                 camstate = 1
                 shotcount.text = "已拍摄0张"
                 title.text = "次要照片拍摄"
+                count = 0
             }
             else{
                 manager.showPage("DescribeActivity.qml")

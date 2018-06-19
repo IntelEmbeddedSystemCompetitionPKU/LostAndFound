@@ -50,6 +50,9 @@ Item {
     function isExist(name) {
         return mydata.isExist(name)
     }
+    function popOut(name) {
+        return mydata.popOut(name)
+    }
 
     Loader {
         id: pageLoader
