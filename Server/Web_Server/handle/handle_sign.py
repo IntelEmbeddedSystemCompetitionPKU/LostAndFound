@@ -1,10 +1,22 @@
+########################################################
+# DESCRIPTION:
+# handle functions about signup and signin
+#
+# AUTHOR: ykx
+# TIME: 2018.06.21
+########################################################
+
+#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+
 from Web_Server import app
 from flask import request
 import json
 import uuid
 import sys
-sys.path.append(r'/home/ykx/EmbeddedSystem/LostAndFound/Server/Web_Server/db_op')  
+sys.path.append(r'/home/ykx/EmbeddedSystem/LostAndFound/Server/Web_Server/db_op')
 from sqlconnect import *
+
 
 @app.route('/sign/signup', methods=['POST'])
 # 注册(用户名，密码(MD5，用公钥加密))(True,False)
@@ -33,7 +45,7 @@ def handle_sign_signin():
     print(data)
     jdata = json.loads(data.decode('utf-8'))
     print(jdata)
-    print(jdata['username']+' trys to login with password '+jdata['password'])    
+    print(jdata['username']+' trys to login with password '+jdata['password'])
     username=jdata['username']
     passwd=jdata['password']
     #db,c = cnnct()

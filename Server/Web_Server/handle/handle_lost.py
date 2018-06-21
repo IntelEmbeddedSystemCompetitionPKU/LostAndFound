@@ -1,6 +1,16 @@
+########################################################
+# DESCRIPTION:
+# handle functions about querying infomations
+#
+# AUTHOR: ykx
+# TIME: 2018.06.21
+########################################################
+
+#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+
 from Web_Server import app
 from flask import request, send_file, send_from_directory
-#from flask.ext.cachecontrol import cache, cache_for, dont_cache, FlaskCacheControl
 import json
 import os
 import pymysql
@@ -31,10 +41,10 @@ def handle_query_lostlist():
     #time_keywords_dict=time_keywords.split('_')
     lostlist = query_mysql("objuuid", "Lost")
     print(lostlist)
-    
+
     json_list = '{"uuid_num": "' + str(len(lostlist)) + '"'
     for k in range(0, len(lostlist)):
-        json_list = json_list + ',"uuid' + str(k) + '": "' + lostlist[k][0] + '"' 
+        json_list = json_list + ',"uuid' + str(k) + '": "' + lostlist[k][0] + '"'
     json_list = json_list + "}"
     print(type(json_list))
     return(json_list.encode('utf-8'))
@@ -71,7 +81,7 @@ def handle_query_LD(uuid, picture_type, order):
     #resp = make_response(img, mimetype='image/jpg')
     directory = path + '/' + picture_type + '/'
     return send_from_directory(directory, picture_dir, as_attachment=True)
-    
+
     #fr = open(picture, 'rb')
     #img = fr.read()
     #img64 = {"img": img}
@@ -108,7 +118,7 @@ def handle_query_maskcheck(uuid):
         return 'There is no such thing!'
     fr = open(path + '/data.txt', 'rb')
     answer = fr.read()
-    
+
     return 'True'
     #mask_num = int(answer['mask_num'])
     #for k in range(0, mask_num):

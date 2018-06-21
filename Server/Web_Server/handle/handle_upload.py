@@ -30,8 +30,8 @@ def insert_mysql(uuid, path):
     conn = pymysql.connect("localhost", user='root', passwd='ykx970910', db='LostFound', charset='utf8')
     cursor = conn.cursor()
     # !!! need to modify !!!
-    cursor.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES(" 
-            #+ item_info['uuid'] + "," 
+    cursor.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES("
+            #+ item_info['uuid'] + ","
             + uuid + ","
             + item_info['time'] + ","
             + item_info['description']# + ","
@@ -49,10 +49,10 @@ def insert_mysql(uuid, path):
 def handle_upload_results():
     data = request.get_data()
     json_data = json.loads(data.decode('utf-8'))
-    
+
     uuid = json_data['uuid']
     path = basepath + uuid
-    
+
     fr = open(path + '/data.txt', 'r')
     info = fr.read()
     info = json.loads(info)
@@ -65,7 +65,7 @@ def handle_upload_results():
     #print(json_data['num_block'])
     #for _ in range(json_data['num_block']):
     #    print(json_data['block'+str(_+1)])
-    
+
     #if (SQL_check_results(json_data) == 1):
     if (True): # FOR TEST
         return 1
@@ -107,7 +107,7 @@ def handle_upload_information():
     print(json_data['description'])
     #print(json_data['picture']) #??? what's this?
     print(json_data['time'])
-    
+
     return 1 #FOR TEST
 
 #uuid, mask_num, mask*, mask*.picture_num, mask*.picture*, mask*.block_num, mask*.block*
@@ -117,7 +117,7 @@ def handle_upload_mask():
     path = basepath + uuid
     if os.path.exists(path) == False:
         return 0
-    
+
     fw = open(path + '/data.txt', 'a')
     fw.write('"mask_num": ' + json_data['mask_num'] + ', ')
     for i in range(int(json_data['mask_num'])):
@@ -131,7 +131,7 @@ def handle_upload_mask():
         fp.write(json_data['mask' + str(i)]['picture'])
         fp.close()
             #fw.write('"picture' + str(j) + '": ' + json_data['mask' + str(i)]['picture' + str(j)] + ', ')
-        
+
         # write mask*.block* information
         fw.write('"block_num": ' + json_data['mask' + str(i)]['block_num'] + ', ')
         for j in range(int(json_data['mask' + str(i)]['block_num'])):
@@ -139,7 +139,7 @@ def handle_upload_mask():
         fw.write('}, ')
     fw.close()
 
-    
+
     return 1 # FOR TEST
 
 #uuid, LD_num, LD*
@@ -189,7 +189,7 @@ def handle_upload_HD():
 def handle_upload_fetch():
     data = request.get_data()
     json_data = json.loads(data.decode('utf-8'))
-    
+
     uuid = json_data['uuid']
     path = basepath + uuid
     if os.path.exists(path) == False:
@@ -209,13 +209,8 @@ def handle_upload_fetch():
 #.tar.gz
 @app.route('/upload/compress/<uuid>', methods=['POST'])
 def handle_upload_compress(uuid):
-    #data = request.get_data()
     files = request.files['file']
-    #json_data = json.loads(data.decode('utf-8'))
     print(files)
-    #print(json_data)
-    #uuid = json_data['uuid']
-    #uuid = data['uuid']
     path = basepath + uuid
     if os.path.exists(basepath + 'compress') == False:
         os.system('mkdir ' + basepath + 'compress')
@@ -223,17 +218,9 @@ def handle_upload_compress(uuid):
     #    return "False"
         os.system('mkdir ' + path)
     print ('mkdir')
-    #files.save(basepath + 'compress/' + uuid + '.tar.gz')
-    #fw = open(basepath + 'compress/' + uuid + '.tar.gz', 'w')
-    #print ('fwrite')
-    #fw.write(files)
-    #fw.close()
     print(uuid)
     files.save(os.path.join(basepath, 'compress/' + uuid + '.tar.gz'))
     os.system('tar -xvf ' + basepath + 'compress/' + uuid + '.tar.gz -C ' + path)
     insert_mysql(uuid, path)
-    #os.system('tree ' + basepath)
-    #os.system('tar -xvf ' + basepath + 'compress/' + uuid + '.tar.gz')
 
     return 'True'
-
