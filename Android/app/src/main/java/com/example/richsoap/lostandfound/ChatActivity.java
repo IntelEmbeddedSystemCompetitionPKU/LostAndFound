@@ -7,7 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.richsoap.lostandfound.Table.ChatPiece;
+import com.example.richsoap.lostandfound.Table.OtherUser;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+
+import java.util.List;
+
 public class ChatActivity extends AppCompatActivity {
+    List<ChatPiece> chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,15 +22,5 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
-
 }

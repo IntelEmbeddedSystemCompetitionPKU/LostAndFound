@@ -22,7 +22,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -33,6 +35,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.richsoap.lostandfound.DebugActivity.SetServerActivity;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.yanzhenjie.nohttp.Logger;
 
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private static final String TAG = "LoginActivity";
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -60,7 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FlowManager.init(this);
         setContentView(R.layout.activity_login);
         // Set up the login form.
         Logger.setDebug(true);// Enable NoHttp debug mode
@@ -94,6 +97,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: " + Integer.toString(item.getItemId()) + "----" + R.id.home);
+        switch (item.getItemId()) {
+            case R.id.toolbar_set:
+                Intent intent = new Intent(this, SetServerActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return true;
     }
 
 

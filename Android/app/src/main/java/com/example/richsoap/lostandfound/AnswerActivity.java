@@ -13,6 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.richsoap.lostandfound.Adapters.BlanksAdapter;
 import com.example.richsoap.lostandfound.NormalObject.Blanks;
@@ -33,6 +36,8 @@ public class AnswerActivity extends AppCompatActivity {
     private BlanksAdapter adapter;
     private RecyclerView recyclerView;
     private BlanksListTask blanksListTask;
+    private boolean loadfinish;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,9 @@ public class AnswerActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        progressBar = (ProgressBar) findViewById(R.id.answer_progress);
+        progressBar.setVisibility(View.GONE);
+        loadfinish = false;
         getBlanksList();
     }
     @Override
@@ -81,17 +89,16 @@ public class AnswerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //Log.d(TAG, "onOptionsItemSelected: " + Integer.toString(item.getItemId()) + "----" + R.id.home);
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
             case R.id.toolbar_ok:
-                JSONObject jsonObject = adapter.getStrings();
-                Intent intent = new Intent(this, AnswerResultActivity.class);
-                intent.putExtra("answer", jsonObject.toString());
-                intent.putExtra("uuid", uuid);
-                startActivity(intent);
+                if(loadfinish) {
+                    JSONObject jsonObject = adapter.getStrings();
+                    startValid(uuid, jsonObject);
+                    progressBar.setVisibility(View.VISIBLE);
+                }
                 break;
         }
         return true;
@@ -107,8 +114,12 @@ public class AnswerActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... keys) {
             blanksList = NetworkManager.getBlanksList(keys[0], context);
+            if(blanksList == null) {
+                cancel(true);
+                return null;
+            }
             for(int i = 0;i < blanksList.size();i ++) {
-                Bitmap result = NetworkManager.getImage(uuid, "LD", i, context);
+                Bitmap result = NetworkManager.getImage(uuid, "mask", i, context); // get image for each mask
                 if(result != null) {
                     blanksList.get(i).setImage(result);
                     publishProgress(blanksList.get(i));
@@ -122,9 +133,62 @@ public class AnswerActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(Blanks... details) {
-            addBlankToList(details[0]);
+            if(details[0].getImage() == null) {
+                Toast.makeText(context,"Network error, please try again later", Toast.LENGTH_SHORT).show();
+                cancel(false);
+                addBlankToList(details[0]);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            loadfinish = true;
         }
     }
 
+
+    public void startValid(String uuid, JSONObject jsonObject) {
+        ValidTask task = new ValidTask(this, uuid, jsonObject);
+        task.execute();
+    }
+    public void showQRCode() {
+        Intent intent = new Intent(this, ObjectQRActivity.class);
+        intent.putExtra("UUID", uuid);
+        startActivity(intent);
+        finish();
+    }
+
+    public void showOptions() {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(this, "Wrong Answer", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private class ValidTask extends AsyncTask<Void, Void, Boolean> {
+        private Context context;
+        private String uuid;
+        private JSONObject jsonObject;
+        public ValidTask(Context context, String uuid, JSONObject jsonObject) {
+            this.context = context;
+            this.uuid = uuid;
+            this.jsonObject = jsonObject;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... keys) {
+            return NetworkManager.tryToValid(uuid, jsonObject, context);
+        }
+
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if(success) {
+                showQRCode();
+            }
+            else {
+                showOptions();
+            }
+        }
+    }
 
 }

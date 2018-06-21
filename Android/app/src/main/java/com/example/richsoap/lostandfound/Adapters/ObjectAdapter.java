@@ -57,14 +57,19 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
+        final LostObject lostObject = lostObjectList.get(position);
+        viewHolder.dateText.setText(lostObject.getDate());
+        viewHolder.descriptionText.setText(lostObject.getDescription());
+        viewHolder.image.setImageBitmap(lostObject.getPhoto());
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mContext.cancleTask();
                 Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra("UUID", lostObjectList.get(position).getUuid());
-                intent.putExtra("Description", lostObjectList.get(position).getDescription());
-                intent.putExtra("Number", lostObjectList.get(position).getNumber());
+                intent.putExtra("UUID", lostObject.getUuid());
+                intent.putExtra("Description", lostObject.getDescription());
+                intent.putExtra("Number", lostObject.getNumber());
+                intent.putExtra("Date", lostObject.getDate());
                 mContext.startActivity(intent);
             }
         });
