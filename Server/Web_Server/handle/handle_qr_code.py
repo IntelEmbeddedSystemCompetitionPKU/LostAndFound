@@ -1,3 +1,14 @@
+########################################################
+# DESCRIPTION:
+# handle functions about getting qrcode
+#
+# AUTHOR: ykx
+# TIME: 2018.06.21
+########################################################
+
+#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+
 from Web_Server import app
 from flask import request, send_file, send_from_directory
 import crypt
@@ -31,7 +42,12 @@ def get_usr_qr_code():
 def handle_query_qrcode():
     data = request.get_data()
     jdata = json.loads(data.decode('utf-8'))
-    info = jdata['test']
+    if ('username' in jdata):
+        info = jdata['useruuid'] + ' ' + jdata['password']
+    elif ('useruuid' in jdata):
+        info = jdata['useruuid'] + jdata['itemuuid']
+    else:
+        return 'Wrong query!'
     img = qrcode.make(info)
     img.get_image().show()
     print(img)
