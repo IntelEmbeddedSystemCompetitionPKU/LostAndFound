@@ -10,9 +10,9 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  * Created by richsoap on 18-6-19.
  */
 
-@Table(database = DataBaseManager.class)
+@Table(database = DataBaseManager.class, name = "OtherUserStore_Table")
 
-public class OtherUser extends BaseModel {
+public class OtherUserStore extends BaseModel {
     @PrimaryKey(autoincrement = true)
     public long id;
 

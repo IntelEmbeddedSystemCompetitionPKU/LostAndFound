@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.richsoap.lostandfound.ChatActivity;
 import com.example.richsoap.lostandfound.DetailActivity;
 import com.example.richsoap.lostandfound.R;
 import com.example.richsoap.lostandfound.NormalObject.OtherUser;
@@ -42,27 +43,27 @@ public class UserlistAdapter extends RecyclerView.Adapter<UserlistAdapter.MyView
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView dateText;
+        TextView kindText;
         TextView descriptionText;
-        ImageView image;
         CardView cardView;
         public MyViewHolder(View view) {
             super(view);
-            cardView = (CardView)view.findViewById(R.id.list_cardview);
-            dateText = (TextView)view.findViewById(R.id.list_cardview_date);
-            descriptionText = (TextView)view.findViewById(R.id.list_cardview_description);
-            image = (ImageView)view.findViewById(R.id.list_cardview_image);
+            cardView = (CardView)view.findViewById(R.id.userlist_cardview);
+            kindText = (TextView)view.findViewById(R.id.userlist_cardview_kind);
+            descriptionText = (TextView)view.findViewById(R.id.userlist_cardview_description);
         }
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
+        OtherUser otherUser = userList.get(position);
+        viewHolder.descriptionText.setText(otherUser.getDescription());
+        viewHolder.kindText.setText(otherUser.getKind() == 0? "Acquire" : "Check");
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
+                Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("uuid", userList.get(position).getUuid());
-                intent.putExtra("Description", userList.get(position).getDescription());
                 intent.putExtra("kind", userList.get(position).getKind());
                 mContext.startActivity(intent);
             }
@@ -71,7 +72,7 @@ public class UserlistAdapter extends RecyclerView.Adapter<UserlistAdapter.MyView
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_list_cardview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_user_list_cardview, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }

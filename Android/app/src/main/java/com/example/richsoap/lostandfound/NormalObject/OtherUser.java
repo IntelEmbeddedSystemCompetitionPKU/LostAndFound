@@ -1,6 +1,6 @@
 package com.example.richsoap.lostandfound.NormalObject;
 
-import com.raizlabs.android.dbflow.annotation.Column;
+import com.example.richsoap.lostandfound.Table.OtherUserStore;
 
 /**
  * Created by richsoap on 18-6-19.
@@ -16,10 +16,10 @@ public class OtherUser {
         kind = 0;
         description = null;
     }
-    public OtherUser(com.example.richsoap.lostandfound.Table.OtherUser otherUser) {
-        uuid = otherUser.getUuid();
-        kind = otherUser.getKind();
-        description = otherUser.getDescription();
+    public OtherUser(OtherUserStore otherUserStore) {
+        uuid = otherUserStore.getUuid();
+        kind = otherUserStore.getKind();
+        description = otherUserStore.getDescription();
     }
 
     public String getUuid() {

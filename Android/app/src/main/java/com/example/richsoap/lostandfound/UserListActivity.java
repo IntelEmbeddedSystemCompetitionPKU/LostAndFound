@@ -1,24 +1,18 @@
 package com.example.richsoap.lostandfound;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.richsoap.lostandfound.Adapters.ObjectAdapter;
 import com.example.richsoap.lostandfound.Adapters.UserlistAdapter;
-import com.example.richsoap.lostandfound.Table.OtherUser;
+import com.example.richsoap.lostandfound.Table.OtherUserStore;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -43,7 +37,7 @@ public class UserListActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
         }
-        init_data();
+        //init_data();
         recyclerView = (RecyclerView) findViewById(R.id.userlist_recyclerview);
         userlistAdapter = new UserlistAdapter(this);
         recyclerView.setAdapter(userlistAdapter);
@@ -66,7 +60,7 @@ public class UserListActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.toolbar_trash:
-                Delete.table(OtherUser.class);
+                Delete.table(OtherUserStore.class);
                 read_data();
                 break;
         }
@@ -75,15 +69,15 @@ public class UserListActivity extends AppCompatActivity {
 
     private void init_data() {
         for(int i = 0;i < 3;i ++) {
-            OtherUser otherUser = new OtherUser();
-            otherUser.insert(UUID.randomUUID().toString(),0,"test" + Integer.toString(i));
-            boolean save = otherUser.save();
+            OtherUserStore otherUserStore = new OtherUserStore();
+            otherUserStore.insert(UUID.randomUUID().toString(),0,"test" + Integer.toString(i));
+            boolean save = otherUserStore.save();
             Toast.makeText(this, save? "Succeed" : "Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void read_data() {
-        List<OtherUser> users = SQLite.select().from(OtherUser.class).queryList();
+        List<OtherUserStore> users = SQLite.select().from(OtherUserStore.class).queryList();
         userList.clear();
         for(int i = 0;i < users.size();i ++) {
             userList.add(new com.example.richsoap.lostandfound.NormalObject.OtherUser(users.get(i)));

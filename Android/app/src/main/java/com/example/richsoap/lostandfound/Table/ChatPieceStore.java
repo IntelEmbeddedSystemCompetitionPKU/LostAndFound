@@ -5,25 +5,29 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.Database;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
  * Created by richsoap on 18-6-19.
  */
 
-@Table(database = DataBaseManager.class)
-public class ChatPiece {
+@Table(database = DataBaseManager.class, name = "ChatPieceStore_Table")
+public class ChatPieceStore extends BaseModel {
 
     @PrimaryKey(autoincrement = true)
     private long id;
 
     @Column
-    private String user;
+    public String user;
 
     @Column
-    private String text;
+    public String text;
 
     @Column
-    private int date;
+    public long date;
+
+    @Column
+    public int dir;
 
     public long getId() {
         return id;
@@ -49,7 +53,7 @@ public class ChatPiece {
         this.text = text;
     }
 
-    public int getDate() {
+    public long getDate() {
         return date;
     }
 
@@ -57,9 +61,18 @@ public class ChatPiece {
         this.date = date;
     }
 
-    public void insert(String user, String text, int date) {
+    public int getDir() {
+        return dir;
+    }
+
+    public void setDir(int dir) {
+        this.dir = dir;
+    }
+
+    public void insert(String user, String text, long date, int dir) {
         this.user = user;
         this.text = text;
         this.date = date;
+        this.dir = dir;
     }
 }
