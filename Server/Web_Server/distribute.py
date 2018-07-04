@@ -48,17 +48,18 @@ import json
 #        elif upload_type == 'result':
 #            return handle.upload_result(json_data)
 
-@app.route('/sign/<sign_type>', methods=['POST', 'GET'])
-def handle_sign(sign_type):
-    if request.method == 'POST':
-        data = request.get_data()
-        print(data)
-        json_data = json.loads(data.decode("utf-8"))
-        print(json_data)
-        if sign_type == 'signup':
-            return handle.sign_up(json_data)
-        elif sign_type == 'signin':
-            return handle.sign_in(json_data)
+# @app.route('/sign/<sign_type>', methods=['POST', 'GET'])
+# def handle_sign(sign_type):
+#     print('\nhandle_sign haha\n')
+#     if request.method == 'POST':
+#         data = request.get_data()
+#         print(data)
+#         json_data = json.loads(data.decode("utf-8"))
+#         print(json_data)
+#         if sign_type == 'signup':
+#             return handle.sign_up(json_data)
+#         elif sign_type == 'signin':
+#             return handle.sign_in(json_data)
 
 @app.route('/query/<query_type>/<keyword>', methods=['GET'])
 def handle_query_get(query_type, keyword):
