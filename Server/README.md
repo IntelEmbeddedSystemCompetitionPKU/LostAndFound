@@ -30,7 +30,7 @@
 | 1.8 获取用户信息二维码       | /query/qrcode                           | POST   | {"username": <username>, "password": <password>} | **file**(image)                                              |
 | 1.9 获取指定失物二维码       | /query/qrcode                           | POST   | {"useruuid": <useruuid>, "itemuuid": <itemuuid>} | **file**(image)                                              |
 | 2.0 发送完整压缩文件         | /upload/compress/\<uuid>                | POST   | {"file": <file>}                                 | 'True'/'False'                                               |
-
+| 2.1 获取防丢二维码       | /query/qrcode                           | POST   | {"username": <username>, "password": <password>， "description:"<description>} | **file**(image)                                                |
 
 
 

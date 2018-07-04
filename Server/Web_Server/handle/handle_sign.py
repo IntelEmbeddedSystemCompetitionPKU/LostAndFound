@@ -23,10 +23,9 @@ import Web_Server.db_op.mysql_connect as mc
 def handle_sign_signup():
     data = request.get_data()
     jdata = json.loads(data.decode('utf-8'))
-    print(jdata['username']+' trys to sign up with password '+jdata['password'])
+    username, passwd = jdata['username'], jdata['password']
+    print(username+' trys to sign up with password '+passwd)
     #若不冲突且合法则存入数据库
-    username=jdata['username']
-    passwd=jdata['password']
     useruuid = uuid.uuid1().__str__().replace('_','').replace('-','')
     db,c=mc.cnnct()
     try:
@@ -44,12 +43,9 @@ def handle_sign_signup():
 # username, password
 def handle_sign_signin():
     data = request.get_data()
-    print(data)
     jdata = json.loads(data.decode('utf-8'))
-    print(jdata)
-    print(jdata['username']+' trys to login with password '+jdata['password'])
-    username=jdata['username']
-    passwd=jdata['password']
+    username, passwd = jdata['username'], jdata['password']
+    print(username+' trys to login with password '+passwd)
     db,c = mc.cnnct()
     try:
        sql = 'select * from User where username="'+username+'" and password="'+passwd+'";'
@@ -57,8 +53,9 @@ def handle_sign_signin():
        if r==1:
            db.close()
            return 'True'
+       else:
+           db.close()
+           return 'False'
     except:
         db.close()
         return 'False'
-    db.close()
-    return 'True'

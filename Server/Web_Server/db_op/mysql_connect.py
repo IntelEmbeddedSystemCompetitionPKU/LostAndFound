@@ -13,7 +13,7 @@ def cnnct():
 
 if __name__=='__main__':
     db,c = cnnct()
-    r=c.execute("show tables;")
+    r=c.execute('select * from User where username="richsoap" and password="testinggg";')
     print('return',r)
-    c.execute('insert into User values("lily","pswd","lilyuiid");')
+    # c.execute('insert into User values("lily","pswd","lilyuiid");')
     db.close()

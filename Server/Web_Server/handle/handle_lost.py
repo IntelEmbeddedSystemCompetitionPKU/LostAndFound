@@ -15,7 +15,7 @@ import json
 import os
 import pymysql
 import base64
-
+import Web_Server.db_op.mysql_connect as mc
 basepath = '/home/ykx/Server_File/'
 
 #################
@@ -23,13 +23,11 @@ basepath = '/home/ykx/Server_File/'
 #################
 
 def query_mysql(contents, table):
-    conn = pymysql.connect("localhost", user='root', passwd='ykx970910', db='LostFound', charset='utf8')
-    cursor = conn.cursor()
-    cursor.execute("SELECT " + contents + " FROM " + table)
-    results = cursor.fetchall() # type(results) == tuple
-    conn.commit()
-    cursor.close()
-    conn.close()
+    db,c =mc.cnnct()
+    c.execute("SELECT " + contents + " FROM " + table)
+    results = c.fetchall() # type(results) == tuple
+    c.close()
+    db.close()
     return results
 
 @app.route('/query/lostlist', methods=['POST'])
