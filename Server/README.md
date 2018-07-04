@@ -18,20 +18,23 @@
 
 
 
-| 请求                         | url                                     | method | 上传内容                                         | 返回值                                                       |
-| ---------------------------- | --------------------------------------- | ------ | ------------------------------------------------ | ------------------------------------------------------------ |
-| 1.1 注册                     | /sign/signup                            | POST   | {"username": <username>, "password": <password>} | 'True'/'False'                                               |
-| 1.2 登录                     | /sign/signin                            | POST   | {"username": <username>, "password": <password>} | 'True'/'False'                                               |
-| 1.3 获取失物列表             | /query/lostlist                         | POST   | {"description": <description>, "date": <date>}   | {"uuid_num": <num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}   |
-| 1.4 获取物品粗略信息         | /query/getinfo/\<uuid>                  | GET    | /                                                | {"description": <description>, "date", <date> "LD_num": <num>} |
-| 1.5 获取图片                 | /query/\<uuid>/\<picture_type>/\<order> | GET    | /                                                | **file**(picture)                                            |
-| 1.6 获取物品所有mask基本信息 | /query/maskinfo/\<uuid>                 | GET    | /                                                | {"mask_num":<num>, "block0_num":<num>, "block1_num":<num>, ...} |
-| 1.7 验证mask信息             | /query/maskcheck/\<uuid>                | GET    | /                                                | 'True'/'False'                                               |
-| 1.8 获取用户信息二维码       | /query/qrcode_user                           | POST   | {"username": <username>, "password": <password>} | **file**(image)                                              |
-| 1.9 获取指定失物二维码       | /query/qrcode_lost                           | POST   | {"useruuid": <useruuid>, "itemuuid": <itemuuid>} | **file**(image)                                              |
-| 2.0 发送完整压缩文件         | /upload/compress/\<uuid>                | POST   | {"file": <file>}                                 | 'True'/'False'                                               |
-| 2.1 获取防丢二维码       | /query/qrcode_anti                           | POST   | {"username": <username>, "password": <password>， "description":<description>} | **file**(image)                                                |
-
+| 请求                         | url                                     | method | 上传内容                                         | 返回值                                                       | state |
+| ---------------------------- | --------------------------------------- | ------ | ------------------------------------------------ | ------------------------------------------------------------ |---|
+| 1.1 注册                     | /sign/signup                            | POST   | {"username": <username>, "password": <password>} | 'True'/'False'                                               | done |
+| 1.2 登录                     | /sign/signin                            | POST   | {"username": <username>, "password": <password>} | 'True'/'False'                                               | done |
+| 1.3 获取失物列表             | /query/lostlist                         | POST   | {"description": <description>, "date": <date>}   | {"uuid_num": <num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}   | tested |
+| 1.4 获取物品粗略信息         | /query/getinfo/\<uuid>                  | GET    | /                                                | {"description": <description>, "date", <date> "LD_num": <num>}| done |
+| 1.5 获取图片                 | /query/\<uuid>/\<picture_type>/\<order> | GET    | /                                                | **file**(picture)                                            | done |
+| 1.6 获取物品所有mask基本信息 | /query/maskinfo/\<uuid>                 | GET    | /                                                | {"mask_num":<num>, "block0_num":<num>, "block1_num":<num>, ...}  | not done |
+| 1.7 验证mask信息             | /query/maskcheck/\<uuid>                | GET    | /                                                | 'True'/'False'                                               | notdone |
+| 1.8 获取用户信息二维码       | /query/qrcode_user                      | POST   | {"username": <username>, "password": <password>} | **file**(image)                                              | done |
+| 1.9 获取指定失物二维码       | /query/qrcode_lost                      | POST   | {"useruuid": <useruuid>, "itemuuid": <itemuuid>} | **file**(image)                                              | done |
+| 2.1 发送完整压缩文件         | /upload/compress/\<uuid>                | POST   | {"file": <file>}                                 | 'True'/'False'                                               | not done |
+| 3.1 获取防丢二维码           | /query/qrcode_anti                      | POST   | {"username": <username>, "password": <password>， "description":<description>} | **file**(image)                | done |
+| 3.2 获取从未获取过二维码的物品列表| /query/noobatinlist                | POST   | {"username": <username>}                         | "uuid_num": <num>, "uuid0": <uuid0> ...                      | not done|
+| 4.1 发送消息给指定用户       | /upload/message                         | POST   | {"username": <username>, "targetname": <targetname>, "message": <message>, "time": <time>}| "True"/" False" | not done|
+| 4.2 获取从某时刻起的指定用户消息| /query/messages                      | POST   | {"username": <username>, "targetname": <targetname>, "time": <time>} |"message_num":<num>,"message0":<message_0>,"time_0":<time_0>...| not done|
+| 4.3 获取从未回复过的用户列表 | /query/noreplaylist                     | POST   | {"username": <username>}                          | "user_num":<num>,"user0":<user_0>,"message0":<message_0>...| not done |
 
 
 
