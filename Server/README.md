@@ -27,10 +27,10 @@
 | 1.5 获取图片                 | /query/\<uuid>/\<picture_type>/\<order> | GET    | /                                                | **file**(picture)                                            |
 | 1.6 获取物品所有mask基本信息 | /query/maskinfo/\<uuid>                 | GET    | /                                                | {"mask_num":<num>, "block0_num":<num>, "block1_num":<num>, ...} |
 | 1.7 验证mask信息             | /query/maskcheck/\<uuid>                | GET    | /                                                | 'True'/'False'                                               |
-| 1.8 获取用户信息二维码       | /query/qrcode                           | POST   | {"username": <username>, "password": <password>} | **file**(image)                                              |
-| 1.9 获取指定失物二维码       | /query/qrcode                           | POST   | {"useruuid": <useruuid>, "itemuuid": <itemuuid>} | **file**(image)                                              |
+| 1.8 获取用户信息二维码       | /query/qrcode_user                           | POST   | {"username": <username>, "password": <password>} | **file**(image)                                              |
+| 1.9 获取指定失物二维码       | /query/qrcode_lost                           | POST   | {"useruuid": <useruuid>, "itemuuid": <itemuuid>} | **file**(image)                                              |
 | 2.0 发送完整压缩文件         | /upload/compress/\<uuid>                | POST   | {"file": <file>}                                 | 'True'/'False'                                               |
-| 2.1 获取防丢二维码       | /query/qrcode                           | POST   | {"username": <username>, "password": <password>， "description:"<description>} | **file**(image)                                                |
+| 2.1 获取防丢二维码       | /query/qrcode_anti                           | POST   | {"username": <username>, "password": <password>， "description":<description>} | **file**(image)                                                |
 
 
 
