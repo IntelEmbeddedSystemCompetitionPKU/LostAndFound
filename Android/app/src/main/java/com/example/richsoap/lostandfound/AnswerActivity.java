@@ -19,10 +19,12 @@ import android.widget.Toast;
 
 import com.example.richsoap.lostandfound.Adapters.BlanksAdapter;
 import com.example.richsoap.lostandfound.NormalObject.Blanks;
+import com.example.richsoap.lostandfound.Table.OtherUserStore;
 
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This Activity is designed for user to answer questions about the object
@@ -38,6 +40,7 @@ public class AnswerActivity extends AppCompatActivity {
     private BlanksListTask blanksListTask;
     private boolean loadfinish;
     private ProgressBar progressBar;
+    private String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class AnswerActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         uuid = intent.getStringExtra("UUID");
-
+        description = intent.getStringExtra("Description");
         adapter = new BlanksAdapter(this);
         recyclerView = (RecyclerView) findViewById(R.id.answer_recyclerview);
         recyclerView.setAdapter(adapter);
@@ -80,10 +83,18 @@ public class AnswerActivity extends AppCompatActivity {
         adapter.addData(blanks);
     }
 
+    private void startCommunicate() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("uuid", uuid);
+        intent.putExtra("kind", 0);
+        intent.putExtra("description", description);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_ok, menu);
+        getMenuInflater().inflate(R.menu.toolbar_answer, menu);
         return true;
     }
 
@@ -99,6 +110,10 @@ public class AnswerActivity extends AppCompatActivity {
                     startValid(uuid, jsonObject);
                     progressBar.setVisibility(View.VISIBLE);
                 }
+                break;
+            case R.id.toolbar_communicate:
+                startCommunicate();
+                finish();
                 break;
         }
         return true;

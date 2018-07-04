@@ -30,4 +30,7 @@
     <string name="title_activity_user_list">UserList</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="title_activity_adduser">AdduserActivity</string>
+    <string name="title_activity_ask_for_qrcode">AskForQRCodeActivity</string>
+    <string name="title_activity_generate_qrlist">GenerateQRListActivity</string>
+    <string name="title_activity_getable_object_list">GetableObjectList</string>
 </resources>

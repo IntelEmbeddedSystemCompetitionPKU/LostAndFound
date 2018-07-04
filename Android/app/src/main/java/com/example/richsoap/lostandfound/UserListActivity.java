@@ -67,15 +67,6 @@ public class UserListActivity extends AppCompatActivity {
         return true;
     }
 
-    private void init_data() {
-        for(int i = 0;i < 3;i ++) {
-            OtherUserStore otherUserStore = new OtherUserStore();
-            otherUserStore.insert(UUID.randomUUID().toString(),0,"test" + Integer.toString(i));
-            boolean save = otherUserStore.save();
-            Toast.makeText(this, save? "Succeed" : "Failed", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void read_data() {
         List<OtherUserStore> users = SQLite.select().from(OtherUserStore.class).queryList();
         userList.clear();

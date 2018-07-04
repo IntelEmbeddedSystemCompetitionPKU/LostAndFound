@@ -24,10 +24,12 @@ import java.util.List;
 public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHolder> {
     private List<LostObject> lostObjectList;
     private ListActivity mContext;
+    private String command;
 
-    public ObjectAdapter(ListActivity activity) {
+    public ObjectAdapter(ListActivity activity, String command) {
         lostObjectList = new ArrayList<>();
         mContext = activity;
+        this.command = command;
     }
 
     public void setData(List<LostObject> list) {
@@ -70,6 +72,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
                 intent.putExtra("Description", lostObject.getDescription());
                 intent.putExtra("Number", lostObject.getNumber());
                 intent.putExtra("Date", lostObject.getDate());
+                intent.putExtra("Command", command);
                 mContext.startActivity(intent);
             }
         });

@@ -5,7 +5,11 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.example.richsoap.lostandfound.NormalObject.Blanks;
+import com.example.richsoap.lostandfound.NormalObject.ChatPiece;
 import com.example.richsoap.lostandfound.NormalObject.LostObject;
+import com.example.richsoap.lostandfound.NormalObject.OtherUser;
+import com.example.richsoap.lostandfound.Table.GettableLostObject;
+import com.example.richsoap.lostandfound.Table.OtherUserStore;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -242,9 +246,6 @@ public class NetworkManager {
 
     static public Bitmap getImageByUrl(String url, Context mContext) {// for test image download
         NoHttp.initialize(mContext);
-        /*ImageRequest req = new ImageRequest(url,RequestMethod.GET,1280,1280, Bitmap.Config.RGB_565, ImageView.ScaleType.CENTER);
-        Response<Bitmap> response = SyncRequestExecutor.INSTANCE.execute(req);
-        */
         Request<Bitmap> req = NoHttp.createImageRequest(url);
         Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
@@ -258,6 +259,48 @@ public class NetworkManager {
 
     static public boolean tryToValid(String uuid, JSONObject jsonObject, Context mContext) {
         return true;
+    }
+
+    static public boolean sendMessage(ChatPiece message, Context mContext) {
+        return true;
+    }
+    static public List<ChatPiece> getMessages(String uuid, long time, Context mContext) {
+        return null;
+    }
+
+    static public Bitmap generateQRCode(String description, Context mContext) {
+        return null;
+        /*NoHttp.initialize(mContext);
+        String url = "test";/////////////////////////////////////
+        Request<Bitmap> req = NoHttp.createImageRequest(url);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("description", description);
+        }
+        catch (JSONException e) {
+            return null;
+        }
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<Bitmap> response = NoHttp.startRequestSync(req);
+        if(response.isSucceed()) {
+            Log.d(TAG, "generateQRCode: Generate QRCode return successed");
+            return response.get();
+        }
+        else {
+            Log.d(TAG, "generateQRCode: Generate QRCode failed");
+            return null;
+        }*/
+    }
+
+    static public List<OtherUserStore> getWaitUserList() {
+        return new ArrayList<>();
+    }
+
+    static public List<String> getGetableItemList() {
+        return new ArrayList<>();
+    }
+    static public List<GettableLostObject> getUnreadGetableItemList() {
+        return new ArrayList<>();
     }
 
 }

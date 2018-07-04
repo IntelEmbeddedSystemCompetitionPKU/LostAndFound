@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.richsoap.lostandfound.DebugActivity.AdduserActivity;
 import com.example.richsoap.lostandfound.DebugActivity.NetworkTestActivity;
 import com.example.richsoap.lostandfound.DebugActivity.SetServerActivity;
+import com.example.richsoap.lostandfound.Services.CheckService;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.Operator;
 
@@ -55,6 +56,9 @@ public class SearchActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        Intent intent = new Intent(this, CheckService.class);
+        startService(intent);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -96,7 +100,8 @@ public class SearchActivity extends AppCompatActivity
             Intent intent = new Intent(this, UserListActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
-
+            Intent intent = new Intent(this, GenerateQRListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -134,5 +139,12 @@ public class SearchActivity extends AppCompatActivity
 
         mDateText.setText(Integer.toString(year) + "-" + Integer.toString(month + 1) +  "-" + Integer.toString(day));
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent(this, CheckService.class);
+        stopService(intent);
     }
 }
