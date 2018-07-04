@@ -26,7 +26,7 @@ def handle_sign_signup():
     username, passwd = jdata['username'], jdata['password']
     print(username+' trys to sign up with password '+passwd)
     #若不冲突且合法则存入数据库
-    useruuid = uuid.uuid1().__str__().replace('_','').replace('-','')
+    useruuid = uuid.uuid1().__str__().replace('-','')
     db,c=mc.cnnct()
     try:
         sql='insert into User values("'+username+'","'+passwd+'","'+useruuid+'");'
@@ -46,16 +46,4 @@ def handle_sign_signin():
     jdata = json.loads(data.decode('utf-8'))
     username, passwd = jdata['username'], jdata['password']
     print(username+' trys to login with password '+passwd)
-    db,c = mc.cnnct()
-    try:
-       sql = 'select * from User where username="'+username+'" and password="'+passwd+'";'
-       r=c.execute(sql)
-       if r==1:
-           db.close()
-           return 'True'
-       else:
-           db.close()
-           return 'False'
-    except:
-        db.close()
-        return 'False'
+    return str(mc.is_password_right(username,passwd))

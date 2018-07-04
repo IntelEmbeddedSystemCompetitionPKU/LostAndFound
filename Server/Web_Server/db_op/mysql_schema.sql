@@ -24,10 +24,10 @@ create table Lost(
 );
 create index clst_idx_lostdate on Lost(lostdate);
 
-create table User_qrcode(
-    useruuid varchar(32),
+create table Anti_qrcode(
+    username varchar(16),
     qrcode varchar(256),
-    constraint PK_User_qrcode primary key(useruuid,qrcode)
+    constraint PK_User_qrcode primary key(username,qrcode)
 );
     --constraint FK_User_qrcode_useruuid foreign key(useruuid) references User(useruuid)
 

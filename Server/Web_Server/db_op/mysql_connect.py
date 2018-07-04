@@ -10,6 +10,22 @@ def cnnct():
     c = db.cursor()
     return db, c
 
+def is_password_right(username,passwd):
+    db, c =  cnnct()
+    # try:
+    sql = 'select * from User where username="'+username+'" and password="'+passwd+'";'
+    print(sql)
+    r=c.execute(sql)
+    if r==1:
+        db.close()
+        return True
+    else:
+        db.close()
+        return False
+    # except:
+    #     db.close()
+    #     return False
+
 
 if __name__=='__main__':
     db,c = cnnct()

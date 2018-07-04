@@ -12,8 +12,8 @@ curl -X POST --data '{"test": "Can I compare thee to a summer''s day?"}' http://
 curl -X GET --data '{}' http://162.105.91.179:5000/query/maskinfo/5c946bd2292c4c658ca9e856746337d
 
 
-
-
+curl -X POST --data '{ "username":"fcg", "password": "MYHD"}' http://162.105.91.179:5000/query/qrcode_usr
+curl -X POST --data '{ "username":"fcg", "password": "MYHD", "description":"my property!"}' http://10.1.173.3:5000/query/qrcode_usr
 
 #curl -i -H "Content-Type:application/json" -X POST -d {\"uuid\":\"Alice\",\"HD\":\"MYHD\"} http://localhost:5000/upload/HD
 #signup
