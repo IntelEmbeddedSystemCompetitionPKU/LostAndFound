@@ -29,6 +29,14 @@ create table Anti_qrcode(
     qrcode varchar(256),
     constraint PK_User_qrcode primary key(username,qrcode)
 );
+
+create table Messages(
+    username varchar(16),
+    targetname varchar(16),
+    message varchar(512),
+    time bigint,
+    replied TINYINT
+);
     --constraint FK_User_qrcode_useruuid foreign key(useruuid) references User(useruuid)
 
 ---create user and login
