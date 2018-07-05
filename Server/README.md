@@ -34,7 +34,7 @@
 | 3.2 获取从未获取过二维码的物品列表| /query/noobatinlist                | POST   | {"username": <username>}                         | "uuid_num": <num>, "uuid0": <uuid0> ...                      | not done|
 | 4.1 发送消息给指定用户       | /upload/message                         | POST   | {"username": <username>, "targetuuid": <targetuuid>, "message": <message>, "time": <time>}| "True"/" False" | not done|
 | 4.2 获取从某时刻起的指定用户消息| /query/messages                      | POST   | {"username": <username>, "targetuuid": <targetuuid>, "time": <time>} |"message_num":<num>,"message0":<message_0>,"time_0":<time_0>...| not done|
-| 4.3 获取从未回复过的用户列表 | /query/noreplaylist                     | POST   | {"username": <username>}                          | "user_num":<num>,"user0":<user_0>,"message0":<message_0>...| not done |
+| 4.3 获取从未回复过的用户列表 | /query/noreplaylist                     | POST   | {"username": <username>}                          | "user_num":<num>,"user0":<user_0>,"user1":<user_1>...| not done |
 
 
 

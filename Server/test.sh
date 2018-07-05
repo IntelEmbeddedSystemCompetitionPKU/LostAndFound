@@ -10,8 +10,10 @@ curl -X POST --data '{ "username":"fcg", "password": "MYHD"}' http://162.105.91.
 curl -X GET --data '{}' http://162.105.91.179:5000/query/5c946bd2292c4c658ca9e856746337d/LD/1
 curl -X POST --data '{"test": "Can I compare thee to a summer''s day?"}' http://162.105.91.179:5000/query/qrcode
 curl -X GET --data '{}' http://162.105.91.179:5000/query/maskinfo/5c946bd2292c4c658ca9e856746337d
-
-
+10.2.15.121
+curl -X POST --data '{ "username":"fcg", "targetuuid": "lilyuiid", "message":"u must give back!", "time":12345}' http://162.105.91.179:5000/upload/message
+curl -X POST --data '{ "username":"fcg2"}' http://162.105.91.179:5000/query/noreplylist
+curl -X POST --data '{ "username":"poorsoap", "targetuuid":"05924b5e7f9111e8ba66e4f89c86f5ba","time":123}' http://162.105.91.179:5000/query/messages
 curl -X POST --data '{ "username":"fcg", "password": "MYHD"}' http://162.105.91.179:5000/query/qrcode_usr
 curl -X POST --data '{ "username":"fcg", "password": "MYHD", "description":"my property!"}' http://10.1.173.3:5000/query/qrcode_usr
 
