@@ -17,6 +17,7 @@ ApplicationWindow {
         source: "manager.qml"
         asynchronous: false
     }
+
     //inputpanel = virtual Keyboard
     InputPanel {
         id: inputPanel

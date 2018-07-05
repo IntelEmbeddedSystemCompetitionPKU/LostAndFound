@@ -1,18 +1,17 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-
+#include <Python.h>
+#include <iostream>
+#include "mythread.h"
+using namespace std;
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_WIN)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+   QGuiApplication app(argc, argv);
+   qmlRegisterType<MyThread>("user.MyThread",1,0,"MyThread");
+   QQmlApplicationEngine engine;
+   engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+   if (engine.rootObjects().isEmpty())
+       return -1;
 
-    QGuiApplication app(argc, argv);
-
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
-
-    return app.exec();
+   return app.exec();
 }

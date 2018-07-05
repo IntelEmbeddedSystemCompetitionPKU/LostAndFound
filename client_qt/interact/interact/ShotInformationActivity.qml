@@ -3,19 +3,30 @@ import QtQuick.Controls 1.2
 import QtQuick.Window 2.0
 import QtQuick.Controls.Styles 1.4
 import QtMultimedia 5.8
-import user.DataManager 1.0
+import user.MyThread 1.0
 import "."
 Item{
     anchors.fill: parent
     property int camstate : 0
     property int count: 0
+    MyThread {
+        id: myThread
+    }
     Camera {
         id: camera
           imageCapture {
-              onImageSaved:
-                    shotcount.text = "已拍摄" + String(count) +"张"
+             onImageSaved: {
+                 shotcount.text = "已拍摄" + String(count) +"张"
+                 myThread.setArgs(String(count))
+                 myThread.startProcess()
+                 shotgroup.visible = false
+                 processGroup.visible = true
+             }
         }
     }
+    Item {
+        anchors.fill: parent
+        id: shotgroup
     Item {
         anchors.centerIn: parent
         height: parent.height / 2
@@ -54,8 +65,6 @@ Item{
                 camstate = 0
             }
             camera.imageCapture.captureToLocation(savepath)
-            count ++
-
             }
         }
         style: ButtonStyle {
@@ -119,6 +128,7 @@ Item{
                 shotcount.text = "已拍摄0张"
                 title.text = "次要照片拍摄"
                 count = 0
+                thisConnections.enabled = false
             }
             else{
                 manager.showPage("DescribeActivity.qml")
@@ -139,8 +149,77 @@ Item{
             font.pixelSize: 20
         }
     }
+    }
+    Item {
+        id: showgroup
+        anchors.fill: parent
+        Image {
+            id: showImage
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            width: parent.width / 2 - 100
+            anchors.margins: 20
+        }
+        TextEdit {
+            id: showEdit
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            width: parent.width / 2 - 100
+            anchors.margins: 20
+        }
+        Button {
+            id: showbutton
+            width: 300
+            height: 200
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {//////////////set the information back if changed
+                showgroup.visible = false
+                shotgroup.visible = true
+            }
+            style: ButtonStyle {
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 25
+                    border.width: control.activeFocus ? 2 : 1
+                    border.color: "#888"
+                    radius: 100
+                }
+            }
+            Text {
+                anchors.centerIn: parent
+                text: "确认"
+                font.pixelSize: 20
+            }
+        }
+
+    }
+    Item {
+        id: processGroup
+        anchors.fill: parent
+        Text {
+            id: processText
+            anchors.centerIn: parent
+            text: qsTr("处理中...")
+            font.pixelSize: 25
+        }
+    }
+    Connections {
+        id: thisConnections
+        target: MyThread
+        onFinish: {
+            processGroup.visible = false
+            showgroup.visible = true
+            /////load image and text
+        }
+    }
+
     Component.onCompleted: {
-        manager.setUUID()
         camstate = 0
+        showgroup.visible = false
+        processGroup.visible = false
+        shotgroup.visible = true
+        myThread.getNewUUID()
+        myThread.setCommand("classify")
     }
 }

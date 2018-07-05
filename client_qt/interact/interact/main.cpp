@@ -1,4 +1,4 @@
-#include "datamanager.h"
+#include "mythread.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QZXing.h>
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 #endif
     QZXing::registerQMLTypes();    
     QGuiApplication app(argc, argv);
-    qmlRegisterType<datamanager>("user.DataManager",1,0,"DataManager");
+    qmlRegisterType<MyThread>("user.MyThread",1,0,"MyThread");
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

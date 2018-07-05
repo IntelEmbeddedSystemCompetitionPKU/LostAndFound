@@ -35,7 +35,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = interact1.0.0
-DISTDIR = /home/upsquared/workspace/LostAndFound/client_qt/interact/build-interact-Desktop_Qt_5_10_0_GCC_64bit-Debug/.tmp/interact1.0.0
+DISTDIR = /home/richsoap/Workspaces/LostAndFound/client_qt/interact/build-interact-Desktop_Qt_5_10_0_GCC_64bit-Debug/.tmp/interact1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS) -L/opt/Qt5.10.0/5.10.0/gcc_64/lib -lQt5Quick -lQt5Multimedia -lQt5Gui -lQt5Qml -lQt5Network -lQt5Core -lGL -lpthread 
@@ -324,6 +324,8 @@ DIST          = /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
@@ -756,6 +758,8 @@ Makefile: ../interact/interact.pro /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
@@ -946,6 +950,8 @@ Makefile: ../interact/interact.pro /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri:
@@ -1246,7 +1252,7 @@ moc_ImageHandler.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		../../../../qzxing/src/ImageHandler.h \
 		moc_predefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
-	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/qzxing/src -I/home/upsquared/workspace/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/ImageHandler.h -o moc_ImageHandler.cpp
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/ImageHandler.h -o moc_ImageHandler.cpp
 
 moc_QZXing.cpp: ../../../../qzxing/src/QZXing_global.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QtGlobal \
@@ -1327,7 +1333,7 @@ moc_QZXing.cpp: ../../../../qzxing/src/QZXing_global.h \
 		../../../../qzxing/src/QZXing.h \
 		moc_predefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
-	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/qzxing/src -I/home/upsquared/workspace/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXing.h -o moc_QZXing.cpp
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXing.h -o moc_QZXing.cpp
 
 moc_QZXingFilter.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject.h \
@@ -1435,7 +1441,7 @@ moc_QZXingFilter.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QObject \
 		../../../../qzxing/src/QZXingFilter.h \
 		moc_predefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
-	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/qzxing/src -I/home/upsquared/workspace/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXingFilter.h -o moc_QZXingFilter.cpp
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../qzxing/src/QZXingFilter.h -o moc_QZXingFilter.cpp
 
 moc_datamanager.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QString \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qstring.h \
@@ -1498,7 +1504,7 @@ moc_datamanager.cpp: /opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QString \
 		../interact/datamanager.h \
 		moc_predefs.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc
-	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/LostAndFound/client_qt/interact/interact -I/home/upsquared/workspace/qzxing/src -I/home/upsquared/workspace/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../interact/datamanager.h -o moc_datamanager.cpp
+	/opt/Qt5.10.0/5.10.0/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++ -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/LostAndFound/client_qt/interact/interact -I/home/richsoap/Workspaces/qzxing/src -I/home/richsoap/Workspaces/qzxing/src/zxing -I/opt/Qt5.10.0/5.10.0/gcc_64/include -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQuick -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtMultimedia -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtGui -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtQml -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtNetwork -I/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../interact/datamanager.h -o moc_datamanager.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

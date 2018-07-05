@@ -5,7 +5,6 @@
         <file>MainActivity.qml</file>
         <file>scanqrcode.qml</file>
         <file>ShotInformationActivity.qml</file>
-        <file>ShotShapeActivity.qml</file>
         <file>DescribeActivity.qml</file>
         <file>ShotFaceInformation.qml</file>
     </qresource>

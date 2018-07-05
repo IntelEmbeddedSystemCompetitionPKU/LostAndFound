@@ -12,7 +12,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    mypython.cpp \
+    mythread.cpp
+
+#LIBS += -L /usr/lib/python3.5/config-x86_64-linux-gnu
+#LIBS += -l python3.5
+#INCLUDEPATH += -I /usr/include/python3.5
+
+LIBS += -L /usr/lib/python2.7/config-x86_64-linux-gnu
+LIBS += -l python2.7
+INCLUDEPATH += -I /usr/include/python2.7
 
 RESOURCES += qml.qrc
 
@@ -26,3 +36,7 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    mypython.h \
+    mythread.h
