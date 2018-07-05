@@ -19,7 +19,6 @@ import os
 import Web_Server.db_op.mysql_connect as mc
 
 @app.route('/sign/signup', methods=['POST'])
-# 注册(用户名，密码(MD5，用公钥加密))(True,False)
 def handle_sign_signup():
     data = request.get_data()
     jdata = json.loads(data.decode('utf-8'))
@@ -39,8 +38,6 @@ def handle_sign_signup():
 
 
 @app.route('/sign/signin', methods=['POST'])
-# 登陆(用户名，密码(MD5，用公钥加密))(True,False)
-# username, password
 def handle_sign_signin():
     data = request.get_data()
     jdata = json.loads(data.decode('utf-8'))
