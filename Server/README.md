@@ -32,10 +32,10 @@
 | 2.1 发送完整压缩文件         | /upload/compress/\<uuid>                | POST   | {"file": <file>}                                 | 'True'/'False'                                               | not done |
 | 3.1 获取防丢二维码           | /query/qrcode_anti                      | POST   | {"username": <username>, "password": <password>， "description":<description>} | **file**(image)                | done |
 | 3.2 获取从未获取过二维码的物品列表| /query/noobatinlist                | POST   | {"username": <username>}                         | "uuid_num": <num>, "uuid0": <uuid0> ...                      | not done|
-| 4.1 发送消息给指定用户       | /upload/message                         | POST   | {"username": <username>, "targetname": <targetname>, "message": <message>, "time": <time>}| "True"/" False" | not done|
-| 4.2 获取从某时刻起的指定用户消息| /query/messages                      | POST   | {"username": <username>, "targetname": <targetname>, "time": <time>} |"message_num":<num>,"message0":<message_0>,"time_0":<time_0>...| not done|
-| 4.3 获取从未回复过的用户列表 | /query/noreplaylist                     | POST   | {"username": <username>}                          | "user_num":<num>,"user0":<user_0>,"message0":<message_0>...| not done |
-
+| 4.1 发送消息给指定用户       | /upload/message                         | POST   | {"username": <username>, "targetuuid": <targetuuid>, "message": <message>, "time": <time>}| "True"/" False" | done|
+| 4.2 username获取从某时刻time起的指定用户targetuuid给他发的消息| /query/messages                      | POST   | {"username": <username>, "targetuuid": <targetuuid>, "time": <time>} |"message_num":<num>,"message0":<message_0>,"time_0":<time_0>...| done|
+| 4.3 获取从未回复过的用户列表 | /query/noreplaylist                     | POST   | {"username": <username>}                          | "user_num":<num>,"user0":<user_0>,"user1":<user_1>...| done |
+| 4.4 通过验证 | /upload/pass                     | POST   | {"username": <username>, "targetuuid":<uuid>}                          | "True"/"False"| not done |
 
 
 
