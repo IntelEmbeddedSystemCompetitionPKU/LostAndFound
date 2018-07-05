@@ -1,6 +1,7 @@
 package com.example.richsoap.lostandfound.Table;
 
 import com.example.richsoap.lostandfound.DataBaseManager;
+import com.example.richsoap.lostandfound.NetworkManager;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -62,5 +63,6 @@ public class OtherUserStore extends BaseModel {
         this.kind = kind;
         this.description = description;
     }
+
 
 }

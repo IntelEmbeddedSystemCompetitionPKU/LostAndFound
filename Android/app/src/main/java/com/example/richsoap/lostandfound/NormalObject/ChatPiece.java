@@ -23,6 +23,13 @@ public class ChatPiece {
         dir = 0;
     }
 
+    public ChatPiece(String user, String text, long date, int dir) {
+        this.user = user;
+        this.text = text;
+        this.date = date;
+        this.dir = dir;
+    }
+
     public ChatPiece(ChatPieceStore chatPieceStore) {
         user = chatPieceStore.getUser();
         text = chatPieceStore.getText();

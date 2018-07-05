@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.richsoap.lostandfound.Adapters.UserlistAdapter;
 import com.example.richsoap.lostandfound.Table.OtherUserStore;
+import com.example.richsoap.lostandfound.Table.OtherUserStore_Table;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 

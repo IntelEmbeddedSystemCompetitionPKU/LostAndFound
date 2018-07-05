@@ -96,7 +96,12 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        jsonListTask.cancel(true);
+        if(uuidListTask != null) {
+            uuidListTask.cancel(true);
+        }
+        if(jsonListTask != null) {
+            jsonListTask.cancel(true);
+        }
     }
 
     private void addObjectToList(LostObject lostObject) {

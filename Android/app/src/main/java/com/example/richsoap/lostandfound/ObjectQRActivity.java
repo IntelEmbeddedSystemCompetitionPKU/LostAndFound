@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 public class ObjectQRActivity extends AppCompatActivity {
     private String uuid;
+    private String command;
     private ImageView imageView;
 
     @Override
@@ -29,6 +30,7 @@ public class ObjectQRActivity extends AppCompatActivity {
         imageView = findViewById(R.id.objectqr_image);
         Intent intent = getIntent();
         uuid = intent.getStringExtra("UUID");
+        command = intent.getStringExtra("command");
         startGetQRcode();
     }
     public void startGetQRcode() {
@@ -74,7 +76,13 @@ public class ObjectQRActivity extends AppCompatActivity {
 
         @Override
         protected Bitmap doInBackground(Void... keys) {
-            Bitmap result = NetworkManager.getQRImage(uuid, context);
+            Bitmap result;
+            if(command.equals("userqrcode")) {
+                result = NetworkManager.getUserQRImage(context);
+            }
+            else {
+                result = NetworkManager.getQRImage(uuid, context);
+            }
             return result;
         }
 

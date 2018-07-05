@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.richsoap.lostandfound.NormalObject.ChatPiece;
@@ -43,12 +44,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         TextView leftText;
         TextView rightText;
         TextView timeText;
+        LinearLayout leftLinear;
+        LinearLayout rightLinear;
         static long lasttime = 0;
         public MyViewHolder(View view) {
             super(view);
             leftText= (TextView) view.findViewById(R.id.chat_cardview_left);
             rightText = (TextView) view.findViewById(R.id.chat_cardview_right);
             timeText = (TextView) view.findViewById(R.id.chat_time);
+            leftLinear = (LinearLayout) view.findViewById(R.id.chat_cardview_linear_left);
+            rightLinear = (LinearLayout) view.findViewById(R.id.chat_cardview_linear_right);
         }
     }
 
@@ -68,11 +73,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         }
         MyViewHolder.lasttime = chatPiece.getDate();
         if(chatPiece.getDir() == 0) { //receive chatpiece
-            viewHolder.rightText.setVisibility(View.GONE);
+            viewHolder.rightLinear.setVisibility(View.GONE);
             viewHolder.leftText.setText(chatPiece.getText());
         }
         else {
-            viewHolder.leftText.setVisibility(View.GONE);
+            viewHolder.leftLinear.setVisibility(View.GONE);
             viewHolder.rightText.setText(chatPiece.getText());
         }
     }

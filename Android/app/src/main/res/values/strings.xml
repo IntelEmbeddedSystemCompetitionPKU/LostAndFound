@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LostAndFount</string>
+    <string name="app_name">LostAndFound</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

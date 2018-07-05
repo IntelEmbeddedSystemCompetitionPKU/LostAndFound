@@ -27,7 +27,7 @@ import java.util.TimerTask;
 
 public class CheckService extends Service {
     private List<GettableLostObject> itemList;
-    private List<OtherUserStore> userList;
+    private List<OtherUser> userList;
     private Timer timer;
     private Context context;
     private int counter;
@@ -46,7 +46,7 @@ public class CheckService extends Service {
     public void onCreate() {
         super.onCreate();
         itemList = new ArrayList<>();
-        userList = SQLite.select().from(OtherUserStore.class).queryList();
+        userList = new ArrayList<>();
         timer = new Timer();
         context = this;
         counter = 1;
@@ -79,14 +79,13 @@ public class CheckService extends Service {
                         itemList.add(tempItemList.get(i));
                     }
                 }
-                List<OtherUserStore> tempUserList = NetworkManager.getWaitUserList();
+                List<OtherUser> tempUserList = NetworkManager.getWaitUserList(context);
                 for(int i = 0;i < tempUserList.size();i ++) {
                     if(!userList.contains(tempUserList.get(i))) {
-                        Intent intent = new Intent(context, DetailActivity.class);
-                        intent.putExtra("UUID", tempItemList.get(i).getUuid());
-                        intent.putExtra("Command","getable");
-                        intent.putExtra("Date",tempItemList.get(i).getDescription());
-                        intent.putExtra("Description", "");
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        intent.putExtra("uuid", tempUserList.get(i).getUuid());
+                        intent.putExtra("kind", 1);
+                        intent.putExtra("description", "Need auth");
                         // Description??
                         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
                         Notification notification = new NotificationCompat.Builder(context)
@@ -94,6 +93,7 @@ public class CheckService extends Service {
                                 .setContentText("New Text")////// Description
                                 .setWhen(System.currentTimeMillis())
                                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.objects))
+                                .setSmallIcon(R.mipmap.objects)
                                 .setContentIntent(pendingIntent)
                                 .setAutoCancel(true)
                                 .build();

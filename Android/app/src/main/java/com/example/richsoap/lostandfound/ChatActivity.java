@@ -27,7 +27,7 @@ import com.example.richsoap.lostandfound.NormalObject.ChatPiece;
 import com.example.richsoap.lostandfound.Table.ChatPieceStore;
 import com.example.richsoap.lostandfound.Table.ChatPieceStore_Table;
 import com.example.richsoap.lostandfound.Table.OtherUserStore;
-import com.example.richsoap.lostandfound.Table.OtherUser_Table;
+import com.example.richsoap.lostandfound.Table.OtherUserStore_Table;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -47,6 +47,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button sendButton;
     private EditText editText;
     private Timer timer;
+    private Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class ChatActivity extends AppCompatActivity {
         uuid = intent.getStringExtra("uuid");
         kind = intent.getIntExtra("kind", 0);
         description = intent.getStringExtra("description");
-        List<OtherUserStore> list = SQLite.select().from(OtherUserStore.class).where(OtherUser_Table.uuid.eq(uuid)).queryList();
+        List<OtherUserStore> list = SQLite.select().from(OtherUserStore.class).where(OtherUserStore_Table.uuid.eq(uuid)).queryList();
         if(list.size() == 0) {
             OtherUserStore otherUserStore = new OtherUserStore();
             otherUserStore.insert(uuid,kind,description);
@@ -109,13 +110,13 @@ public class ChatActivity extends AppCompatActivity {
                                 chatPieceStore.insert(list.get(i));
                                 chatPieceStore.save();
                             }
-                            lastTime = list.get(list.size() - 1).getDate();
+                            lastTime = list.get(list.size() - 1).getDate() + 1;
                         }
                     });
                 }
             }
         };
-        timer.schedule(timerTask, 1000);
+        timer.schedule(timerTask, 1000,5000);
     }
 
     @Override
@@ -128,7 +129,9 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_check, menu);
+        if(kind == 1) {
+            getMenuInflater().inflate(R.menu.toolbar_check, menu);
+        }
         return true;
     }
 
@@ -143,7 +146,8 @@ public class ChatActivity extends AppCompatActivity {
                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        AuthTask authTask = new AuthTask(mContext);
+                        authTask.execute(uuid);
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -166,12 +170,18 @@ public class ChatActivity extends AppCompatActivity {
         for(int i = 0;i < chatPieceStoreList.size();i ++) {
             chatList.add(new ChatPiece(chatPieceStoreList.get(i)));
         }
-        lastTime = chatList.get(chatList.size()-1).getDate();
+        if(chatList.size() > 0) {
+            lastTime = chatList.get(chatList.size() - 1).getDate();
+        }
+        else {
+            lastTime = 0;
+        }
         adapter.setData(chatList);
+        Log.d(TAG, "readData: Load data from DB");
     }
     private void addData(String input) {
         ChatPieceStore chatPieceStore = new ChatPieceStore();
-        chatPieceStore.insert(uuid, input, System.currentTimeMillis(),1);
+        chatPieceStore.insert(uuid, input, System.currentTimeMillis(),1); //send
         SendTask sendTask = new SendTask(this);
         sendTask.execute(new ChatPiece(chatPieceStore));
     }
@@ -199,6 +209,27 @@ public class ChatActivity extends AppCompatActivity {
                 chatPieceStore.insert(chatPiece);
                 chatPieceStore.save();
                 adapter.addData(chatPiece);
+            }
+        }
+    }
+    private class AuthTask extends AsyncTask<String, Void, Boolean> {
+        private Context context;
+        public AuthTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... keys) {
+            return NetworkManager.authUuid(keys[0], context);
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean result) {
+            if(result) {
+                Toast.makeText(context,"Success",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(context,"Fail",Toast.LENGTH_SHORT).show();
             }
         }
     }

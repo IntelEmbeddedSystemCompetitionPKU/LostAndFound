@@ -1,6 +1,5 @@
 package com.example.richsoap.lostandfound;
 
-import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +16,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.richsoap.lostandfound.DebugActivity.AdduserActivity;
-import com.example.richsoap.lostandfound.DebugActivity.NetworkTestActivity;
-import com.example.richsoap.lostandfound.DebugActivity.SetServerActivity;
 import com.example.richsoap.lostandfound.Services.CheckService;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.Operator;
 
 import java.util.Calendar;
 
@@ -90,11 +85,12 @@ public class SearchActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-            Intent intent = new Intent(this, SetServerActivity.class);
+        if (id == R.id.nav_camera) {//change to show user QR code?
+            Intent intent = new Intent(this, ObjectQRActivity.class);
+            intent.putExtra("command","userqrcode");
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(this, NetworkTestActivity.class);
+            Intent intent = new Intent(this, GetableObjectListActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
             Intent intent = new Intent(this, UserListActivity.class);
