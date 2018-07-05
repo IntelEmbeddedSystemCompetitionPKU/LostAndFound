@@ -41,6 +41,7 @@ def handle_query_msg():
     c.execute(sql)
     r=c.fetchall()
     targetname=r[0][0]
+    targetname, username = username, targetname
     print('target name is',targetname)
     sql='select message, time from Messages where username="'+username+'" and targetname="'+targetname+'" and time>"'+str(time)+'";'
     c.execute(sql)
