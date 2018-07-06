@@ -17,7 +17,7 @@ void MyPython::imageProcess(int number) {}
 QString MyPython::loadResult(int number){return "test";}
 bool MyPython::saveItem() {return true;}
 bool MyPython::getItem() {return true;}
-void MyPython::uploadInformation(QString uuid) {}
+void MyPython::uploadInformation() {}
 void MyPython::finish() {Py_Finalize();}
 void MyPython::addDesc(QString desc) {}
 QString MyPython::test(int input) {

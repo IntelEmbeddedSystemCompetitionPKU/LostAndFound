@@ -15,11 +15,11 @@ public:
     Q_INVOKABLE void setUUID(QString _uuid);
     Q_INVOKABLE void getNewUUID();
     Q_INVOKABLE void startProcess();
+    Q_INVOKABLE static QString getDir();
 private:
     QString command;
     QString args;
     static QString uuid;
-    static QString getDir();
 signals:
     void finish(QString result);
 

@@ -4,9 +4,7 @@
 #include <QZXing.h>
 #include <QUuid>
 
-QUuid datamanager::nowUUID = NULL;
-QString datamanager::description = NULL;
-myProcess* datamanager::process = NULL;
+QString MyThread::uuid = "uuid";
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));

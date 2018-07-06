@@ -2,11 +2,30 @@
 
 #include<QObject>
 #include<QThread>
+#include<QUuid>
+#include<QDir>
+#include<QDebug>
 MyThread::MyThread(QObject *parent):QThread(parent) {}
 MyThread::~MyThread() {}
 void MyThread::run() {
+    qDebug() << "runing!";
+    qDebug() << "command is " << command;
+    if(command.contains("classify")) {
+        qDebug() << "in classify";
+        sleep(2);
+        finish("Test");
+        qDebug() << "Send signal";
+    }
+    else if(command.contains("face")) {
 
-    if(command == )
+    }
+    else if(command.contains("upload")) {
+
+    }
+    else if(command.contains("isvaild")) {
+
+    }
+    exit(0);
 }
 void MyThread::setCommand(QString _command) {
     command = _command;
@@ -39,6 +58,6 @@ void MyThread::getNewUUID() {
 }
 
 QString MyThread::getDir() {
-    //return "/home/richsoap/workspace/data/" + getUUIDString() + "/";
-    return "/home/upsquared/workspace/data/" + uuid + "/";
+    return "/home/richsoap/workspace/data/" + uuid + "/";
+    //return "/home/upsquared/workspace/data/" + uuid + "/";
 }

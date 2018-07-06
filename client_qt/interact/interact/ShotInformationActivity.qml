@@ -56,10 +56,10 @@ Item{
             if(camera.imageCapture.ready) {
             var savepath
             if(camstate === 0) {
-               savepath = manager.getDir() + "ocr/"
+               savepath = myThread.getDir() + "ocr/"
             }
             else if(camstate === 1){
-                savepath = manager.getDir() + "HD/"
+                savepath = myThread.getDir() + "HD/"
             }
             else{
                 camstate = 0
@@ -206,7 +206,7 @@ Item{
     }
     Connections {
         id: thisConnections
-        target: MyThread
+        target: myThread
         onFinish: {
             processGroup.visible = false
             showgroup.visible = true
@@ -220,6 +220,6 @@ Item{
         processGroup.visible = false
         shotgroup.visible = true
         myThread.getNewUUID()
-        myThread.setCommand("classify")
+        myThread.setCommand(String("classify"))
     }
 }
