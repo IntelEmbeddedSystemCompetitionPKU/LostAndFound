@@ -12,9 +12,6 @@
 >    查询... -> query(GET)
 >
 >    发送... -> upload
->
->
-> 3. 标记有`*`表示功能基本完成能ping/pong，标记有`?`表示本地未见bug但不知远程调用情况
 
 
 
@@ -38,6 +35,8 @@
 | 4.4 通过验证 | /upload/pass                     | POST   | {"username": <username>, "targetuuid":<uuid>}                          | "True"/"False"| not done |
 
 
+------
+以下内容未更新
 
 
 ## 1.1 注册 *

@@ -2,8 +2,12 @@
 # DESCRIPTION:
 # handle functions about signup and signin
 #
-# AUTHOR: ykx
+# AUTHOR: fcg, ykx
 # TIME: 2018.06.21
+#
+# MODIFY: ykx
+# TIME: 2018.07.06
+# add function of encrypting password with MD5
 ########################################################
 
 #! /usr/bin/env python
@@ -16,9 +20,13 @@ from flask import request
 import json
 import uuid
 import os
+import hashlib
 import Web_Server.db_op.mysql_connect as mc
 
 @app.route('/sign/signup', methods=['POST'])
+# 注册（密码MD5加密）
+# 需要：username, password
+# 返回值：True,False
 def handle_sign_signup():
     data = request.get_data()
     jdata = json.loads(data.decode('utf-8'))
@@ -26,6 +34,7 @@ def handle_sign_signup():
     print(username+' trys to sign up with password '+passwd)
     #若不冲突且合法则存入数据库
     useruuid = uuid.uuid1().__str__().replace('-','')
+    password=get_md5(jdata['password'] + jdata['username'] + 'Author:fcg,yql,ykx')
     db,c=mc.cnnct()
     try:
         sql='insert into User values("'+username+'","'+passwd+'","'+useruuid+'");'
@@ -38,9 +47,13 @@ def handle_sign_signup():
 
 
 @app.route('/sign/signin', methods=['POST'])
+# 登录（密码MD5加密）
+# 需要：username, password
+# 返回值：True,False
 def handle_sign_signin():
     data = request.get_data()
     jdata = json.loads(data.decode('utf-8'))
     username, passwd = jdata['username'], jdata['password']
     print(username+' trys to login with password '+passwd)
+    password=get_md5(jdata['password'] + jdata['username'] + 'Author:fcg,yql,ykx')
     return str(mc.is_password_right(username,passwd))
