@@ -3,38 +3,37 @@ import QtQuick.Controls 1.2
 import QtQuick.Window 2.0
 import QtQuick.Controls.Styles 1.4
 import QtMultimedia 5.8
-import user.DataManager 1.0
+import user.MyThread 1.0
 import "."
 Item{
     anchors.fill: parent
     property int camstate : 0
     property int count: 0
+    property int stage: 0
+    MyThread {
+        id: myThread
+    }
     Camera {
         id: camera
+        focus {
+            focusMode: CameraFocus.FocusContinuous
+            focusPointMode: CameraFocus.FocusPointAuto
+        }
           imageCapture {
-              onImageSaved:
-                    shotcount.text = "已拍摄" + String(count) +"张"
+             onImageSaved: {
+                 shotcount.text = "已拍摄" + String(count) +"张"
+                 count ++
+                 if(camstate == 0) {
+                     myThread.setCommand("classify")
+                    myThread.setArgs(String(count))
+                    myThread.startProcess()
+                    stage = 1
+                    shottext.text = "确认"
+                     showEdit.text = "处理中..."
+                 }
+             }
         }
     }
-    Item {
-        anchors.centerIn: parent
-        height: parent.height / 2
-        width: parent.width / 2
-        VideoOutput {
-            source: camera
-            anchors.fill: parent
-            focus: visible
-        }
-    }
-
-    Text {
-        id: title
-        text: "敏感照片拍摄"
-        font.pixelSize: 35
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
     Button {
         id: shotbutton
         width: 400
@@ -42,20 +41,29 @@ Item{
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
-            if(camera.imageCapture.ready) {
-            var savepath
-            if(camstate === 0) {
-               savepath = manager.getDir() + "ocr/"
+            if(stage == 0) {
+                if(camera.imageCapture.ready) {
+                var savepath
+                if(camstate === 0) {
+                   savepath = myThread.getDir() + "OCR/"
+                }
+                else if(camstate === 1){
+                    savepath = myThread.getDir() + "HD/"
+                }
+                else{
+                    camstate = 0
+                }
+                camera.imageCapture.captureToLocation(savepath)
+                }
             }
-            else if(camstate === 1){
-                savepath = manager.getDir() + "HD/"
-            }
-            else{
-                camstate = 0
-            }
-            camera.imageCapture.captureToLocation(savepath)
-            count ++
-
+            else {
+                stage = 0
+                shottext.text = "拍摄"
+                myThread.setCommand("refresh")
+                myThread.setArgs(count)
+                myThread.addDesc(showEdit.text)
+                myThread.startProcess()
+                processImage.visible = false
             }
         }
         style: ButtonStyle {
@@ -119,9 +127,12 @@ Item{
                 shotcount.text = "已拍摄0张"
                 title.text = "次要照片拍摄"
                 count = 0
+                thisConnections.enabled = false
             }
             else{
-                manager.showPage("DescribeActivity.qml")
+                myThread.setCommand("save")
+                myThread.startProcess()
+                manager.showPage("ScanActivity.qml")
             }
         }
         style: ButtonStyle {
@@ -139,8 +150,66 @@ Item{
             font.pixelSize: 20
         }
     }
+    Text {
+        id: title
+        text: "敏感照片拍摄"
+        font.pixelSize: 35
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    Item {
+        id: imagegroup
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        height: parent.height / 2
+        width: parent.width / 2
+        Text {
+            anchors.centerIn: parent
+            text: qsTr("初始化中...")
+            font.pixelSize: 30
+        }
+        VideoOutput {
+            id: liveImage
+            source: camera
+            anchors.fill: parent
+            focus: visible
+        }
+        Image {
+            anchors.fill: parent
+            id: processImage
+            visible: false
+        }
+    }
+
+    Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.left: imagegroup.right
+        height: imagegroup.height
+        anchors.margins: 20
+        color: "gray"
+        TextEdit {
+            id: showEdit
+            anchors.fill: parent
+            font.pixelSize: 30
+        }
+    }
+
+    Connections {
+        id: thisConnections
+        target: myThread
+        onFinish: {
+            //processImage.source = myThread.getDir() + "mask/" + String(count) + ".jpg"
+            showEdit.text = result
+            processImage.visible = true
+
+        }
+    }
+
     Component.onCompleted: {
-        manager.setUUID()
         camstate = 0
+        myThread.getNewUUID()
+        myThread.setCommand(String("classify"))
     }
 }

@@ -5,7 +5,11 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.example.richsoap.lostandfound.NormalObject.Blanks;
+import com.example.richsoap.lostandfound.NormalObject.ChatPiece;
 import com.example.richsoap.lostandfound.NormalObject.LostObject;
+import com.example.richsoap.lostandfound.NormalObject.OtherUser;
+import com.example.richsoap.lostandfound.Table.GettableLostObject;
+import com.example.richsoap.lostandfound.Table.OtherUserStore;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -32,12 +36,16 @@ import static com.example.richsoap.lostandfound.NetworkManager.LoginResult.SUCCE
 
 public class NetworkManager {
     private static final String TAG = "NetworkManager";
-    private static String ip = "162.105.91.179";
+    private static String ip = "10.1.170.107";
     private static String port = "5000";
     private static String userName = "tester";
     private static String password = "testing";
     public enum LoginResult {
         SUCCESS, ERRORPASSWORD, NETERROR;
+    }
+
+    static public String getUserName() {
+        return userName;
     }
 
     static public void setServer(String _ip, String _port) {
@@ -62,9 +70,9 @@ public class NetworkManager {
         catch(JSONException e) {
             return NETERROR;
         }
-        String url = "http://" + ip + ":" + port +"/sign/signup";
+        Log.d(TAG, "isValidUser: json" + jsonObject.toString());
+        String url = "http://" + ip + ":" + port +"/sign/signin";
         String result = null;
-        Log.d(TAG, "isValidUser: " + jsonObject.toString());
         Request<String> request = NoHttp.createStringRequest(url, RequestMethod.POST);
 		request.setDefineRequestBodyForJson(jsonObject);
 		Response<String> response = NoHttp.startRequestSync(request);
@@ -78,8 +86,9 @@ public class NetworkManager {
 		if(result.equals("True")) {
 			return SUCCESS;
 		}
-		url = "http://" + ip + ":" + port + "/sign/signin";
+		url = "http://" + ip + ":" + port + "/sign/signup";
 		request = NoHttp.createStringRequest(url, RequestMethod.POST);
+		request.setDefineRequestBodyForJson(jsonObject);
 		response = NoHttp.startRequestSync(request);
 		if(response.isSucceed()) {
 			result = response.get();
@@ -188,7 +197,7 @@ public class NetworkManager {
 
     static public Bitmap getQRImage(String uuid, Context mContext) {// For every image from server
         NoHttp.initialize(mContext);/////////need more logic here
-        String url = "http://" + ip + ":" + port +"/query/qrcode";
+        String url = "http://" + ip + ":" + port +"/query/qrcode_lost";
         NoHttp.initialize(mContext);
         Log.d(TAG, "getQRImage: Try to get QRcode:" + url);
         JSONObject jsonObject = new JSONObject();
@@ -242,9 +251,6 @@ public class NetworkManager {
 
     static public Bitmap getImageByUrl(String url, Context mContext) {// for test image download
         NoHttp.initialize(mContext);
-        /*ImageRequest req = new ImageRequest(url,RequestMethod.GET,1280,1280, Bitmap.Config.RGB_565, ImageView.ScaleType.CENTER);
-        Response<Bitmap> response = SyncRequestExecutor.INSTANCE.execute(req);
-        */
         Request<Bitmap> req = NoHttp.createImageRequest(url);
         Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
@@ -260,4 +266,191 @@ public class NetworkManager {
         return true;
     }
 
+    static public boolean sendMessage(ChatPiece message, Context mContext) {
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/upload/message";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", userName);
+            jsonObject.put("targetuuid", "05924b5e7f9111e8ba66e4f89c86f5ba");
+            jsonObject.put("message", message.getText());
+            jsonObject.put("time", message.getDate());
+        }
+        catch (JSONException e) {
+            return false;
+        }
+        Log.d(TAG, "sendMessage: Json is " + jsonObject.toString());
+        Request<String> req = NoHttp.createStringRequest(url, RequestMethod.POST);
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<String> response = NoHttp.startRequestSync(req);
+        if(response.isSucceed()) {
+            Log.d(TAG, "sendMessage: Success");
+            if(response.get().equals("True")) {
+                return true;
+            }
+        }
+        else {
+            Log.d(TAG, "sendMessage: Failed");
+            return false;
+        }
+        return false;
+    }
+    static public List<ChatPiece> getMessages(String uuid, long time, Context mContext) {
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/query/messages";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", userName);
+            jsonObject.put("targetuuid", uuid);
+            jsonObject.put("time", time);
+        }
+        catch (JSONException e) {
+            return new ArrayList<>();
+        }
+        Log.d(TAG, "getWaitUserList: Json is " + jsonObject.toString());
+        Request<String> req = NoHttp.createStringRequest(url, RequestMethod.POST);
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<String> response = NoHttp.startRequestSync(req);
+        if(response.isSucceed()) {
+            String jsonString = response.get();
+            Log.d(TAG, "getWaitUserList: return JsonString is " + jsonString);
+            List<ChatPiece> result = new ArrayList<>();
+            try {
+                jsonObject = new JSONObject(jsonString);
+                for(int i = 0;i < jsonObject.getInt("message_num");i ++) {
+                    result.add(new ChatPiece(uuid,jsonObject.getString("message" + Integer.toString(i)), jsonObject.getLong("time" + Integer.toString(i)),0));
+                }
+                return result;
+            }
+            catch (JSONException e) {
+                return new ArrayList<>();
+            }
+        }
+        else {
+            Log.d(TAG, "getWaitUserList: Generate qrcode failed");
+            return new ArrayList<>();
+        }
+    }
+
+    static public Bitmap generateQRCode(String description, Context mContext) {
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/query/qrcode_anti";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", userName);
+            jsonObject.put("password", password);
+            jsonObject.put("description", description);
+        }
+        catch (JSONException e) {
+            return null;
+        }
+        Log.d(TAG, "generateQRCode: Json is " + jsonObject.toString());
+        Request<Bitmap> req = NoHttp.createImageRequest(url, RequestMethod.POST);
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<Bitmap> response = NoHttp.startRequestSync(req);
+        if(response.isSucceed()) {
+            Log.d(TAG, "generateQRCode: Generate qrcode return successed");
+            return response.get();
+        }
+        else {
+            Log.d(TAG, "generateQRCode: Generate qrcode failed");
+            return null;
+        }
+    }
+
+    static public List<OtherUser> getWaitUserList(Context mContext) {
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/query/noreplylist";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", userName);
+        }
+        catch (JSONException e) {
+            return null;
+        }
+        Log.d(TAG, "getWaitUserList: Json is " + jsonObject.toString());
+        Request<String> req = NoHttp.createStringRequest(url, RequestMethod.POST);
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<String> response = NoHttp.startRequestSync(req);
+        if(response.isSucceed()) {
+            String jsonString = response.get();
+            Log.d(TAG, "getWaitUserList: return JsonString is " + jsonString);
+            List<OtherUser> result = new ArrayList<>();
+            try {
+                jsonObject = new JSONObject(jsonString);
+                for(int i = 0;i < jsonObject.getInt("user_num");i ++) {
+                    result.add(new OtherUser(jsonObject.getString("user" + Integer.toString(i))));
+                }
+                return result;
+            }
+            catch (JSONException e) {
+                return new ArrayList<>();
+            }
+        }
+        else {
+            Log.d(TAG, "getWaitUserList: Response failed");
+            return new ArrayList<>();
+        }
+    }
+
+    static public List<String> getGetableItemList() {
+        return new ArrayList<>();
+    }
+    static public List<GettableLostObject> getUnreadGetableItemList() {
+        return new ArrayList<>();
+    }
+    static public Bitmap getUserQRImage(Context mContext) {
+        NoHttp.initialize(mContext);/////////need more logic here
+        String url = "http://" + ip + ":" + port +"/query/qrcode_user";
+        NoHttp.initialize(mContext);
+        Log.d(TAG, "getQRImage: Try to get QRcode:" + url);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", userName);
+            jsonObject.put("password", password);
+        }
+        catch (JSONException e) {
+            return null;
+        }
+        Log.d(TAG, "getQRImage: json is: " + jsonObject.toString());
+        Request<Bitmap> req = NoHttp.createImageRequest(url, RequestMethod.POST);
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<Bitmap> response = NoHttp.startRequestSync(req);
+        if (response.isSucceed()) {
+            Log.d(TAG, "getQRImage: Success");
+            return response.get();
+        } else {
+            Log.d(TAG, "getQRImage: Fail");
+            return null;
+        }
+    }
+
+    static public boolean authUuid(String uuid, Context mContext) {
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/upload/pass";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", userName);
+            jsonObject.put("targetuuid",uuid);
+        }
+        catch (JSONException e) {
+            return false;
+        }
+        Log.d(TAG, "authUuid: Json is " + jsonObject.toString());
+        Request<String> req = NoHttp.createStringRequest(url, RequestMethod.POST);
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<String> response = NoHttp.startRequestSync(req);
+        if(response.isSucceed()) {
+            String jsonString = response.get();
+            if(jsonString.equals("True")) {
+                return true;
+            }
+            else  {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
 }

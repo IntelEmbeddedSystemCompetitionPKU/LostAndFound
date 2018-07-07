@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.richsoap.lostandfound.Adapters.UserlistAdapter;
 import com.example.richsoap.lostandfound.Table.OtherUserStore;
+import com.example.richsoap.lostandfound.Table.OtherUserStore_Table;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -65,15 +66,6 @@ public class UserListActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
-
-    private void init_data() {
-        for(int i = 0;i < 3;i ++) {
-            OtherUserStore otherUserStore = new OtherUserStore();
-            otherUserStore.insert(UUID.randomUUID().toString(),0,"test" + Integer.toString(i));
-            boolean save = otherUserStore.save();
-            Toast.makeText(this, save? "Succeed" : "Failed", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void read_data() {

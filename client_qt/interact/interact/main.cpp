@@ -1,23 +1,21 @@
-#include "datamanager.h"
+#include "mythread.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QZXing.h>
 #include <QUuid>
 
-QUuid datamanager::nowUUID = NULL;
-QString datamanager::description = NULL;
-myProcess* datamanager::process = NULL;
+QString MyThread::uuid = "uuid";
 int main(int argc, char *argv[])
 {
-    //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
-    qputenv("QT_IM_MODULE",QByteArray("fcitxplatforminputcontext"));
+    //qputenv("QT_IM_MODULE",QByteArray("fcitxplatforminputcontext"));
 #if defined(Q_OS_WIN)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     QZXing::registerQMLTypes();    
     QGuiApplication app(argc, argv);
-    qmlRegisterType<datamanager>("user.DataManager",1,0,"DataManager");
+    qmlRegisterType<MyThread>("user.MyThread",1,0,"MyThread");
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

@@ -21,6 +21,9 @@ public class OtherUser {
         kind = otherUserStore.getKind();
         description = otherUserStore.getDescription();
     }
+    public OtherUser(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getUuid() {
         return uuid;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toolbar_ok"
+        android:icon="@mipmap/ok"
+        android:title="ok"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/toolbar_communicate"
+        android:icon="@mipmap/ask"
+        android:title="ask"
+        app:showAsAction="always"
+        />
+
+</menu>

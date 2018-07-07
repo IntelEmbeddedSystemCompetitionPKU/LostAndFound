@@ -1,14 +1,15 @@
 import pymysql
-from sqlconnect import *
+# from sqlconnect import *
+import mysql_connect
 
-db = pymysql.connect("localhost",user='root', password='',database="lost_found")
-c = db.cursor()
+db,c = mysql_connect.cnnct()
 r=c.execute('show tables;')
 r=c.fetchall()
 print('show tables: ',r)
 db.close()
 
-db,c = cnnct()
+exit(0)
+db,c = mysql_connect.cnnct()
 try:
     r=c.execute("insert into user values('fcg2','haha2','21234567890123456789012345678901');")
 # print('return',r)

@@ -33,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     private List<String> imgList;
     private String description;
     private String date;
+    private String command;
     private int number;
     private RecyclerView recyclerView;
     private String uuid;
@@ -56,6 +57,7 @@ public class DetailActivity extends AppCompatActivity {
         description = intent.getStringExtra("Description");
         date = intent.getStringExtra("Date");
         number = intent.getIntExtra("Number", 0);
+        command = intent.getStringExtra("Command");
         TextView textView = findViewById(R.id.detail_description);
         textView.setText(description);
         recyclerView = (RecyclerView) findViewById(R.id.detail_recyclerview);
@@ -99,9 +101,18 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.toolbar_ok:
-                Intent intent = new Intent(this, AnswerActivity.class);
-                intent.putExtra("UUID", uuid);
-                startActivity(intent);
+                if(command.equals("getable")){
+                    Intent intent = new Intent(this, ObjectQRActivity.class);
+                    intent.putExtra("UUID", uuid);
+                    intent.putExtra("Description", description);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(this, AnswerActivity.class);
+                    intent.putExtra("UUID", uuid);
+                    intent.putExtra("Description", description);
+                    startActivity(intent);
+                }
                 break;
         }
         return true;

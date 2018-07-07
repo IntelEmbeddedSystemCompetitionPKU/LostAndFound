@@ -1,6 +1,8 @@
 package com.example.richsoap.lostandfound.Table;
 
 import com.example.richsoap.lostandfound.DataBaseManager;
+import com.example.richsoap.lostandfound.NetworkManager;
+import com.example.richsoap.lostandfound.NormalObject.ChatPiece;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.Database;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -69,10 +71,17 @@ public class ChatPieceStore extends BaseModel {
         this.dir = dir;
     }
 
+
     public void insert(String user, String text, long date, int dir) {
         this.user = user;
         this.text = text;
         this.date = date;
         this.dir = dir;
+    }
+    public void insert(ChatPiece chatPiece) {
+        user = chatPiece.getUser();
+        text = chatPiece.getText();
+        date = chatPiece.getDate();
+        dir = chatPiece.getDir();
     }
 }

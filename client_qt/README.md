@@ -32,3 +32,28 @@ this is used to store information which is still in chest
 uuid-location
 ### todo
 - [ ] Qxml
+
+
+
+
+# Python 接口 fcg
+## Classify and OCR
+### 输入
+图片文件路径(1.jpg)
+### 返回值
+* 0: 处理过程没有问题
+* -1: 有问题
+### 处理结果
+同一文件夹下的JSON文本(1.txt)
+#### 格式(带-的为可选项)
+* kind: string
+* - blank_num: int
+* - blank_<num>: string
+
+## 人脸识别
+### 输入
+图片文件路径
+### 返回值
+* 0: 有人脸
+* -1:没有人脸
+

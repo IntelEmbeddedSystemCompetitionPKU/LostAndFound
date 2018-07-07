@@ -1,0 +1,2 @@
+QT_PLUGIN.qtvirtualkeyboardplugin.PATH = /home/upsquared/workspace/LostAndFound/client_qt/build-qtvirtualkeyboard-Desktop_Qt_5_10_0_GCC_64bit-Debug/plugins
+include(/home/upsquared/workspace/LostAndFound/client_qt/build-qtvirtualkeyboard-Desktop_Qt_5_10_0_GCC_64bit-Debug/mkspecs/modules-inst/qt_plugin_qtvirtualkeyboardplugin.pri)

@@ -32,6 +32,7 @@ public class ListActivity extends AppCompatActivity {
 
     private String date;
     private String keywords;
+    private String command;
     private View mProcess;
     private UUIDListTask uuidListTask;
     private JsonListTask jsonListTask;
@@ -56,9 +57,10 @@ public class ListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         date = intent.getStringExtra("date");
         keywords = intent.getStringExtra("keywords");
+        command = intent.getStringExtra("command");
         mProcess = (View) findViewById(R.id.list_progress);
         recyclerView = (RecyclerView) findViewById(R.id.list_recycleview);
-        objectAdapter = new ObjectAdapter(this);
+        objectAdapter = new ObjectAdapter(this, command);
         recyclerView.setAdapter(objectAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -79,7 +81,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
         stopIndex = 0;
-        tryToGetUUIDList();
     }
 
     @Override
@@ -95,7 +96,12 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        jsonListTask.cancel(true);
+        if(uuidListTask != null) {
+            uuidListTask.cancel(true);
+        }
+        if(jsonListTask != null) {
+            jsonListTask.cancel(true);
+        }
     }
 
     private void addObjectToList(LostObject lostObject) {
@@ -130,7 +136,7 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
-    private class UUIDListTask extends AsyncTask<Void, Void, List<String>> {
+    private class UUIDListTask extends AsyncTask<String, Void, List<String>> {
         private String date;
         private String keywords;
         private View mProcess;
@@ -148,8 +154,13 @@ public class ListActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<String> doInBackground(Void... keys) {
-            return NetworkManager.getUUIDList(date, keywords, context);
+        protected List<String> doInBackground(String... keys) {
+            if(keys[0].equals("getable")) {
+                return NetworkManager.getGetableItemList();
+            }
+            else {
+                return NetworkManager.getUUIDList(date, keywords, context);
+            }
         }
 
         @Override

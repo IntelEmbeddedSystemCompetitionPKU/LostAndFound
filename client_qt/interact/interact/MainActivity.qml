@@ -71,7 +71,7 @@ Item{
 
             Text {
                 anchors.centerIn: parent
-                text: "捡到东西"
+                text: "无标记失物"
                 font.pixelSize: 20
             }
             onClicked: {
@@ -96,11 +96,11 @@ Item{
             }
             Text {
                 anchors.centerIn: parent
-                text: "领取东西"
+                text: "扫描二维码"
                 font.pixelSize: 20
             }
             onClicked: {
-                manager.showPage("scanqrcode.qml")
+                manager.showPage("ScanActivity.qml")
             }
         }
     }
