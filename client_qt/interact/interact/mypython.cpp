@@ -11,8 +11,11 @@ bool MyPython::init() {
     if (!Py_IsInitialized())
         return false;
     PyRun_SimpleString("import sys");
-    PyRun_SimpleString("sys.path.append('./scipts/')");
-    pModule = PyImport_ImportModule("maininterface");
+    PyRun_SimpleString("sys.path.append('./')");
+    qDebug() << "before import maininterface";
+    pModule = PyImport_ImportModule("interface");
+    //pModule = PyImport_Import("interface");
+    qDebug() << "after import";
     if(!pModule) {
         return false;
     }
@@ -44,14 +47,18 @@ bool MyPython::isFacePhoto(QString uuid){
 }
 void MyPython::imageProcess(QString uuid, QString number) {
     qDebug() << "before pFunc";
-    PyObject *pFunc = PyObject_GetAttrString(pModule, "classify");
+    PyObject *pFunc = PyObject_GetAttrString(pModule, "classify_img");
     qDebug() << "before pArg";
     PyObject *pArg = Py_BuildValue("(s,i)", uuid.toStdString().c_str(), number.toInt());
+    qDebug() << "before call";
     PyEval_CallObject(pFunc, pArg);
 }
 QString MyPython::loadResult(QString uuid, QString number){
+    qDebug() << "before load";
     PyObject *pFunc = PyObject_GetAttrString(pModule, "loadresult");
+    qDebug() << "before func";
     PyObject *pArg = Py_BuildValue("(s,i)", uuid.toStdString().c_str(), number.toInt());
+    qDebug() << "before call";
     PyObject *result = PyEval_CallObject(pFunc, pArg);
     char* res;
     PyArg_ParseTuple(result, "s", &res);
@@ -59,15 +66,20 @@ QString MyPython::loadResult(QString uuid, QString number){
 }
 void MyPython::saveItem(QString uuid) {
     PyObject *pFunc = PyObject_GetAttrString(pModule, "save");
+        qDebug() << "after func";
     PyObject *pArg = Py_BuildValue("(s)", uuid.toStdString().c_str());
+        qDebug() << "after arg";
     PyEval_CallObject(pFunc, pArg);
+    qDebug() << "after call";
 }
 void MyPython::getItem(QString uuid) {
     PyObject *pFunc = PyObject_GetAttrString(pModule, "load");
     PyObject *pArg = Py_BuildValue("(s)", uuid.toStdString().c_str());
     PyEval_CallObject(pFunc, pArg);
 }
-void MyPython::finish() {Py_Finalize();}
+void MyPython::finish() {
+    Py_Finalize();
+}
 void MyPython::refreshDesc(QString uuid,QString num, QString desc) {
     PyObject *pFunc = PyObject_GetAttrString(pModule, "refresh");
     PyObject *pArg = Py_BuildValue("(s,i,s)", uuid.toStdString().c_str(),num.toInt(), desc.toStdString().c_str());

@@ -12,14 +12,17 @@
 MyThread::MyThread(QObject *parent):QThread(parent) {}
 MyThread::~MyThread() {}
 void MyThread::run() {
+    qDebug() << "running";
     MyPython myPython;
     myPython.init();
-    QString result;
+    qDebug() << "after init";
+    QString result = "";
     if(command.contains("classify")) {
         qDebug() << "before classify";
         myPython.imageProcess(uuid, args);
         qDebug() << "before load";
         result = myPython.loadResult(uuid, args);
+        finish(result);
     }
     else if(command.contains("face")) {
         qDebug() << "before face";
@@ -29,6 +32,7 @@ void MyThread::run() {
         else {
             result = "False";
         }
+        finish(result);
     }
     else if(command.contains("save")) {
         qDebug() << "before save";
@@ -52,8 +56,7 @@ void MyThread::run() {
         qDebug() << "before picker";
         myPython.uploadPicker(uuid, desc);
     }
-    finish(result);
-    myPython.finish();
+    //myPython.finish();
     exit(0);
 }
 void MyThread::setCommand(QString _command) {

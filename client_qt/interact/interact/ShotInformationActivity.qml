@@ -21,7 +21,6 @@ Item{
         }
           imageCapture {
              onImageSaved: {
-                 shotcount.text = "已拍摄" + String(count) +"张"
                  count ++
                  if(camstate == 0) {
                      myThread.setCommand("classify")
@@ -30,6 +29,9 @@ Item{
                     stage = 1
                     shottext.text = "确认"
                      showEdit.text = "处理中..."
+                 }
+                 else {
+                     showEdit.text = "已保存"
                  }
              }
         }
@@ -53,10 +55,11 @@ Item{
                 else{
                     camstate = 0
                 }
+                showEdit.text = "保存中"
                 camera.imageCapture.captureToLocation(savepath)
                 }
             }
-            else {
+            else if(stage == 2){
                 stage = 0
                 shottext.text = "拍摄"
                 myThread.setCommand("refresh")
@@ -79,15 +82,7 @@ Item{
             id: shottext
             text: "拍摄"
             font.pixelSize: 35
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-        Text {
-            id: shotcount
-            text: "已拍摄0张"
-            font.pixelSize: 20
-            anchors.top: shottext.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
         }
     }
 
@@ -124,7 +119,6 @@ Item{
         onClicked: {
             if(camstate === 0) {
                 camstate = 1
-                shotcount.text = "已拍摄0张"
                 title.text = "次要照片拍摄"
                 count = 0
                 thisConnections.enabled = false
@@ -202,8 +196,10 @@ Item{
         onFinish: {
             //processImage.source = myThread.getDir() + "mask/" + String(count) + ".jpg"
             showEdit.text = result
+            print("in qml")
+            print(result)
             processImage.visible = true
-
+            stage = 2
         }
     }
 
