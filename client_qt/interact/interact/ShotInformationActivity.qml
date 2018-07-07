@@ -9,6 +9,7 @@ Item{
     anchors.fill: parent
     property int camstate : 0
     property int count: 0
+    property int stage: 0
     MyThread {
         id: myThread
     }
@@ -17,35 +18,18 @@ Item{
           imageCapture {
              onImageSaved: {
                  shotcount.text = "已拍摄" + String(count) +"张"
-                 myThread.setArgs(String(count))
-                 myThread.startProcess()
-                 shotgroup.visible = false
-                 processGroup.visible = true
+                 count ++
+                 if(camstate == 0) {
+                     myThread.setCommand("classify")
+                    myThread.setArgs(String(count))
+                    myThread.startProcess()
+                    stage = 1
+                    shottext.text = "确认"
+                     showEdit.text = "处理中..."
+                 }
              }
         }
     }
-    Item {
-        anchors.fill: parent
-        id: shotgroup
-    Item {
-        anchors.centerIn: parent
-        height: parent.height / 2
-        width: parent.width / 2
-        VideoOutput {
-            source: camera
-            anchors.fill: parent
-            focus: visible
-        }
-    }
-
-    Text {
-        id: title
-        text: "敏感照片拍摄"
-        font.pixelSize: 35
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
     Button {
         id: shotbutton
         width: 400
@@ -53,18 +37,29 @@ Item{
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
-            if(camera.imageCapture.ready) {
-            var savepath
-            if(camstate === 0) {
-               savepath = myThread.getDir() + "ocr/"
+            if(stage == 0) {
+                if(camera.imageCapture.ready) {
+                var savepath
+                if(camstate === 0) {
+                   savepath = myThread.getDir() + "OCR/"
+                }
+                else if(camstate === 1){
+                    savepath = myThread.getDir() + "HD/"
+                }
+                else{
+                    camstate = 0
+                }
+                camera.imageCapture.captureToLocation(savepath)
+                }
             }
-            else if(camstate === 1){
-                savepath = myThread.getDir() + "HD/"
-            }
-            else{
-                camstate = 0
-            }
-            camera.imageCapture.captureToLocation(savepath)
+            else {
+                stage = 0
+                shottext.text = "拍摄"
+                myThread.setCommand("refresh")
+                myThread.setArgs(count)
+                myThread.addDesc(showEdit.text)
+                myThread.startProcess()
+                processImage.visible = false
             }
         }
         style: ButtonStyle {
@@ -131,7 +126,7 @@ Item{
                 thisConnections.enabled = false
             }
             else{
-                manager.showPage("DescribeActivity.qml")
+                manager.showPage("ScanActivity.qml")
             }
         }
         style: ButtonStyle {
@@ -149,76 +144,65 @@ Item{
             font.pixelSize: 20
         }
     }
+    Text {
+        id: title
+        text: "敏感照片拍摄"
+        font.pixelSize: 35
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
     }
+
     Item {
-        id: showgroup
-        anchors.fill: parent
-        Image {
-            id: showImage
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            width: parent.width / 2 - 100
-            anchors.margins: 20
+        id: imagegroup
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        height: parent.height / 2
+        width: parent.width / 2
+        Text {
+            anchors.centerIn: parent
+            text: qsTr("初始化中...")
+            font.pixelSize: 30
         }
+        VideoOutput {
+            id: liveImage
+            source: camera
+            anchors.fill: parent
+            focus: visible
+        }
+        Image {
+            anchors.fill: parent
+            id: processImage
+            visible: false
+        }
+    }
+
+    Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.left: imagegroup.right
+        height: imagegroup.height
+        anchors.margins: 20
+        color: "gray"
         TextEdit {
             id: showEdit
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            width: parent.width / 2 - 100
-            anchors.margins: 20
+            anchors.fill: parent
+            font.pixelSize: 30
         }
-        Button {
-            id: showbutton
-            width: 300
-            height: 200
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: {//////////////set the information back if changed
-                showgroup.visible = false
-                shotgroup.visible = true
-            }
-            style: ButtonStyle {
-                background: Rectangle {
-                    implicitWidth: 100
-                    implicitHeight: 25
-                    border.width: control.activeFocus ? 2 : 1
-                    border.color: "#888"
-                    radius: 100
-                }
-            }
-            Text {
-                anchors.centerIn: parent
-                text: "确认"
-                font.pixelSize: 20
-            }
-        }
+    }
 
-    }
-    Item {
-        id: processGroup
-        anchors.fill: parent
-        Text {
-            id: processText
-            anchors.centerIn: parent
-            text: qsTr("处理中...")
-            font.pixelSize: 25
-        }
-    }
     Connections {
         id: thisConnections
         target: myThread
         onFinish: {
-            processGroup.visible = false
-            showgroup.visible = true
-            /////load image and text
+            //processImage.source = myThread.getDir() + "mask/" + String(count) + ".jpg"
+            showEdit.text = result
+            processImage.visible = true
+
         }
     }
 
     Component.onCompleted: {
         camstate = 0
-        showgroup.visible = false
-        processGroup.visible = false
-        shotgroup.visible = true
         myThread.getNewUUID()
         myThread.setCommand(String("classify"))
     }

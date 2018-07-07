@@ -7,16 +7,17 @@ public:
     MyPython();
     ~MyPython();
     bool init(); //done
-    bool isExist(); // directly python
-    bool isFacePhoto();
-    void imageProcess(int number);
-    QString loadResult(int number);
-    bool saveItem();
-    bool getItem();
-    void uploadInformation();
-    QString test(int input);
+    bool isExist(QString uuid); // directly python
+    bool isFacePhoto(QString uuid);
+    void imageProcess(QString uuid, QString number);
+    QString loadResult(QString uuid, QString number);
+    void saveItem(QString uuid);
+    void getItem(QString uuid);
+    void refreshDesc(QString uuid, QString number, QString desc);
     void finish();
-    void addDesc(QString desc);
-
+    void uploadMark(QString uuid, QString desc);
+    void uploadPicker(QString uuid, QString desc);
+private:
+    PyObject* pModule;
 };
 #endif // MYPYTHON_H
