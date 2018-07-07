@@ -1,12 +1,13 @@
 import pymysql
 
+#host = 'localhost'
+host = '10.128.171.97'
 dba, password='LostFoundDba','123'
 # dba, password='root','ykx970910'
 
-
 def cnnct():
     db = pymysql.connect(
-        "localhost", user=dba, password=password, database="LostFound",  autocommit=True)
+        host, user=dba, password=password, database="LostFound",  autocommit=True)
     c = db.cursor()
     return db, c
 
