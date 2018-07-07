@@ -1155,12 +1155,10 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: ../interact/qml.qrc \
 		/opt/Qt5.10.0/5.10.0/gcc_64/bin/rcc \
+		../interact/ScanActivity.qml \
 		../interact/manager.qml \
 		../interact/ShotInformationActivity.qml \
-		../interact/DescribeActivity.qml \
-		../interact/scanqrcode.qml \
 		../interact/MainActivity.qml \
-		../interact/ShotFaceInformation.qml \
 		../interact/main.qml
 	/opt/Qt5.10.0/5.10.0/gcc_64/bin/rcc -name qml ../interact/qml.qrc -o qrc_qml.cpp
 
@@ -4262,7 +4260,33 @@ mythread.o: ../interact/mythread.cpp ../interact/mythread.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcontainerfwd.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qobject_impl.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QThread \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qthread.h
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qthread.h \
+		../interact/mypython.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QString \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QUuid \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QDir \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qdir.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qfileinfo.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QDebug \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QJsonValue \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qjsonvalue.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mythread.o ../interact/mythread.cpp
 
 mypython.o: ../interact/mypython.cpp ../interact/mypython.h \
@@ -4330,7 +4354,13 @@ mypython.o: ../interact/mypython.cpp ../interact/mypython.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qset.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qcontiguouscache.h \
 		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsharedpointer.h \
-		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsharedpointer_impl.h
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QJsonDocument \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qjsondocument.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt5.10.0/5.10.0/gcc_64/include/QtCore/QJsonParseError
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mypython.o ../interact/mypython.cpp
 
 qrc_qml.o: qrc_qml.cpp 
