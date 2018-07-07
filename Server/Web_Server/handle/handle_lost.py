@@ -20,7 +20,14 @@ import Web_Server.db_op.mysql_connect as mc
 basepath = '/home/ykx/Server_File/'
 
 # order by similarity
-def sort_lost(lostlist,keywords):
+def sort_lost(lostlist,keyword):
+    words=keyword.split(' ')
+    # keyword=keyword.replace(' ','')
+    # chars=[c for c in keyword]
+    # l=[[r,sum([1 for word in words if word in r[1]]), sum([1 for char in chars if char in r[1]]) ] for r in lostlist]
+    l=[[r,sum([1 for word in words if word in r[1]]) ] for r in lostlist]
+    l.sort(key=lambda x: -x[1])
+    lostlist=[e[0] for e in l if e[1]>0]
     return lostlist
 
 
