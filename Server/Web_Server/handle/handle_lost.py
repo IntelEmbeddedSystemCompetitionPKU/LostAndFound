@@ -2,7 +2,7 @@
 # DESCRIPTION:
 # handle functions about querying infomations
 #
-# AUTHOR: ykx
+# AUTHOR: fcg, ykx
 # TIME: 2018.06.21
 ########################################################
 
@@ -115,7 +115,14 @@ def handle_query_maskcheck(uuid):
     answer = fr.read()
     answer = json.loads(answer)
 
-    if answer['mask'] == json_data['mask']:
+    cnt_right = 0
+    cnt_all = 0
+    for item in json_data:
+        for jtem in json_data[item]:
+            cnt_all = cnt_all + 1;
+            if answer['mask'][item][jtem] == json_data[item][jtem]:
+                cnt_right = cnt_right + 1;
+    if cnt_right > cnt_all * 0.6:
         db,c = mc.cnnct()
         c.execute("UPDATE Lost SET owneruuid=" + json_data['useruuid'] + " WHERE objuuid=" + uuid + ";")
         c.execute("UPDATE Lost SET apply='1' WHERE objuuid=" + uuid + ";")
@@ -124,9 +131,3 @@ def handle_query_maskcheck(uuid):
         return 'True'
     else:
         return 'False'
-    #mask_num = int(answer['mask_num'])
-    #for k in range(0, mask_num):
-    #    if (json_data['mask'] != answer['mask']):
-    #        return 'False'
-    #    else:
-    #        return 'True'
