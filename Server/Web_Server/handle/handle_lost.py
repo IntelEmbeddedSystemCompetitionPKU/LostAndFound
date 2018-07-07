@@ -30,24 +30,50 @@ def query_mysql(contents, table):
     db.close()
     return results
 
+
+
 @app.route('/query/lostlist', methods=['POST'])
 # description, date
 def handle_query_lostlist():
     data = request.get_data()
     json_data = json.loads(data.decode('utf-8'))
+    keyword = json_data['description']
     print(json_data)
     #time_keywords_dict=time_keywords.split('_')
-    lostlist = query_mysql("objuuid", "Lost")
+    lostlist = query_mysql("objuuid,description", "Lost")
     print(lostlist)
-
-    json_list = '{"uuid_num": "' + str(len(lostlist)) + '"'
+    json_list ='{'
+    l = 0
     for k in range(0, len(lostlist)):
-        json_list = json_list + ',"uuid' + str(k) + '": "' + lostlist[k][0] + '"'
-    json_list = json_list + "}"
-    print(type(json_list))
+        if keyword not in lostlist[k][1]:
+            continue
+        json_list = json_list + '"uuid' + str(l) + '": "' + lostlist[k][0] + '",'
+        l = l + 1
+    json_list = '"uuid_num": "' + l + '"}'
+
     return(json_list.encode('utf-8'))
 
-# !!! need to modify !!!
+
+@app.route('/query/lostlist/available/<useruuid>', methods=['POST'])
+def handle_query_available():
+    db,c = mc.cnnct()
+    c.execute("SELECT objuuid FROM Lost WHERE useruuid='" + useruuid + "';")
+    results = c.fetchall()
+    c.close()
+    db.close()
+    return results
+
+
+@app.route('query/lostlist/applied/<useruuid>', methods=['POST'])
+def handle_query_applied(useruuid):
+    db,c = mc.cnnct()
+    c.execute("SELECT objuuid FROM Lost WHERE useruuid='" + useruuid + "' and apply='0';")
+    results = c.fetchall()
+    c.close()
+    db.close()
+    return results
+
+
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
 def handle_query_getinfo(uuid):
     path = basepath + uuid
@@ -62,6 +88,7 @@ def handle_query_getinfo(uuid):
     print(response)
     fr.close()
     return response
+
 
 @app.route('/query/<uuid>/<picture_type>/<order>')
 # uuid: uuid of object
@@ -89,6 +116,7 @@ def handle_query_LD(uuid, picture_type, order):
     #print(type(files))
     return img64
 
+
 @app.route('/query/maskinfo/<uuid>')
 def handle_query_maskinfo(uuid):
     path = basepath + uuid
@@ -105,6 +133,7 @@ def handle_query_maskinfo(uuid):
     data = data + '}'
     return data
 
+
 @app.route('/query/maskcheck/<uuid>')
 def handle_query_maskcheck(uuid):
     data = request.get_data()
@@ -116,8 +145,17 @@ def handle_query_maskcheck(uuid):
         return 'There is no such thing!'
     fr = open(path + '/data.txt', 'rb')
     answer = fr.read()
+    answer = json.loads(answer)
 
-    return 'True'
+    if answer['mask'] == json_data['mask']:
+        db,c = mc.cnnct()
+        c.execute("UPDATE Lost SET useruuid=" + json_data['useruuid'] + " WHERE objuuid=" + uuid + ";")
+        c.execute("UPDATE Lost SET apply='1' WHERE objuuid=" + uuid + ";")
+        c.close()
+        db.close()
+        return 'True'
+    else:
+        return 'False'
     #mask_num = int(answer['mask_num'])
     #for k in range(0, mask_num):
     #    if (json_data['mask'] != answer['mask']):

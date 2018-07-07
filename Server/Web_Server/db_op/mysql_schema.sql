@@ -21,6 +21,7 @@ create table Lost(
     ocr varchar(256),
     finderuuid varchar(32) default '',
     owneruuid varchar(32) default ''
+    apply varchar(32) default '0',
     constraint PK_Lost primary key(objuuid)
 );
 create index clst_idx_lostdate on Lost(lostdate);
