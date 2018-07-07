@@ -15,79 +15,55 @@ import json
 import os
 import pymysql
 import base64
+import qrcode
 import Web_Server.db_op.mysql_connect as mc
 basepath = '/home/ykx/Server_File/'
 
-#################
-## Query MySQL ##
-#################
-
-def query_mysql(contents, table):
-    db,c =mc.cnnct()
-    c.execute("SELECT " + contents + " FROM " + table)
-    results = c.fetchall() # type(results) == tuple
-    c.close()
-    db.close()
-    return results
+# order by similarity
+def sort_lost(lostlist,keywords):
+    return lostlist
 
 
+def lostlist2json(lostlist):
+    data='{"uuid_num":'+str(len(lostlist))
+    for i, r in enumerate(lostlist):
+        data+=',num'+str(i)+':'+r[0]
+    data+='}'
+    print(data)
+    return data
 
 @app.route('/query/lostlist', methods=['POST'])
 # description, date
 def handle_query_lostlist():
-    data = request.get_data()
-    json_data = json.loads(data.decode('utf-8'))
-    keyword = json_data['description']
-    print(json_data)
+    json_data = json.loads(request.get_data().decode('utf-8'))
+    keyword, date = json_data['description'], json_data['date']
+    print('query lost about '+keyword+' after '+date)
     #time_keywords_dict=time_keywords.split('_')
-    lostlist = query_mysql("objuuid,description", "Lost")
+    lostlist = mc.query_mysql("objuuid,description", "Lost",'lostdate>='+date)
+    lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
-    json_list ='{'
-    l = 0
-    for k in range(0, len(lostlist)):
-        if keyword not in lostlist[k][1]:
-            continue
-        json_list = json_list + '"uuid' + str(l) + '": "' + lostlist[k][0] + '",'
-        l = l + 1
-    json_list = '"uuid_num": "' + l + '"}'
+    return lostlist2json(lostlist)
 
-    return(json_list.encode('utf-8'))
+@app.route('/query/lostlist/available/<useruuid>', methods=['GET'])
+def handle_query_available(useruuid):
+    lostlist=mc.query_mysql("objuuid", "Lost",'owneruuid="'+useruuid+'"')
+    return lostlist2json(lostlist)
 
-
-@app.route('/query/lostlist/available/<useruuid>', methods=['POST'])
-def handle_query_available():
-    db,c = mc.cnnct()
-    c.execute("SELECT objuuid FROM Lost WHERE useruuid='" + useruuid + "';")
-    results = c.fetchall()
-    c.close()
-    db.close()
-    return results
-
-
-@app.route('query/lostlist/applied/<useruuid>', methods=['POST'])
+@app.route('/query/lostlist/notapplied/<useruuid>', methods=['GET'])
 def handle_query_applied(useruuid):
-    db,c = mc.cnnct()
-    c.execute("SELECT objuuid FROM Lost WHERE useruuid='" + useruuid + "' and apply='0';")
-    results = c.fetchall()
-    c.close()
-    db.close()
-    return results
-
+    lostlist=mc.query_mysql("objuuid", "Lost",'owneruuid="'+useruuid+'" and apply="0"')
+    return lostlist2json(lostlist)
 
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
 def handle_query_getinfo(uuid):
-    path = basepath + uuid
-    if os.path.exists(path) == False:
+    lostlist=mc.query_mysql("description,lostdate", "Lost",'objuuid="'+uuid+'"')
+    if len(lostlist)==0:
         return 'There is no such thing!'
-    fr = open(path + '/data.txt', 'r')
-    data = fr.read()
+    r=lostlist[0]
+    ldpath = basepath + uuid + '/LD'
+    data = '{"description": "' + r[0] + '", "time": "' + r[1] + '", "LD_num": "' + str(os.listdir(ldpath)) + '"}'
     print(data)
-    jdata = json.loads(data)
-    print(jdata)
-    response = '{"description": "' + jdata['description'] + '", "time": "' + jdata['time'] + '", "LD_num": "' + jdata['LD_num'] + '"}'
-    print(response)
-    fr.close()
-    return response
+    return data
 
 
 @app.route('/query/<uuid>/<picture_type>/<order>')
@@ -95,26 +71,11 @@ def handle_query_getinfo(uuid):
 # picture_type: LD, HD, mask
 # order: 0, 1, 2, ...
 def handle_query_LD(uuid, picture_type, order):
-    print(uuid, picture_type, order)
-    path = basepath + uuid
+    path = basepath + uuid + '/' + picture_type + '/' + order + '.jpg'
     print(path)
     if os.path.exists(path) == False:
         return 'There is no such thing!'
-    #picture = path + '/' + picture_type + '/' + picture_type + order + '.jpg'
-    picture_dir = picture_type + order + '.jpg'
-    #img = open(picture, 'rb')
-    #resp = make_response(img, mimetype='image/jpg')
-    directory = path + '/' + picture_type + '/'
-    return send_from_directory(directory, picture_dir, as_attachment=True)
-
-    #fr = open(picture, 'rb')
-    #img = fr.read()
-    #img64 = {"img": img}
-    #img64 = json.dumps(img64)
-    #img64 = base64.b64encode(img)
-    #files = {'file': open(picture, 'rb')}
-    #print(type(files))
-    return img64
+    return send_file(path,as_attachment=True)
 
 
 @app.route('/query/maskinfo/<uuid>')
@@ -162,31 +123,3 @@ def handle_query_maskcheck(uuid):
     #        return 'False'
     #    else:
     #        return 'True'
-
-
-
-#############################
-#############################
-@app.route('/lost_details/<lost_uuid>')
-# 得到失物详细信息(UUID)(很多张高清图片)
-def show_post(lost_uuid):
-    return '{"images":["img1","img2","img3"]}'
-
-
-@app.route('/qestion/<lost_uuid>')
-# 失物填空题(UUID)(图片，几个空)
-def qestion(lost_uuid):
-    # show the subpath after /path/
-    return '{"image":"img"}'
-
-
-@app.route('/answer/<lost_uuid>')
-# 用户的失物填空题结果(用户ID，UUID，json)(True, False)????
-def answer(lost_uuid):
-    return 'False'
-
-
-@app.route('/lost_qrcode/<usrid>/<lost_uuid>')
-# 得到指定失物的二维码(用户ID，UUID)(Image)
-def lost_qrcode(lost_uuid):
-    return 'lost_qrcode'

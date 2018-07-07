@@ -17,6 +17,14 @@ curl -X POST --data '{ "username":"poorsoap", "targetuuid":"05924b5e7f9111e8ba66
 curl -X POST --data '{ "username":"fcg", "password": "MYHD"}' http://162.105.91.179:5000/query/qrcode_usr
 curl -X POST --data '{ "username":"fcg", "password": "MYHD", "description":"my property!"}' http://10.1.173.3:5000/query/qrcode_usr
 
+insert into Lost(objuuid,lostdate,description,ocr,finderuuid,owneruuid) values('obj0','20180706','a cup','cup cup', 'finder1','');
+insert into Lost(objuuid,lostdate,description,ocr,finderuuid,owneruuid) values('obj1','20180707','a card','card cup', '','');
+insert into Lost(objuuid,lostdate,description,ocr,finderuuid,owneruuid) values('obj2','20180707','a wallet','money is bad', '','owner1');
+curl -X POST --data '{ "description":"cup", "date": "20180706"}' http://10.1.178.226:5000/query/lostlist
+curl -X GET http://10.1.178.226:5000/query/lostlist/available/owner1
+curl -X GET http://10.1.178.226:5000/query/lostlist/notapplied/owner1
+curl -X POST --data '{"useruuid":"owner1" , "itemuuid":"obj2" }' http://10.1.178.226:5000/query/qrcode_lost
+
 #curl -i -H "Content-Type:application/json" -X POST -d {\"uuid\":\"Alice\",\"HD\":\"MYHD\"} http://localhost:5000/upload/HD
 #signup
 #curl -i -H "Content-Type:application/json" -X POST -d {\"name\":\"Alice\",\"passwd\":\"123abc\"} http://localhost:5000/signup
