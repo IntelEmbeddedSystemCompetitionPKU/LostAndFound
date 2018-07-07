@@ -80,7 +80,19 @@ Item{
             id: textedit
             font.pixelSize: 32
             anchors.fill: parent
+            selectByKeyboard: true
+            selectByMouse: true
+            onVisibleChanged: {
+                if(visible) {
+                    Qt.inputMethod.show()
+                }
+                else {
+                    Qt.inputMethod.hide()
+                }
+            }
         }
     }
+
+
 
 }

@@ -9,8 +9,9 @@ QString datamanager::description = NULL;
 myProcess* datamanager::process = NULL;
 int main(int argc, char *argv[])
 {
-    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
+    qputenv("QT_IM_MODULE",QByteArray("fcitxplatforminputcontext"));
 #if defined(Q_OS_WIN)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif

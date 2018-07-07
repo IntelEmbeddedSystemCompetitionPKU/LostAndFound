@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
-import QtQuick.VirtualKeyboard 2.2
+//import QtQuick.VirtualKeyboard 2.2
+import
 import QtQuick.Controls 1.2
 import "."
 
@@ -17,8 +18,9 @@ ApplicationWindow {
         source: "manager.qml"
         asynchronous: false
     }
+
     //inputpanel = virtual Keyboard
-    InputPanel {
+    /*InputPanel {
         id: inputPanel
         z: 99
         x: 0
@@ -45,6 +47,6 @@ ApplicationWindow {
                 }
             }
         }
-    }
+    }*/
 }
 
