@@ -110,7 +110,7 @@ def handle_query_maskcheck(uuid):
 
     if answer['mask'] == json_data['mask']:
         db,c = mc.cnnct()
-        c.execute("UPDATE Lost SET useruuid=" + json_data['useruuid'] + " WHERE objuuid=" + uuid + ";")
+        c.execute("UPDATE Lost SET owneruuid=" + json_data['useruuid'] + " WHERE objuuid=" + uuid + ";")
         c.execute("UPDATE Lost SET apply='1' WHERE objuuid=" + uuid + ";")
         c.close()
         db.close()
