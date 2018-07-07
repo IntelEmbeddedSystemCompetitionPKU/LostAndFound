@@ -225,3 +225,37 @@ def handle_upload_compress(uuid):
     insert_mysql(uuid, path)
 
     return 'True'
+
+@app.route('/upload/labelinfo', methods=['POST'])
+def handle_upload_labelinfo():
+    data = request.get_data()
+    json_data = json.loads(data.decode('utf-8'))
+
+    username = json_data['username']
+    objuuid = json_data['uuid']
+
+    db,c = mc.cnnct()
+    c.execute("SELECT useruuid FROM User WHERE username=" + username + ";")
+    results = c.fetchall()
+    owneruuid = results[0][0]
+    c.execute("UPDATE Lost SET owneruuid=" + owneruuid + " WHERE objuuid=" + objuuid + ";")
+    c.close()
+    db.close()
+    return 'True'
+
+@app.route('/upload/finderinfo', methods=['POST'])
+def handle_upload_finderinfo():
+    data = request.get_data()
+    json_data = json.loads(data.decode('utf-8'))
+
+    username = json_data['username']
+    objuuid = json_data['uuid']
+
+    db,c = mc.cnnct()
+    c.execute("SELECT useruuid FROM User WHERE username=" + username + ";")
+    results = c.fetchall()
+    owneruuid = results[0][0]
+    c.execute("UPDATE Lost SET finderuuid=" + owneruuid + " WHERE objuuid=" + objuuid + ";")
+    c.close()
+    db.close()
+    return 'True'

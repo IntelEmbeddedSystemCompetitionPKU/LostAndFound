@@ -1,7 +1,8 @@
 import pymysql
+import hashlib
 
-#host = 'localhost'
-host = '10.128.171.97'
+host = 'localhost'
+# host = '10.128.171.97'
 dba, password='LostFoundDba','123'
 # dba, password='root','ykx970910'
 
@@ -13,6 +14,7 @@ def cnnct():
 
 def is_password_right(username,passwd):
     db, c =  cnnct()
+    password=get_md5(passwd + username + 'Author:fcg,yql,ykx')
     # try:
     sql = 'select * from User where username="'+username+'" and password="'+passwd+'";'
     print(sql)
@@ -26,6 +28,15 @@ def is_password_right(username,passwd):
     # except:
     #     db.close()
     #     return False
+
+
+def query_mysql(contents, table, where='true'):
+    db,c =cnnct()
+    c.execute("SELECT " + contents + " FROM " + table + " WHERE "+where+";")
+    results = c.fetchall() # type(results) == tuple
+    c.close()
+    db.close()
+    return results
 
 
 if __name__=='__main__':
