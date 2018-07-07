@@ -77,3 +77,14 @@ def handle_query_noreplylist():
     print(data)
     db.close()
     return data
+
+@app.route('/upload/pass', methods=['POST'])
+def handle_upload_pass():
+    print('handle_upload_pass')
+    data = request.get_data()
+    jdata = json.loads(data.decode('utf-8'))
+    username, targetuuid = jdata['username'], jdata['targetuuid']
+    print(username+' thinks '+targetuuid+' is right!')
+    # db,c=mc.cnnct()
+    # db.close()
+    return 'True'
