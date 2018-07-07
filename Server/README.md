@@ -29,7 +29,7 @@
 | 1.10 可拿失物列表            | /query/lostlist/available/\<useruuid>   | GET    |                                                  | {"uuid_num": <num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}   | not done |
 | 1.11 可拿但未申的失物列表    | /query/lostlist/notapplied/\<useruuid>  | GET    |                                                  | {"uuid_num": <num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}   | not done |
 | 2.1 发送完整压缩文件         | /upload/compress/\<uuid>                | POST   | {"file": <file>}                                 | 'True'/'False'                                               | not done |
-| 2.2 上传标签物品信息         | /upload/labelinfo                       | POST   | {"uuid": <uuid>, "username": <username>}         | 'True'                                                       | waiting to test |
+| 2.2 上传标签物品信息         | /upload/labelinfo                       | POST   | {"uuid": <uuid>, "value": <value>}               | 'True'                                                       | waiting to test |
 | 2.3 上传拾主身份信息         | /upload/finderinfo                      | POST   | {"uuid": <uuid>, "username": <username>}         | 'True'                                                       | waiting to test |
 | 3.1 获取防丢二维码           | /query/qrcode_anti                      | POST   | {"username": <username>, "password": <password>， "description":<description>} | **file**(image)                | done |
 | 3.2 获取从未获取过二维码的物品列表| /query/noobatinlist                | POST   | {"username": <username>}                         | "uuid_num": <num>, "uuid0": <uuid0> ...                      | not done|
