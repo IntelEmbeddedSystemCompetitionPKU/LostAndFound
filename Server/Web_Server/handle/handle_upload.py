@@ -13,7 +13,8 @@ from Web_Server import app
 from flask import request
 import json
 import os
-import pymysql
+#import pymysql
+import Web_Server.db_op.mysql_connect as mc
 
 basepath = '/home/ykx/Server_File/'
 
@@ -25,12 +26,12 @@ def insert_mysql(uuid, path):
     fr = open(path + '/data.txt', 'r')
     item_info = fr.read()
     item_info = json.loads(item_info)
-
+    db, c = mc.cnnct()
     # connect to mysql
-    conn = pymysql.connect("localhost", user='root', passwd='ykx970910', db='LostFound', charset='utf8')
-    cursor = conn.cursor()
+    #conn = pymysql.connect("localhost", user='root', passwd='ykx970910', db='LostFound', charset='utf8')
+    #cursor = conn.cursor()
     # !!! need to modify !!!
-    cursor.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES("
+    c.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES("
             #+ item_info['uuid'] + ","
             + uuid + ","
             + item_info['time'] + ","
@@ -38,9 +39,9 @@ def insert_mysql(uuid, path):
             #+ item_info['mask_num'] + ","
             #+ item_info['usruuid']
             + ")")
-    conn.commit()
-    cursor.close()
-    conn.close()
+    db.commit()
+    c.close()
+    db.close()
 
 ################
 ## APP client ##
