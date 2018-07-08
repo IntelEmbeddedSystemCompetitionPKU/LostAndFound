@@ -65,6 +65,7 @@ public class SearchActivity extends AppCompatActivity
                 String date = mDateText.getText().toString();
                 intent.putExtra("keywords", keywords);
                 intent.putExtra("date", date);
+                intent.putExtra("command", "search");
                 startActivity(intent);
             }
         });
@@ -90,7 +91,8 @@ public class SearchActivity extends AppCompatActivity
             intent.putExtra("command","userqrcode");
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(this, GetableObjectListActivity.class);
+            Intent intent = new Intent(this,ListActivity.class);
+            intent.putExtra("command","getable");
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
             Intent intent = new Intent(this, UserListActivity.class);
@@ -113,9 +115,9 @@ public class SearchActivity extends AppCompatActivity
         final DatePickerDialog.OnDateSetListener pickerlistener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker picker, int selyear, int selmonth, int selday) {
-                mDateText.setText(Integer.toString(selyear) + "-" + Integer.toString(selmonth) +  "-" + Integer.toString(selday));
+                mDateText.setText(Integer.toString(selyear) + "-" + Integer.toString(selmonth + 1) +  "-" + Integer.toString(selday));
                 year = selyear;
-                month = selmonth;
+                month = selmonth + 1;
                 day = selday;
             }
         };
