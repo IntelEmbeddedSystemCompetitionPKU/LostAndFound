@@ -2,7 +2,7 @@
 # DESCRIPTION:
 # handle functions about querying infomations
 #
-# AUTHOR: ykx
+# AUTHOR: fcg, ykx
 # TIME: 2018.06.21
 ########################################################
 
@@ -15,79 +15,75 @@ import json
 import os
 import pymysql
 import base64
+import qrcode
 import Web_Server.db_op.mysql_connect as mc
 basepath = '/home/ykx/Server_File/'
 
-#################
-## Query MySQL ##
-#################
+# order by similarity
+def sort_lost(lostlist,keyword):
+    words=keyword.split(' ')
+    # keyword=keyword.replace(' ','')
+    # chars=[c for c in keyword]
+    # l=[[r,sum([1 for word in words if word in r[1]]), sum([1 for char in chars if char in r[1]]) ] for r in lostlist]
+    l=[[r,sum([1 for word in words if word in r[1]]) ] for r in lostlist]
+    l.sort(key=lambda x: -x[1])
+    lostlist=[e[0] for e in l if e[1]>0]
+    return lostlist
 
-def query_mysql(contents, table):
-    db,c =mc.cnnct()
-    c.execute("SELECT " + contents + " FROM " + table)
-    results = c.fetchall() # type(results) == tuple
-    c.close()
-    db.close()
-    return results
+
+def lostlist2json(lostlist):
+    data='{"uuid_num":'+str(len(lostlist))
+    for i, r in enumerate(lostlist):
+        data+=',num'+str(i)+':'+r[0]
+    data+='}'
+    print(data)
+    return data
 
 @app.route('/query/lostlist', methods=['POST'])
 # description, date
 def handle_query_lostlist():
-    data = request.get_data()
-    json_data = json.loads(data.decode('utf-8'))
-    print(json_data)
+    json_data = json.loads(request.get_data().decode('utf-8'))
+    keyword, date = json_data['description'], json_data['date']
+    print('query lost about '+keyword+' after '+date)
     #time_keywords_dict=time_keywords.split('_')
-    lostlist = query_mysql("objuuid", "Lost")
+    lostlist = mc.query_mysql("objuuid,description", "Lost",'lostdate>='+date)
+    lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
+    return lostlist2json(lostlist)
 
-    json_list = '{"uuid_num": "' + str(len(lostlist)) + '"'
-    for k in range(0, len(lostlist)):
-        json_list = json_list + ',"uuid' + str(k) + '": "' + lostlist[k][0] + '"'
-    json_list = json_list + "}"
-    print(type(json_list))
-    return(json_list.encode('utf-8'))
+@app.route('/query/lostlist/available/<useruuid>', methods=['GET'])
+def handle_query_available(useruuid):
+    lostlist=mc.query_mysql("objuuid", "Lost",'owneruuid="'+useruuid+'"')
+    return lostlist2json(lostlist)
 
-# !!! need to modify !!!
+@app.route('/query/lostlist/notapplied/<useruuid>', methods=['GET'])
+def handle_query_applied(useruuid):
+    lostlist=mc.query_mysql("objuuid", "Lost",'owneruuid="'+useruuid+'" and apply="0"')
+    return lostlist2json(lostlist)
+
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
 def handle_query_getinfo(uuid):
-    path = basepath + uuid
-    if os.path.exists(path) == False:
+    lostlist=mc.query_mysql("description,lostdate", "Lost",'objuuid="'+uuid+'"')
+    if len(lostlist)==0:
         return 'There is no such thing!'
-    fr = open(path + '/data.txt', 'r')
-    data = fr.read()
+    r=lostlist[0]
+    ldpath = basepath + uuid + '/LD'
+    data = '{"description": "' + r[0] + '", "time": "' + r[1] + '", "LD_num": "' + str(os.listdir(ldpath)) + '"}'
     print(data)
-    jdata = json.loads(data)
-    print(jdata)
-    response = '{"description": "' + jdata['description'] + '", "time": "' + jdata['time'] + '", "LD_num": "' + jdata['LD_num'] + '"}'
-    print(response)
-    fr.close()
-    return response
+    return data
+
 
 @app.route('/query/<uuid>/<picture_type>/<order>')
 # uuid: uuid of object
 # picture_type: LD, HD, mask
 # order: 0, 1, 2, ...
 def handle_query_LD(uuid, picture_type, order):
-    print(uuid, picture_type, order)
-    path = basepath + uuid
+    path = basepath + uuid + '/' + picture_type + '/' + order + '.jpg'
     print(path)
     if os.path.exists(path) == False:
         return 'There is no such thing!'
-    #picture = path + '/' + picture_type + '/' + picture_type + order + '.jpg'
-    picture_dir = picture_type + order + '.jpg'
-    #img = open(picture, 'rb')
-    #resp = make_response(img, mimetype='image/jpg')
-    directory = path + '/' + picture_type + '/'
-    return send_from_directory(directory, picture_dir, as_attachment=True)
+    return send_file(path,as_attachment=True)
 
-    #fr = open(picture, 'rb')
-    #img = fr.read()
-    #img64 = {"img": img}
-    #img64 = json.dumps(img64)
-    #img64 = base64.b64encode(img)
-    #files = {'file': open(picture, 'rb')}
-    #print(type(files))
-    return img64
 
 @app.route('/query/maskinfo/<uuid>')
 def handle_query_maskinfo(uuid):
@@ -105,6 +101,7 @@ def handle_query_maskinfo(uuid):
     data = data + '}'
     return data
 
+
 @app.route('/query/maskcheck/<uuid>')
 def handle_query_maskcheck(uuid):
     data = request.get_data()
@@ -116,39 +113,21 @@ def handle_query_maskcheck(uuid):
         return 'There is no such thing!'
     fr = open(path + '/data.txt', 'rb')
     answer = fr.read()
+    answer = json.loads(answer)
 
-    return 'True'
-    #mask_num = int(answer['mask_num'])
-    #for k in range(0, mask_num):
-    #    if (json_data['mask'] != answer['mask']):
-    #        return 'False'
-    #    else:
-    #        return 'True'
-
-
-
-#############################
-#############################
-@app.route('/lost_details/<lost_uuid>')
-# 得到失物详细信息(UUID)(很多张高清图片)
-def show_post(lost_uuid):
-    return '{"images":["img1","img2","img3"]}'
-
-
-@app.route('/qestion/<lost_uuid>')
-# 失物填空题(UUID)(图片，几个空)
-def qestion(lost_uuid):
-    # show the subpath after /path/
-    return '{"image":"img"}'
-
-
-@app.route('/answer/<lost_uuid>')
-# 用户的失物填空题结果(用户ID，UUID，json)(True, False)????
-def answer(lost_uuid):
-    return 'False'
-
-
-@app.route('/lost_qrcode/<usrid>/<lost_uuid>')
-# 得到指定失物的二维码(用户ID，UUID)(Image)
-def lost_qrcode(lost_uuid):
-    return 'lost_qrcode'
+    cnt_right = 0
+    cnt_all = 0
+    for item in json_data:
+        for jtem in json_data[item]:
+            cnt_all = cnt_all + 1;
+            if answer['mask'][item][jtem] == json_data[item][jtem]:
+                cnt_right = cnt_right + 1;
+    if cnt_right > cnt_all * 0.6:
+        db,c = mc.cnnct()
+        c.execute("UPDATE Lost SET owneruuid=" + json_data['useruuid'] + " WHERE objuuid=" + uuid + ";")
+        c.execute("UPDATE Lost SET apply='1' WHERE objuuid=" + uuid + ";")
+        c.close()
+        db.close()
+        return 'True'
+    else:
+        return 'False'

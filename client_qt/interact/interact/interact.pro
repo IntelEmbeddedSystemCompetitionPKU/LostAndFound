@@ -7,7 +7,6 @@ CONFIG += qzxing_qml
 CONFIG += staticlib
 CONFIG += qzxing_multimedia
 
-
 TEMPLATE = app
 TARGET = interact
 INCLUDEPATH += .
@@ -16,8 +15,8 @@ LIBS += -L /usr/lib/python2.7/config-x86_64-linux-gnu
 LIBS += -l python2.7
 INCLUDEPATH += -I /usr/include/python2.7
 
-#include(/home/upsquared/workspace/qzxing/src/QZXing.pri)
-include(/home/richsoap/Workspaces/qzxing/src/QZXing.pri)
+include(/home/upsquared/workspace/qzxing/src/QZXing.pri)
+#include(/home/richsoap/Workspaces/qzxing/src/QZXing.pri)
 # The following define makes your compiler warn you if you use any
 # feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -37,3 +36,8 @@ SOURCES += main.cpp \
     mythread.cpp \
     mypython.cpp
 RESOURCES += qml.qrc
+
+DISTFILES += \
+    maininterface.py \
+    storagemanager.py \
+    upload.py

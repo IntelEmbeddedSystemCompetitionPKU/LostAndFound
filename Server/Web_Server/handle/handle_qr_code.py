@@ -21,33 +21,10 @@ import Web_Server.db_op.mysql_connect as mc
 qrimg_path='/home/lily/testqrcode.png'
 # qrimg_path='/home/ykx/testqrcode.png'
 
-# @app.route('/usr_qr_code', methods=['POST'])
-# # 得到附有个人信息的二维码(用户名，密码(MD5，用公钥加密))(Image)
-# def get_usr_qr_code():
-#     jdata = json.loads(request.data)
-#     print(jdata['name']+'with password '+jdata['passwd']+' wants a qrcode'+jdata['description'])
-#     username=jdata['name']
-#     passwd=jdata['passwd']
-#     description=jdata['description']
-#     try:
-#         r=c.execute('select * from User where username="'+username+'" and passwd="'+passwd+'";')
-#         if r==0:
-#             return 'False'
-#         qrcode = username+'#'+description+'#'+uuid.uuid1().__str__().replace('_','')
-#         c.execute('insert into User_qrcode values('+username+','+qrcode+');')
-#         # img=qrcode.make(qrcode)
-#         # img.save("E:/Some.png")
-#         return qrcode
-#         # return json.dumps({})
-#     except:
-#         return 'False'
-
-
 @app.route('/query/qrcode_user', methods=['POST'])
 def handle_query_qrcode_user():
     print('handle_query_qrcode_user')
-    data = request.get_data()
-    jdata = json.loads(data.decode('utf-8'))
+    jdata = json.loads(request.get_data().decode('utf-8'))
     username, passwd = jdata['username'], jdata['password']
     if not mc.is_password_right(username,passwd):
         return None
@@ -59,29 +36,29 @@ def handle_query_qrcode_user():
 
 
 @app.route('/query/qrcode_lost', methods=['POST'])
+#私钥加密，板子上的公钥解密？
 def handle_query_qrcode_lost():
-    data = request.get_data()
-    jdata = json.loads(data.decode('utf-8'))
-    if ('username' in jdata):
-        info = jdata['useruuid'] + ' ' + jdata['password']
-    elif ('useruuid' in jdata):
-        info = jdata['useruuid'] + jdata['itemuuid']
-    else:
-        return 'Wrong query!'
+    jdata = json.loads(request.get_data().decode('utf-8'))
+    useruuid, itemuuid = jdata['useruuid'], jdata['itemuuid']
+    sql_select='select * from Lost where objuuid="'+itemuuid+'" and owneruuid="'+useruuid+'";'
+    sql_update='update Lost set apply="1"'+' where objuuid="'+itemuuid+'" and owneruuid="'+useruuid+'";'
+    db,c = mc.cnnct()
+    r=c.execute(sql_select)
+    print(r)
+    if r==0:
+        return ''
+    c.execute(sql_update)
+    db.close()
+    info = useruuid+'_'+itemuuid
     img = qrcode.make(info)
-    img.get_image().show()
-    print(img)
-    img.save('/home/ykx/testqrcode.png')
-    directory = '/home/ykx/'
-    picture_dir = 'testqrcode.png'
-    print(directory)
-    return send_from_directory(directory, picture_dir, as_attachment=True)
+    img.save(qrimg_path)
+    return send_file(qrimg_path,as_attachment=True)
+
 
 @app.route('/query/qrcode_anti', methods=['POST'])
 def handle_query_qrcode_anti():
     print('handle_query_qrcode_user')
-    data = request.get_data()
-    jdata = json.loads(data.decode('utf-8'))
+    jdata = json.loads(request.get_data().decode('utf-8'))
     username, passwd, dscpt = jdata['username'], jdata['password'], jdata['description']
     if not mc.is_password_right(username,passwd):
         return None

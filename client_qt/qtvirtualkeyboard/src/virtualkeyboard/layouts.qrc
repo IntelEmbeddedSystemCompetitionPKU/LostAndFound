@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/QtQuick/VirtualKeyboard/content/layouts/en_GB">
+        <file alias="dialpad.qml">/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/en_GB/dialpad.qml</file>
+        <file alias="digits.qml">/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/en_GB/digits.qml</file>
+        <file alias="numbers.qml">/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/en_GB/numbers.qml</file>
+        <file alias="main.qml">/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/en_GB/main.qml</file>
+        <file alias="symbols.qml">/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/en_GB/symbols.qml</file>
+    </qresource>
+</RCC>

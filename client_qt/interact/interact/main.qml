@@ -17,35 +17,34 @@ ApplicationWindow {
         source: "manager.qml"
         asynchronous: false
     }
-
-    //inputpanel = virtual Keyboard
     InputPanel {
-        id: inputPanel
-        z: 99
-        x: 0
-        y: rootwindow.height
-        width: rootwindow.width
+            id: inputPanel
+            z: 99
+            x: 0
+            y: rootwindow.height
+            width: rootwindow.width
 
-        states: State {
-            name: "visible"
-            when: inputPanel.active
-            PropertyChanges {
-                target: inputPanel
-                y: rootwindow.height - inputPanel.height
-            }
-        }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    properties: "y"
-                    duration: 250
-                    easing.type: Easing.InOutQuad
+            states: State {
+                name: "visible"
+                when: inputPanel.active
+                PropertyChanges {
+                    target: inputPanel
+                    y: rootwindow.height - inputPanel.height
                 }
             }
-        }
+            transitions: Transition {
+                from: ""
+                to: "visible"
+                reversible: true
+                ParallelAnimation {
+                    NumberAnimation {
+                        properties: "y"
+                        duration: 250
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
     }
+
 }
 

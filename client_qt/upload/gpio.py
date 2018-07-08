@@ -5,7 +5,7 @@ import time
 import argparse
 
 
-def save_item(target):
+def open_door(target):
     motor = mraa.Gpio(10)
     sensor = mraa.Gpio(8)
 # for our sensor, 1 means empty, 0 means something there

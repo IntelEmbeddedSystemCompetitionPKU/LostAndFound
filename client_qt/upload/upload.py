@@ -132,10 +132,10 @@ if __name__ == '__main__':
     parser.add_argument('-mode',type=str)
     args = parser.parse_args()
     if(args.mode == 'new'):
-        #gpio.save_item(0)
+        gpio.open_door(0)
         start_process_new(args.srcdir)
     elif(args.mode == 'old'):
-        gpio.save_item(0)
+        gpio.open_door(0)
 
 
 
