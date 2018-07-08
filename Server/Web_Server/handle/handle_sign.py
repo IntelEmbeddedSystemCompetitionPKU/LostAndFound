@@ -22,6 +22,11 @@ import uuid
 import os
 import hashlib
 import Web_Server.db_op.mysql_connect as mc
+import hashlib
+
+def get_md5(s):
+    md5=hashlib.md5(s.encode('utf-8')).hexdigest()
+    return md5
 
 @app.route('/sign/signup', methods=['POST'])
 # 注册（密码MD5加密）

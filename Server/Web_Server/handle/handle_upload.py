@@ -15,7 +15,8 @@ import json
 import os
 import Web_Server.db_op.mysql_connect as mc
 
-basepath = '/home/ykx/Server_File/'
+# basepath = '/home/ykx/Server_File/'
+basepath = '/home/lily/Server_File/'
 
 ##################
 ## Insert MySQL ##
