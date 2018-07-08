@@ -56,4 +56,8 @@ uuid-location
 ### 返回值
 * 0: 有人脸
 * -1:没有人脸
-
+# IMPORTANT!!!
+## 中文输入法
+* qmake CONFIG+="lang-en_GB" CONFIG+="lang-zh_CN"
+* make
+* sudo make install
