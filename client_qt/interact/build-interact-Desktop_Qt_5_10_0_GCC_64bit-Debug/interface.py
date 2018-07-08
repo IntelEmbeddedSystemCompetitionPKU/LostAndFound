@@ -35,6 +35,7 @@ def isface(uuid):
 
 
 def classify_img(uuid, number):
+    number -= 1
     for root, dirs, filename in os.walk(croot + uuid + '/OCR/'):
         for files in filename:
             print(root+files)
@@ -147,15 +148,14 @@ def generate_txt(rootdir):
                     with open(root + filename,'r') as f:
                         for lines in f:
                             clips = lines.split(' ')
-                            if len(clips) == 2:
-                                if clips[0] == 'kind':
-                                    totaldesc += clips[0]
-                                    totaldesc += ';'
+                            if clips[0].contains('blank'):
+                                j += 1
+                                if len(clips) == 1:
+                                    tempbody[clips[0]] = ''
                                 else:
-                                    j += 1
                                     tempbody[clips[0]] = clips[1]
                             else:
-                                totaldesc += clips[0]
+                                totaldesc += lines
                                 totaldesc += ';'
                     tempbody['block_num'] = str(j)
                     body['mask' + str(i)] = tempbody
@@ -174,20 +174,23 @@ def reshape_photos(path):
     for root, dirs, filenames in os.walk(path + 'mask/'):
         for filename in filenames:
             if filename.endswith('.jpg'):
-                image = cv2.imread(root + filename)
-                image = cv2.resize(image, (640,480))
-                cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
+                shutil.copyfile(root + str(number) + '.jpg', croot + uuid + '/LD/' + str(number) + '.jpg')
+                #image = cv2.imread(root + filename)
+                #image = cv2.resize(image, (640,480))
+                #cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
                 count += 1
     acount = 0
     print('in HD')
     for root, dirs, filenames in os.walk(path + 'HD/'):
         for filename in filenames:
             if filename.endswith('.jpg'):
-                image = cv2.imread(root + filename)
-                image = cv2.resize(image, (640,480))
-                cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
+                shutil.copyfile(root + str(number) + '.jpg', croot + uuid + '/LD/' + str(number) + '.jpg')
+                #image = cv2.imread(root + filename)
+                #image = cv2.resize(image, (640,480))
+                #cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
                 count += 1
-            os.rename(root + filename, root + str(acount) + '.jpg')
+                os.rename(root + filename, root + str(acount) + '.jpg')
+                acount += 1
 
 def targz_path(rootdir):
     os.system('tar -C' + rootdir +' -cvf ' + rootdir +'upload.tar.gz data.txt/ HD/ mask/ LD/')

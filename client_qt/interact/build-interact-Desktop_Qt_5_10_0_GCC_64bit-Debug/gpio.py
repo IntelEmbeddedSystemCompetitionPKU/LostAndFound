@@ -2,7 +2,7 @@
 
 import mraa
 import time
-import argparse
+import sys
 
 
 def opendoor(target):
@@ -75,3 +75,6 @@ def opendoor(target):
     lock.write(1)
     time.sleep(0.5)
     lock.write(0)
+
+if __name__ == '__main__':
+    open_door(sys.argv[1])
