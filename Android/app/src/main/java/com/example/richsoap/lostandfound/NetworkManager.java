@@ -176,8 +176,8 @@ public class NetworkManager {
 
     static public Bitmap getImage(String uuid, String kind, int number, Context mContext) {// For every image from server
         InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
-                .cacheStore(new DBCacheStore(mContext).setEnable(true))
-                .cookieStore(new DBCookieStore(mContext).setEnable(true))
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
                 .build();
         NoHttp.initialize(initializationConfig);
         //NoHttp.initialize(mContext);
@@ -199,7 +199,12 @@ public class NetworkManager {
     }
 
     static public Bitmap getQRImage(String uuid, Context mContext) {// For every image from server
-        NoHttp.initialize(mContext);/////////need more logic here
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
+        NoHttp.initialize(initializationConfig);
+        //NoHttp.initialize(mContext);/////////need more logic here
         String url = "http://" + ip + ":" + port +"/query/qrcode_lost";
         NoHttp.initialize(mContext);
         Log.d(TAG, "getQRImage: Try to get QRcode:" + url);
@@ -352,7 +357,12 @@ public class NetworkManager {
     }
 
     static public Bitmap generateQRCode(String description, Context mContext) {
-        NoHttp.initialize(mContext);
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
+        NoHttp.initialize(initializationConfig);
+        //NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/query/qrcode_anti";
         JSONObject jsonObject = new JSONObject();
         try {
@@ -465,7 +475,12 @@ public class NetworkManager {
         return itemList;
     }
     static public Bitmap getUserQRImage(Context mContext) {
-        NoHttp.initialize(mContext);/////////need more logic here
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
+        NoHttp.initialize(initializationConfig);
+        //NoHttp.initialize(mContext);/////////need more logic here
         String url = "http://" + ip + ":" + port +"/query/qrcode_user";
         NoHttp.initialize(mContext);
         JSONObject jsonObject = new JSONObject();
