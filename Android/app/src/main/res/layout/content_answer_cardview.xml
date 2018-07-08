@@ -12,7 +12,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+        <ImageView
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/answer_cardview_image"/>

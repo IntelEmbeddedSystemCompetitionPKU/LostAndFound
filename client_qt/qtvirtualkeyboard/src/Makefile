@@ -28,7 +28,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = src1.0.0
-DISTDIR = /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/.obj/src1.0.0
+DISTDIR = /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/.obj/src1.0.0
 SUBTARGETS    =  \
 		sub-virtualkeyboard-3rdparty-pinyin \
 		sub-virtualkeyboard \
@@ -38,104 +38,104 @@ SUBTARGETS    =  \
 
 sub-virtualkeyboard-3rdparty-pinyin-qmake_all:  FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro
+	cd virtualkeyboard/3rdparty/pinyin/ && $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro
 	cd virtualkeyboard/3rdparty/pinyin/ && $(MAKE) -f Makefile qmake_all
 sub-virtualkeyboard-3rdparty-pinyin: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile
 sub-virtualkeyboard-3rdparty-pinyin-make_first: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile 
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile 
 sub-virtualkeyboard-3rdparty-pinyin-all: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile all
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile all
 sub-virtualkeyboard-3rdparty-pinyin-clean: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile clean
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile clean
 sub-virtualkeyboard-3rdparty-pinyin-distclean: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile distclean
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile distclean
 sub-virtualkeyboard-3rdparty-pinyin-install_subtargets: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install
 sub-virtualkeyboard-3rdparty-pinyin-uninstall_subtargets: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall
 sub-virtualkeyboard-qmake_all: sub-virtualkeyboard-3rdparty-pinyin-qmake_all FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro
+	cd virtualkeyboard/ && $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro
 	cd virtualkeyboard/ && $(MAKE) -f Makefile qmake_all
 sub-virtualkeyboard: sub-virtualkeyboard-3rdparty-pinyin FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile
 sub-virtualkeyboard-make_first: sub-virtualkeyboard-3rdparty-pinyin-make_first FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile 
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile 
 sub-virtualkeyboard-all: sub-virtualkeyboard-3rdparty-pinyin-all FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile all
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile all
 sub-virtualkeyboard-clean: sub-virtualkeyboard-3rdparty-pinyin-clean FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile clean
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile clean
 sub-virtualkeyboard-distclean: sub-virtualkeyboard-3rdparty-pinyin-distclean FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile distclean
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile distclean
 sub-virtualkeyboard-install_subtargets: sub-virtualkeyboard-3rdparty-pinyin-install_subtargets FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install
 sub-virtualkeyboard-uninstall_subtargets: sub-virtualkeyboard-3rdparty-pinyin-uninstall_subtargets FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall
 sub-virtualkeyboard-import-qmake_all:  FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro
+	cd virtualkeyboard/import/ && $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro
 	cd virtualkeyboard/import/ && $(MAKE) -f Makefile qmake_all
 sub-virtualkeyboard-import: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile
 sub-virtualkeyboard-import-make_first: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile 
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile 
 sub-virtualkeyboard-import-all: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile all
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile all
 sub-virtualkeyboard-import-clean: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile clean
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile clean
 sub-virtualkeyboard-import-distclean: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile distclean
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile distclean
 sub-virtualkeyboard-import-install_subtargets: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install
 sub-virtualkeyboard-import-uninstall_subtargets: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall
 sub-virtualkeyboard-styles-qmake_all:  FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro
+	cd virtualkeyboard/styles/ && $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro
 	cd virtualkeyboard/styles/ && $(MAKE) -f Makefile qmake_all
 sub-virtualkeyboard-styles: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile
 sub-virtualkeyboard-styles-make_first: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile 
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile 
 sub-virtualkeyboard-styles-all: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile all
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile all
 sub-virtualkeyboard-styles-clean: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile clean
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile clean
 sub-virtualkeyboard-styles-distclean: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile distclean
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile distclean
 sub-virtualkeyboard-styles-install_subtargets: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install
 sub-virtualkeyboard-styles-uninstall_subtargets: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall
 
 Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/common/unix.conf \
@@ -174,10 +174,14 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_designer.pri \
@@ -210,6 +214,8 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
@@ -222,6 +228,8 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
@@ -237,6 +245,14 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
@@ -260,6 +276,13 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webview.pri \
@@ -274,6 +297,7 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri \
 		../mkspecs/modules/qt_ext_pinyin.pri \
+		../mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_functions.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++/qmake.conf \
@@ -340,10 +364,14 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_designer.pri:
@@ -376,6 +404,8 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri:
@@ -388,6 +418,8 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
@@ -403,6 +435,14 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_sensors.pri:
@@ -426,6 +466,13 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webview.pri:
@@ -440,6 +487,7 @@ Makefile: src.pro ../.qmake.conf ../.qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mks
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri:
 ../mkspecs/modules/qt_ext_pinyin.pri:
+../mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_functions.prf:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_config.prf:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++/qmake.conf:
@@ -489,156 +537,156 @@ docs:
 
 sub-virtualkeyboard-3rdparty-pinyin-install_html_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install_html_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install_html_docs
 sub-virtualkeyboard-install_html_docs: sub-virtualkeyboard-3rdparty-pinyin-install_html_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install_html_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install_html_docs
 sub-virtualkeyboard-import-install_html_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install_html_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install_html_docs
 sub-virtualkeyboard-styles-install_html_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install_html_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install_html_docs
 install_html_docs: sub-virtualkeyboard-3rdparty-pinyin-install_html_docs sub-virtualkeyboard-install_html_docs sub-virtualkeyboard-import-install_html_docs sub-virtualkeyboard-styles-install_html_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-uninstall_html_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall_html_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall_html_docs
 sub-virtualkeyboard-uninstall_html_docs: sub-virtualkeyboard-3rdparty-pinyin-uninstall_html_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall_html_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall_html_docs
 sub-virtualkeyboard-import-uninstall_html_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall_html_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall_html_docs
 sub-virtualkeyboard-styles-uninstall_html_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall_html_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall_html_docs
 uninstall_html_docs: sub-virtualkeyboard-3rdparty-pinyin-uninstall_html_docs sub-virtualkeyboard-uninstall_html_docs sub-virtualkeyboard-import-uninstall_html_docs sub-virtualkeyboard-styles-uninstall_html_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-install_qch_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install_qch_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install_qch_docs
 sub-virtualkeyboard-install_qch_docs: sub-virtualkeyboard-3rdparty-pinyin-install_qch_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install_qch_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install_qch_docs
 sub-virtualkeyboard-import-install_qch_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install_qch_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install_qch_docs
 sub-virtualkeyboard-styles-install_qch_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install_qch_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install_qch_docs
 install_qch_docs: sub-virtualkeyboard-3rdparty-pinyin-install_qch_docs sub-virtualkeyboard-install_qch_docs sub-virtualkeyboard-import-install_qch_docs sub-virtualkeyboard-styles-install_qch_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-uninstall_qch_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
 sub-virtualkeyboard-uninstall_qch_docs: sub-virtualkeyboard-3rdparty-pinyin-uninstall_qch_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
 sub-virtualkeyboard-import-uninstall_qch_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
 sub-virtualkeyboard-styles-uninstall_qch_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
 uninstall_qch_docs: sub-virtualkeyboard-3rdparty-pinyin-uninstall_qch_docs sub-virtualkeyboard-uninstall_qch_docs sub-virtualkeyboard-import-uninstall_qch_docs sub-virtualkeyboard-styles-uninstall_qch_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-install_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile install_docs
 sub-virtualkeyboard-install_docs: sub-virtualkeyboard-3rdparty-pinyin-install_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile install_docs
 sub-virtualkeyboard-import-install_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile install_docs
 sub-virtualkeyboard-styles-install_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile install_docs
 install_docs: sub-virtualkeyboard-3rdparty-pinyin-install_docs sub-virtualkeyboard-install_docs sub-virtualkeyboard-import-install_docs sub-virtualkeyboard-styles-install_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-uninstall_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile uninstall_docs
 sub-virtualkeyboard-uninstall_docs: sub-virtualkeyboard-3rdparty-pinyin-uninstall_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile uninstall_docs
 sub-virtualkeyboard-import-uninstall_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile uninstall_docs
 sub-virtualkeyboard-styles-uninstall_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile uninstall_docs
 uninstall_docs: sub-virtualkeyboard-3rdparty-pinyin-uninstall_docs sub-virtualkeyboard-uninstall_docs sub-virtualkeyboard-import-uninstall_docs sub-virtualkeyboard-styles-uninstall_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-qch_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile qch_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile qch_docs
 sub-virtualkeyboard-qch_docs: sub-virtualkeyboard-3rdparty-pinyin-qch_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile qch_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile qch_docs
 sub-virtualkeyboard-import-qch_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile qch_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile qch_docs
 sub-virtualkeyboard-styles-qch_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile qch_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile qch_docs
 qch_docs: sub-virtualkeyboard-3rdparty-pinyin-qch_docs sub-virtualkeyboard-qch_docs sub-virtualkeyboard-import-qch_docs sub-virtualkeyboard-styles-qch_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-prepare_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile prepare_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile prepare_docs
 sub-virtualkeyboard-prepare_docs: sub-virtualkeyboard-3rdparty-pinyin-prepare_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile prepare_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile prepare_docs
 sub-virtualkeyboard-import-prepare_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile prepare_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile prepare_docs
 sub-virtualkeyboard-styles-prepare_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile prepare_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile prepare_docs
 prepare_docs: sub-virtualkeyboard-3rdparty-pinyin-prepare_docs sub-virtualkeyboard-prepare_docs sub-virtualkeyboard-import-prepare_docs sub-virtualkeyboard-styles-prepare_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-generate_docs:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile generate_docs
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile generate_docs
 sub-virtualkeyboard-generate_docs: sub-virtualkeyboard-3rdparty-pinyin-generate_docs
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile generate_docs
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile generate_docs
 sub-virtualkeyboard-import-generate_docs:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile generate_docs
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile generate_docs
 sub-virtualkeyboard-styles-generate_docs:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile generate_docs
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile generate_docs
 generate_docs: sub-virtualkeyboard-3rdparty-pinyin-generate_docs sub-virtualkeyboard-generate_docs sub-virtualkeyboard-import-generate_docs sub-virtualkeyboard-styles-generate_docs
 
 sub-virtualkeyboard-3rdparty-pinyin-check:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile check
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile check
 sub-virtualkeyboard-check: sub-virtualkeyboard-3rdparty-pinyin-check
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile check
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile check
 sub-virtualkeyboard-import-check:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile check
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile check
 sub-virtualkeyboard-styles-check:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile check
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile check
 check: sub-virtualkeyboard-3rdparty-pinyin-check sub-virtualkeyboard-check sub-virtualkeyboard-import-check sub-virtualkeyboard-styles-check
 
 sub-virtualkeyboard-3rdparty-pinyin-benchmark:
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile benchmark
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -f Makefile benchmark
 sub-virtualkeyboard-benchmark: sub-virtualkeyboard-3rdparty-pinyin-benchmark
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile benchmark
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -f Makefile benchmark
 sub-virtualkeyboard-import-benchmark:
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile benchmark
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -f Makefile benchmark
 sub-virtualkeyboard-styles-benchmark:
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile benchmark
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -f Makefile benchmark
 benchmark: sub-virtualkeyboard-3rdparty-pinyin-benchmark sub-virtualkeyboard-benchmark sub-virtualkeyboard-import-benchmark sub-virtualkeyboard-styles-benchmark
 install:install_subtargets  FORCE
 
@@ -651,21 +699,21 @@ dist: distdir FORCE
 
 distdir: sub-virtualkeyboard-3rdparty-pinyin-distdir sub-virtualkeyboard-distdir sub-virtualkeyboard-import-distdir sub-virtualkeyboard-styles-distdir FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
-	$(COPY_FILE) --parents ../mkspecs/modules/qt_ext_pinyin.pri ../.qmake.conf ../.qmake.stash config.pri src.pro $(DISTDIR)/
+	$(COPY_FILE) --parents ../mkspecs/modules/qt_ext_pinyin.pri ../mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri ../.qmake.conf ../.qmake.stash config.pri src.pro $(DISTDIR)/
 
 sub-virtualkeyboard-3rdparty-pinyin-distdir: FORCE
 	@test -d virtualkeyboard/3rdparty/pinyin/ || mkdir -p virtualkeyboard/3rdparty/pinyin/
-	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard/3rdparty/pinyin
+	cd virtualkeyboard/3rdparty/pinyin/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/pinyin.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard/3rdparty/pinyin
 
 sub-virtualkeyboard-distdir: FORCE
 	@test -d virtualkeyboard/ || mkdir -p virtualkeyboard/
-	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard
+	cd virtualkeyboard/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard
 
 sub-virtualkeyboard-import-distdir: FORCE
 	@test -d virtualkeyboard/import/ || mkdir -p virtualkeyboard/import/
-	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard/import
+	cd virtualkeyboard/import/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/import/import.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard/import
 
 sub-virtualkeyboard-styles-distdir: FORCE
 	@test -d virtualkeyboard/styles/ || mkdir -p virtualkeyboard/styles/
-	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard/styles
+	cd virtualkeyboard/styles/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/styles/styles.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/virtualkeyboard/styles
 

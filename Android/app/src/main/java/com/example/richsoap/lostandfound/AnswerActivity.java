@@ -150,9 +150,9 @@ public class AnswerActivity extends AppCompatActivity {
         protected void onProgressUpdate(Blanks... details) {
             if(details[0].getImage() == null) {
                 Toast.makeText(context,"Network error, please try again later", Toast.LENGTH_SHORT).show();
-                cancel(false);
-                addBlankToList(details[0]);
+                cancel(true);
             }
+            addBlankToList(details[0]);
         }
 
         @Override
@@ -169,6 +169,7 @@ public class AnswerActivity extends AppCompatActivity {
     public void showQRCode() {
         Intent intent = new Intent(this, ObjectQRActivity.class);
         intent.putExtra("UUID", uuid);
+        intent.putExtra("command", "item");
         startActivity(intent);
         finish();
     }

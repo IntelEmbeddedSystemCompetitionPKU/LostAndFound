@@ -28,7 +28,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qtvirtualkeyboard1.0.0
-DISTDIR = /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/.obj/qtvirtualkeyboard1.0.0
+DISTDIR = /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/.obj/qtvirtualkeyboard1.0.0
 SUBTARGETS    =  \
 		sub-src \
 		sub-examples \
@@ -37,79 +37,79 @@ SUBTARGETS    =  \
 
 sub-src-qmake_all:  FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro
+	cd src/ && $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro
 	cd src/ && $(MAKE) -f Makefile qmake_all
 sub-src: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile
 sub-src-make_first: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile 
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile 
 sub-src-all: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile all
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile all
 sub-src-clean: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile clean
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile clean
 sub-src-distclean: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile distclean
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile distclean
 sub-src-install_subtargets: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install
 sub-src-uninstall_subtargets: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall
 sub-examples-qmake_all: sub-src-qmake_all FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro
+	cd examples/ && $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro
 	cd examples/ && $(MAKE) -f Makefile qmake_all
 sub-examples: sub-src FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile
 sub-examples-make_first: sub-src-make_first FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile 
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile 
 sub-examples-all: sub-src-all FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile all
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile all
 sub-examples-clean: sub-src-clean FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile clean
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile clean
 sub-examples-distclean: sub-src-distclean FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile distclean
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile distclean
 sub-examples-install_subtargets: sub-src-install_subtargets FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile install
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile install
 sub-examples-uninstall_subtargets: sub-src-uninstall_subtargets FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile uninstall
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -f Makefile uninstall
 sub-tests-qmake_all: sub-src-qmake_all FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro
+	cd tests/ && $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro
 	cd tests/ && $(MAKE) -f Makefile qmake_all
 sub-tests: sub-src FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile
 sub-tests-make_first: sub-src-make_first FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile 
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile 
 sub-tests-all: sub-src-all FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile all
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile all
 sub-tests-clean: sub-src-clean FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile clean
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile clean
 sub-tests-distclean: sub-src-distclean FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile distclean
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile distclean
 sub-tests-install_subtargets: sub-src-install_subtargets FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile install
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile install
 sub-tests-uninstall_subtargets: sub-src-uninstall_subtargets FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile uninstall
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -f Makefile uninstall
 
 Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/common/unix.conf \
@@ -148,10 +148,14 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_designer.pri \
@@ -184,6 +188,8 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
@@ -196,6 +202,8 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
@@ -211,6 +219,14 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
@@ -234,6 +250,13 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri \
+		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webview.pri \
@@ -248,7 +271,6 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri \
 		mkspecs/modules/qt_ext_pinyin.pri \
-		mkspecs/modules-inst/qt_plugin_qtvirtualkeyboardplugin.pri \
 		mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_functions.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_config.prf \
@@ -317,10 +339,14 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_designer.pri:
@@ -353,6 +379,8 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri:
@@ -365,6 +393,8 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
@@ -380,6 +410,14 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_sensors.pri:
@@ -403,6 +441,13 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri:
+/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webview.pri:
@@ -417,7 +462,6 @@ Makefile: qtvirtualkeyboard.pro .qmake.conf .qmake.cache /opt/Qt5.10.0/5.10.0/gc
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri:
 mkspecs/modules/qt_ext_pinyin.pri:
-mkspecs/modules-inst/qt_plugin_qtvirtualkeyboardplugin.pri:
 mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_functions.prf:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_config.prf:
@@ -470,57 +514,57 @@ docs:
 
 sub-src-install_html_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install_html_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install_html_docs
 install_html_docs: sub-src-install_html_docs
 
 sub-src-uninstall_html_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall_html_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall_html_docs
 uninstall_html_docs: sub-src-uninstall_html_docs
 
 sub-src-install_qch_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install_qch_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install_qch_docs
 install_qch_docs: sub-src-install_qch_docs
 
 sub-src-uninstall_qch_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall_qch_docs
 uninstall_qch_docs: sub-src-uninstall_qch_docs
 
 sub-src-install_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile install_docs
 install_docs: sub-src-install_docs
 
 sub-src-uninstall_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile uninstall_docs
 uninstall_docs: sub-src-uninstall_docs
 
 sub-src-qch_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile qch_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile qch_docs
 qch_docs: sub-src-qch_docs
 
 sub-src-prepare_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile prepare_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile prepare_docs
 prepare_docs: sub-src-prepare_docs
 
 sub-src-generate_docs:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile generate_docs
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile generate_docs
 generate_docs: sub-src-generate_docs
 
 sub-src-check:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile check
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile check
 check: sub-src-check
 
 sub-src-benchmark:
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile benchmark
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -f Makefile benchmark
 benchmark: sub-src-benchmark
 install:install_subtargets  FORCE
 
@@ -533,17 +577,17 @@ dist: distdir FORCE
 
 distdir: sub-src-distdir sub-examples-distdir sub-tests-distdir FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
-	$(COPY_FILE) --parents mkspecs/modules/qt_ext_pinyin.pri mkspecs/modules-inst/qt_plugin_qtvirtualkeyboardplugin.pri mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri .qmake.conf .qmake.stash qtvirtualkeyboard.pro $(DISTDIR)/
+	$(COPY_FILE) --parents mkspecs/modules/qt_ext_pinyin.pri mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri .qmake.conf .qmake.stash qtvirtualkeyboard.pro $(DISTDIR)/
 
 sub-src-distdir: FORCE
 	@test -d src/ || mkdir -p src/
-	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/src
+	cd src/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/src.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/src
 
 sub-examples-distdir: FORCE
 	@test -d examples/ || mkdir -p examples/
-	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/examples
+	cd examples/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/examples.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/examples
 
 sub-tests-distdir: FORCE
 	@test -d tests/ || mkdir -p tests/
-	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/tests
+	cd tests/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/tests.pro ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/tests
 

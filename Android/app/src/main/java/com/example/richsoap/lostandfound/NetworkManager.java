@@ -22,6 +22,7 @@ import com.yanzhenjie.nohttp.rest.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -183,11 +184,13 @@ public class NetworkManager {
         String url = "http://" + ip + ":" + port +"/query/" + uuid + "/" + kind + "/" + Integer.toString(number);
         NoHttp.initialize(mContext);
         Log.d(TAG, "getImage: Try to get " + url);
-        Request<Bitmap> req = NoHttp.createImageRequest(url);
-        req.setCacheMode(CacheMode.NONE_CACHE_REQUEST_NETWORK);
+        Request<Bitmap> req = NoHttp.createImageRequest(url, RequestMethod.GET);
         Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
             Log.d(TAG, "getImage: Get image success");
+            if(response.get() == null) {
+                Log.d(TAG, "getImage: Get nothing");
+            }
             return response.get();
         } else {
             Log.d(TAG, "getImage: Get image fail");
@@ -264,9 +267,9 @@ public class NetworkManager {
 
     static public boolean tryToValid(String uuid, JSONObject jsonObject, Context mContext) {
         NoHttp.initialize(mContext);
-        String url = "http://" + ip + ":" + port +"/query/maskcheck/" + userName;
+        String url = "http://" + ip + ":" + port +"/query/maskcheck/" + userName + "/" + uuid;
         Log.d(TAG, "tryToVaild: Json is " + jsonObject.toString());
-        Request<String> req = NoHttp.createStringRequest(url, RequestMethod.GET);
+        Request<String> req = NoHttp.createStringRequest(url, RequestMethod.POST );
         req.setDefineRequestBodyForJson(jsonObject);
         Response<String> response = NoHttp.startRequestSync(req);
         if(response.isSucceed()) {
@@ -410,7 +413,7 @@ public class NetworkManager {
     }
 
     static public List<String> getGetableItemList() {
-        String url = "http://" + ip + ":" + port +"/query/lostlist/available" + userName;
+        String url = "http://" + ip + ":" + port +"/query/lostlist/available/" + userName;
         Request<String> request = NoHttp.createStringRequest(url,  RequestMethod.GET);
         Response<String> response = NoHttp.startRequestSync(request);
         List<String> imageList = new ArrayList<>();
@@ -436,7 +439,8 @@ public class NetworkManager {
         return imageList;
     }
     static public List<LostObject> getUnreadGetableItemList(Context mContext) {
-        String url = "http://" + ip + ":" + port +"/query/lostlist/available" + userName;
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/query/lostlist/notapplied/" + userName;
         Request<String> request = NoHttp.createStringRequest(url,  RequestMethod.GET);
         Response<String> response = NoHttp.startRequestSync(request);
         List<LostObject> itemList = new ArrayList<>();
@@ -464,7 +468,6 @@ public class NetworkManager {
         NoHttp.initialize(mContext);/////////need more logic here
         String url = "http://" + ip + ":" + port +"/query/qrcode_user";
         NoHttp.initialize(mContext);
-        Log.d(TAG, "getQRImage: Try to get QRcode:" + url);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", userName);
