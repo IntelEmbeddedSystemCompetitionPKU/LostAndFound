@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import com.example.richsoap.lostandfound.ChatActivity;
 import com.example.richsoap.lostandfound.DetailActivity;
 import com.example.richsoap.lostandfound.NetworkManager;
+import com.example.richsoap.lostandfound.NormalObject.LostObject;
 import com.example.richsoap.lostandfound.NormalObject.OtherUser;
 import com.example.richsoap.lostandfound.R;
 import com.example.richsoap.lostandfound.Table.GettableLostObject;
@@ -26,7 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class CheckService extends Service {
-    private List<GettableLostObject> itemList;
+    private List<LostObject> itemList;
     private List<OtherUser> userList;
     private Timer timer;
     private Context context;
@@ -58,12 +59,14 @@ public class CheckService extends Service {
             @Override
             public void run() {
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                List<GettableLostObject> tempItemList = NetworkManager.getUnreadGetableItemList();
+                List<LostObject> tempItemList = NetworkManager.getUnreadGetableItemList(context);
                 for(int i = 0;i < tempItemList.size();i ++) {
                     if(!itemList.contains(tempItemList.get(i))) {
                         Intent intent = new Intent(context, ChatActivity.class);
                         intent.putExtra("uuid", tempItemList.get(i).getUuid());
                         intent.putExtra("kind",1);
+                        intent.putExtra("date", tempItemList.get(i).getDate());
+                        intent.putExtra("description", tempItemList.get(i).getDescription());
                         // Description??
                         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
                         Notification notification = new NotificationCompat.Builder(context)
