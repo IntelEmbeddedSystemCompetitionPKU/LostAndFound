@@ -35,7 +35,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qtpinyin1.0.0
-DISTDIR = /home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/.obj/qtpinyin1.0.0
+DISTDIR = /home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/src/virtualkeyboard/3rdparty/pinyin/.obj/qtpinyin1.0.0
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -80,6 +80,7 @@ OBJECTS       = .obj/dictbuilder.o \
 		.obj/utf16char.o \
 		.obj/utf16reader.o
 DIST          = ../../../../mkspecs/modules/qt_ext_pinyin.pri \
+		../../../../mkspecs/modules-inst/qt_plugin_qtvirtualkeyboardplugin.pri \
 		../../../../mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri \
 		../../../../.qmake.conf \
 		../../../../.qmake.stash \
@@ -171,14 +172,10 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_designer.pri \
@@ -211,8 +208,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
@@ -225,8 +220,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
@@ -242,14 +235,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
@@ -273,13 +258,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri \
-		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webview.pri \
@@ -294,6 +272,7 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri \
 		../../../../mkspecs/modules/qt_ext_pinyin.pri \
+		../../../../mkspecs/modules-inst/qt_plugin_qtvirtualkeyboardplugin.pri \
 		../../../../mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_functions.prf \
 		/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_config.prf \
@@ -366,14 +345,10 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_charts_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_designer.pri:
@@ -406,8 +381,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri:
@@ -420,8 +393,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
@@ -437,14 +408,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_script_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scripttools_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_sensors.pri:
@@ -468,13 +431,6 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webengine_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri:
-/opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_webview.pri:
@@ -489,6 +445,7 @@ Makefile: pinyin.pro ../../../../.qmake.conf ../../../../.qmake.cache /opt/Qt5.1
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri:
 ../../../../mkspecs/modules/qt_ext_pinyin.pri:
+../../../../mkspecs/modules-inst/qt_plugin_qtvirtualkeyboardplugin.pri:
 ../../../../mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_functions.prf:
 /opt/Qt5.10.0/5.10.0/gcc_64/mkspecs/features/qt_config.prf:
