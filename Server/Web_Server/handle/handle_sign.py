@@ -24,10 +24,6 @@ import hashlib
 import Web_Server.db_op.mysql_connect as mc
 import hashlib
 
-def get_md5(s):
-    md5=hashlib.md5(s.encode('utf-8')).hexdigest()
-    return md5
-
 @app.route('/sign/signup', methods=['POST'])
 # 注册（密码MD5加密）
 # 需要：username, password
@@ -39,7 +35,9 @@ def handle_sign_signup():
     print(username+' trys to sign up with password '+passwd)
     #若不冲突且合法则存入数据库
     useruuid = uuid.uuid1().__str__().replace('-','')
-    passwd=get_md5(jdata['password'] + jdata['username'] + 'Author:fcg,yql,ykx')
+    passwd=mc.get_md5(passwd)# + jdata['username'] + 'Author:fcg,yql,ykx')
+    print(passwd)
+    print(len(passwd))
     db,c=mc.cnnct()
     try:
         sql='insert into User values("'+username+'","'+passwd+'","'+useruuid+'");'

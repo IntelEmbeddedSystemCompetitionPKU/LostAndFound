@@ -29,7 +29,7 @@ def handle_query_qrcode_user():
     if not mc.is_password_right(username,passwd):
         return None
     print(username+' query his qrcode')
-    code='key'+username#+passwd
+    code='user'+username#+passwd
     print(code)
     print('\n'*5)
     qrcode.make(code).save(qrimg_path)
@@ -69,7 +69,7 @@ def handle_query_qrcode_anti():
     if not mc.is_password_right(username,passwd):
         return 'password not right!'
     print(username+'gets a qrcode with description: '+dscpt)
-    code='mark'+username+dscpt+(uuid.uuid1().__str__().replace('-',''))
+    code='mark'+username +'*'+ dscpt+(uuid.uuid1().__str__().replace('-',''))
     db,c=mc.cnnct()
     sql='insert into Anti_qrcode values("'+username+'", "'+code+'");'
     # sql='insert into Anti_qrcode values(%s,%s);'

@@ -9,7 +9,7 @@ create database LostFound;
 use LostFound;
 create table User(
     username varchar(16),
-    password varchar(16),
+    password varchar(32),
     useruuid varchar(32),
     constraint PK_User primary key(username)
 );

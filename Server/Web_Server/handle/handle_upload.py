@@ -77,15 +77,15 @@ def handle_upload_labelinfo():
     data = request.get_data()
     json_data = json.loads(data.decode('utf-8'))
     # get username and information of qrcode
-    username = json_data['username']
-    objuuid = json_data['value']
+    objuuid = json_data['uuid']
+    anti_code = json_data['value']
     db,c = mc.cnnct()
-    c.execute("SELECT useruuid FROM User WHERE username=" + username + ";")
+    username=anti_code.split('*')[0]
+    c.execute('SELECT useruuid FROM User WHERE username="' + username + '";')
     results = c.fetchall()
     owneruuid = results[0][0]
     # distribute owneruuid to lost property
-    c.execute("UPDATE Lost SET owneruuid=" + owneruuid + " WHERE objuuid=" + objuuid + ";")
-    c.close()
+    c.execute('UPDATE Lost SET owneruuid="' + owneruuid + '" WHERE objuuid="' + objuuid + '";')
     db.close()
     return 'True'
 
@@ -97,11 +97,11 @@ def handle_upload_finderinfo():
     username = json_data['username']
     objuuid = json_data['uuid']
     db,c = mc.cnnct()
-    c.execute("SELECT useruuid FROM User WHERE username=" + username + ";")
+    c.execute('SELECT useruuid FROM User WHERE username="' + username + '";')
     results = c.fetchall()
     owneruuid = results[0][0]
     # distribute finderuuid to lost property
-    c.execute("UPDATE Lost SET finderuuid=" + owneruuid + " WHERE objuuid=" + objuuid + ";")
-    c.close()
+    c.execute('UPDATE Lost SET finderuuid="' + owneruuid + '" WHERE objuuid="' + objuuid + '";')
     db.close()
     return 'True'
+
