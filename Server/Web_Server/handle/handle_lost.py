@@ -20,7 +20,7 @@ import Web_Server.db_op.mysql_connect as mc
 from Levenshtein import distance as dist #字符串间的编辑距离
 
 basepath = '/home/lily/Server_File/'
-
+blank_img = basepath+'default.png'
 # order by similarity
 def sort_lost(lostlist,keyword):
     words=keyword.split(' ')
@@ -52,14 +52,14 @@ def handle_query_lostlist():
     print(lostlist)
     return lostlist2json(lostlist)
 
-@app.route('/query/lostlist/available/<useruuid>', methods=['GET'])
-def handle_query_available(useruuid):
-    lostlist=mc.query_mysql('objuuid', 'Lost','owneruuid="'+useruuid+'"')
+@app.route('/query/lostlist/available/<username>', methods=['GET'])
+def handle_query_available(username):
+    lostlist=mc.query_mysql('objuuid', 'Lost l join User u on l.owneruuid=u.useruuid','u.username="'+username+'"')
     return lostlist2json(lostlist)
 
-@app.route('/query/lostlist/notapplied/<useruuid>', methods=['GET'])
-def handle_query_notapplied(useruuid):
-    lostlist=mc.query_mysql('objuuid', 'Lost','owneruuid="'+useruuid+'" and apply="0"')
+@app.route('/query/lostlist/notapplied/<username>', methods=['GET'])
+def handle_query_notapplied(username):
+    lostlist=mc.query_mysql('objuuid', 'Lost l join User u on l.owneruuid=u.useruuid','u.username="'+username+'" and apply="0"')
     return lostlist2json(lostlist)
 
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
@@ -83,7 +83,7 @@ def handle_query_LD(uuid, picture_type, order):
     path = basepath + uuid + '/' + picture_type + '/' + order + '.jpg'
     print(path)
     if os.path.exists(path) == False:
-        return 'There is no such thing!'
+        return send_file(blank_img,as_attachment=True)
     return send_file(path,as_attachment=True)
 
 

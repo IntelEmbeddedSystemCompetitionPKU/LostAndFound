@@ -35,7 +35,9 @@ def is_password_right(username,passwd):
 
 def query_mysql(contents, table, where='true'):
     db,c =cnnct()
-    c.execute("SELECT " + contents + " FROM " + table + " WHERE "+where+";")
+    sql = "SELECT " + contents + " FROM " + table + " WHERE "+where+";"
+    print(sql)
+    c.execute(sql)
     results = c.fetchall() # type(results) == tuple
     c.close()
     db.close()

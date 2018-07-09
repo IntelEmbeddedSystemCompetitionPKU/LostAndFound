@@ -18,7 +18,9 @@ import qrcode
 import json
 import Web_Server.db_op.mysql_connect as mc
 
+basepath = '/home/lily/Server_File/'
 qrimg_path='/home/lily/testqrcode.png'
+blank_img = basepath+'default.png'
 # qrimg_path='/home/ykx/testqrcode.png'
 
 @app.route('/query/qrcode_user', methods=['POST'])
@@ -27,7 +29,7 @@ def handle_query_qrcode_user():
     jdata = json.loads(request.get_data().decode('utf-8'))
     username, passwd = jdata['username'], jdata['password']
     if not mc.is_password_right(username,passwd):
-        return None
+        return send_file(blank_img,as_attachment=True)
     print(username+' query his qrcode')
     code='user'+username#+passwd
     print(code)
@@ -41,15 +43,16 @@ def handle_query_qrcode_user():
 def handle_query_qrcode_lost():
     jdata = json.loads(request.get_data().decode('utf-8'))
     print(jdata)
-    useruuid, itemuuid = jdata['useruuid'], jdata['itemuuid']
-    sql_select='select * from Lost where objuuid="'+itemuuid+'" and owneruuid="'+useruuid+'";'
-    sql_update='update Lost set apply="1"'+' where objuuid="'+itemuuid+'" and owneruuid="'+useruuid+'";'
+    username, itemuuid = jdata['useruuid'], jdata['itemuuid']
+    sql_select='select * from Lost l join User u on l.owneruuid=u.useruuid where objuuid="'+itemuuid+'" and u.username="'+username+'";'
+    sql_update='update Lost set apply="1"'+' where objuuid="'+itemuuid+'" and owneruuid="'+username+'";'
     db,c = mc.cnnct()
     r=c.execute(sql_select)
     print(sql_select)
     if r==0:
-        print('bad guy!')
-        return ''
+        print('-'*6)
+        print(sql_select)
+        return send_file(blank_img,as_attachment=True)
     r = c.execute(sql_update)
     if r==0:
         print(sql_update)
@@ -67,7 +70,7 @@ def handle_query_qrcode_anti():
     print(jdata)
     username, passwd, dscpt = jdata['username'], jdata['password'], jdata['description']
     if not mc.is_password_right(username,passwd):
-        return 'password not right!'
+        return send_file(blank_img,as_attachment=True)
     print(username+'gets a qrcode with description: '+dscpt)
     code='mark'+username +'*'+ dscpt+(uuid.uuid1().__str__().replace('-',''))
     db,c=mc.cnnct()

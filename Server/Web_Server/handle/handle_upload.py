@@ -80,12 +80,20 @@ def handle_upload_labelinfo():
     objuuid = json_data['uuid']
     anti_code = json_data['value']
     db,c = mc.cnnct()
-    username=anti_code.split('*')[0]
-    c.execute('SELECT useruuid FROM User WHERE username="' + username + '";')
+    # username=anti_code.split('*')[0]
+    username=anti_code[:8]
+    dscr=anti_code[9:]
+    sql = 'select useruuid from User where username="' + username + '";'
+    c.execute(sql)
+    print(sql)
     results = c.fetchall()
     owneruuid = results[0][0]
     # distribute owneruuid to lost property
     c.execute('UPDATE Lost SET owneruuid="' + owneruuid + '" WHERE objuuid="' + objuuid + '";')
+    sql = 'UPDATE Lost SET description=concat("' + dscr + '" ,description) WHERE objuuid="' + objuuid + '";'
+    print(sql)
+    c.execute(sql)
+    
     db.close()
     return 'True'
 
