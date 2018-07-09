@@ -44,8 +44,8 @@ def handle_query_qrcode_lost():
     jdata = json.loads(request.get_data().decode('utf-8'))
     print(jdata)
     username, itemuuid = jdata['useruuid'], jdata['itemuuid']
-    sql_select='select * from Lost l join User u on l.owneruuid=u.useruuid where objuuid="'+itemuuid+'" and u.username="'+username+'";'
-    sql_update='update Lost set apply="1"'+' where objuuid="'+itemuuid+'" and owneruuid="'+username+'";'
+    sql_select='select * from Lost where objuuid="'+itemuuid+'" and ownername="'+username+'";'
+    sql_update='update Lost set apply="1"'+' where objuuid="'+itemuuid+'" and ownername="'+username+'";'
     db,c = mc.cnnct()
     r=c.execute(sql_select)
     print(sql_select)
@@ -72,7 +72,7 @@ def handle_query_qrcode_anti():
     if not mc.is_password_right(username,passwd):
         return send_file(blank_img,as_attachment=True)
     print(username+'gets a qrcode with description: '+dscpt)
-    code='mark'+username +'*'+ dscpt+(uuid.uuid1().__str__().replace('-',''))
+    code='mark'+username +'*'+ dscpt+'*'+(uuid.uuid1().__str__().replace('-',''))
     db,c=mc.cnnct()
     sql='insert into Anti_qrcode values("'+username+'", "'+code+'");'
     # sql='insert into Anti_qrcode values(%s,%s);'
