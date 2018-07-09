@@ -9,6 +9,7 @@
 #include <QJsonParseError>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QString>
 MyThread::MyThread(QObject *parent):QThread(parent) {}
 MyThread::~MyThread() {}
 void MyThread::run() {
@@ -100,22 +101,18 @@ void MyThread::addDesc(QString desct) {
 }
 
 QString MyThread::processQR(QString input) {
-    QJsonParseError json_error;
-    QJsonDocument docu = QJsonDocument::fromJson(input.toUtf8(), &json_error);
     QString result = QString("");
-    if(json_error.error == QJsonParseError::NoError) {
-        if(docu.isObject()) {
-            QJsonObject jsonObject = docu.object();
-            if(jsonObject.contains("key")) {
-                QJsonValue Jvalue = jsonObject.take("key");
-                result = Jvalue.toString();
-                Jvalue = jsonObject.take("value");
-                desc = Jvalue.toString();
-                if(result == "fetch") {
-                    uuid = Jvalue.toString();
-                }
-            }
-        }
+    if(input.startsWith("user")) {
+        result = "user";
+        desc = input.mid(4);
+    }
+    else if(input.startsWith("mark")) {
+        result = "mark";
+        desc = input.mid(4);
+    }
+    else if(input.startsWith("fetc")) {
+        result = "fetch";
+        uuid = input.mid(4);
     }
     return result;
 }

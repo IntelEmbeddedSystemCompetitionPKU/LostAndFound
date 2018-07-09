@@ -5,7 +5,7 @@ import time
 import argparse
 
 
-def opendoor(target):
+def open_door(target):
     motor = mraa.Gpio(10)
     sensor = mraa.Gpio(8)
 # for our sensor, 1 means empty, 0 means something there
@@ -28,18 +28,29 @@ def opendoor(target):
 ### this part is used to locate start position
     state = 0
 # 0 = finding next divide, 1 = count the length of the divide, 2 = end of the divide
+
+    print('gpio stage0')
+
+    while True:
+        if sensor.read() == 1:
+            break
+        tick()
+    print('gpio stage1')
+
+    state = 0
+
     while True:
         nowstate = sensor.read()
         if(0 == state):
             count = 0
-            if(0 ==nowstate):
+            if(0 == nowstate):
                 state = 1
-        elif(1 == state):
+        if(1 == state):
             count += 1
             if(1 == nowstate):
                 state = 2
-        elif(2 == state):
-            if(count > durcount / 2):
+        if(2 == state):
+            if(count > int(durcount / 2)):
                 state = 3
             else:
                 state = 0
@@ -48,6 +59,7 @@ def opendoor(target):
         tick()
 
 
+    print('gpio stage2')
 ### this part is used to go to the location
     state = 0
     count = 0
@@ -59,11 +71,11 @@ def opendoor(target):
                 state = 3
             else:
                 state = 1
-        elif(1 == state):
+        if(1 == state):
             if(0 == nowstate):
                 state = 2
                 count += 1
-        elif(2 == state):
+        if(2 == state):
             if(count == 19):
                 state = 0
             elif(1 == nowstate):
@@ -71,7 +83,9 @@ def opendoor(target):
         if(state == 3):
             break;
         tick()
-
+    print('after wheel')
     lock.write(1)
     time.sleep(0.5)
     lock.write(0)
+    time.sleep(0.5)
+    print('after lock')

@@ -15,6 +15,16 @@ Item{
     MyThread {
         id: myThread
     }
+
+    Timer {
+        id: mytimer;
+         interval: 500;
+         running: false;
+         repeat: true;
+         onTriggered: {
+             saveface()
+         }
+     }
     Camera {
         id: camera
 
@@ -29,10 +39,19 @@ Item{
                 myThread.setCommand("face")
                 myThread.setArgs(uuid)
                 myThread.startProcess()
+                mytimer.stop()
+                print("stop timer")
             }
         }
     }
 
+    function saveface() {
+        if(camera.imageCapture.ready) {
+            print("save face")
+            var savepath = myThread.getDir() + "fetch/"
+            camera.imageCapture.captureToLocation(savepath)
+        }
+    }
     VideoOutput {
         id: videoOutput
         source: camera
@@ -100,10 +119,16 @@ Item{
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
+                print(tag)
                 var kind = myThread.processQR(tag)
                 if(kind == "fetch") {
                     scanGroup.visible = false
-                    shotGroup.visible = true
+
+                    myThread.setCommand("get")
+                    myThread.startProcess()
+                    manager.popToPage("MainActivity.qml")
+                    //mytimer.start()
+                    //shotGroup.visible = true
                 }
                 else if(kind == "user") {
                     //myThread.uploadGetter
@@ -183,10 +208,11 @@ Item{
                 manager.popToPage("MainActivity.qml")
             }
             else if(result == "false"){
-                shotGroup.visible = true
-                processingGroup.visible = false
+                mytimer.start()
+                print("start timer")
             }
     }
+
 
     Component.onCompleted: {
         processingGroup.visible = false

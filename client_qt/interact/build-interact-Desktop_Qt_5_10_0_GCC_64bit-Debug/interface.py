@@ -8,10 +8,11 @@ import json
 import os
 import storagemanager
 #import cv2
-#import gpio
+import gpio
 import time
 import shutil
-#from ocr_class import ocr_class
+import call_me
+#import ocr_class
 #from ./face_detect import face_detecting
 croot = '/home/upsquared/workspace/data/' 
 
@@ -26,7 +27,7 @@ def isface(uuid):
         for filename in filenames:
             if filename.endswith('.jpg'):
                 os.rename(root + filename, root + 'face.jpg')
-    result = face_deceting(croot + uuid + '/fetch/face.jpg')
+    result = call_me.face_deceting(croot + uuid + '/fetch/face.jpg')
     if True == result:
         return tuple([0])
     else:
@@ -35,18 +36,19 @@ def isface(uuid):
 
 
 def classify_img(uuid, number):
+    print(os.getcwd())
     for root, dirs, filename in os.walk(croot + uuid + '/OCR/'):
         for files in filename:
             print(root+files)
             if not files.find(str(number)) == -1:
                 os.rename(root + files, root + str(number) + '.jpg') 
-                shutil.copyfile(root + str(number) + '.jpg', croot + uuid + '/mask/' + str(number) + '.jpg')
-                with open(croot + uuid + '/mask/' + str(number) + '.txt', 'w') as f:
-                    f.write('kind test')
-                    f.write('\n')
-                    f.write('blank0 testing')
-                time.sleep(0.5)
-                #ocr_class.ocr_class(root + str(number) + '.jpg', croot + uuid + '/mask/')
+                #shutil.copyfile(root + str(number) + '.jpg', croot + uuid + '/mask/' + str(number) + '.jpg')
+                #with open(croot + uuid + '/mask/' + str(number) + '.txt', 'w') as f:
+                #    f.write('kind test')
+                #    f.write('\n')
+                #    f.write('blank0 testing')
+                #time.sleep(0.5)
+                call_me.ocr_class(root + str(number) + '.jpg', croot + uuid + '/mask/')
                 
                 break
     return
@@ -59,14 +61,17 @@ def loadresult(uuid, number):
 
 
 def save(uuid):
-    #location = storagemanager.save_item(uuid)
-    #gpio.opendoor(location)
+    location = storagemanager.save_item(uuid)
+    print('after saving to storagemanager')
+    gpio.open_door(location)
+    print('after opening door')
     upload_path(croot + uuid + '/')
 
 def load(uuid):
-    #location = storagemanager.remove_item(uuid)
-    #gpio.opendoor(location)
-    upload_fecth(croot + uuid + '/')
+    location = storagemanager.remove_item(uuid)
+    if not location == -1:
+        gpio.open_door(location)
+        upload_fecth(croot + uuid + '/')
 
 def refresh(uuid, number, desc):
     with open(croot + uuid + '/mask/' + str(number) + '.txt','w') as f:
@@ -83,7 +88,7 @@ def uploadPicker(uuid, desc):
 #################################################################################################
 
 def upload_path(path):
-    #reshape_photos(path)
+    reshape_photos(path)
     generate_txt(path)
     targz_path(path)
     upload_targz(path)
@@ -174,20 +179,23 @@ def reshape_photos(path):
     for root, dirs, filenames in os.walk(path + 'mask/'):
         for filename in filenames:
             if filename.endswith('.jpg'):
-                image = cv2.imread(root + filename)
-                image = cv2.resize(image, (640,480))
-                cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
+                #image = cv2.imread(root + filename)
+                #image = cv2.resize(image, (640,480))
+                #cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
+                shutil.copyfile(root + filename, croot + uuid + '/LD/' + str(count) + '.jpg')
                 count += 1
     acount = 0
     print('in HD')
     for root, dirs, filenames in os.walk(path + 'HD/'):
         for filename in filenames:
             if filename.endswith('.jpg'):
-                image = cv2.imread(root + filename)
-                image = cv2.resize(image, (640,480))
-                cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
+                #image = cv2.imread(root + filename)
+                #image = cv2.resize(image, (640,480))
+                #cv2.imwrite(path + 'LD/' + str(count) + '.jpg', image)
+                shutil.copyfile(root + filename, croot + uuid + '/LD/' + str(count) + '.jpg')
+                os.rename(root + filename, root + str(acount) + '.jpg')
                 count += 1
-            os.rename(root + filename, root + str(acount) + '.jpg')
+                acount += 1
 
 def targz_path(rootdir):
     os.system('tar -C' + rootdir +' -cvf ' + rootdir +'upload.tar.gz data.txt/ HD/ mask/ LD/')
