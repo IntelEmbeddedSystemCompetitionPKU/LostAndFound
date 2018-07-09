@@ -12,19 +12,11 @@ Item{
     anchors.fill: parent
     property string uuid: ""
     property string dectag: "Nothing"
+    property int scanstate:0
     MyThread {
-        id: myThread
+        id: scanThread
     }
 
-    Timer {
-        id: mytimer;
-         interval: 500;
-         running: false;
-         repeat: true;
-         onTriggered: {
-             saveface()
-         }
-     }
     Camera {
         id: camera
 
@@ -36,10 +28,10 @@ Item{
         }
         imageCapture {
             onImageSaved: {
-                myThread.setCommand("face")
-                myThread.startProcess()
-                mytimer.stop()
-                print("stop timer")
+                scanThread.setCommand("face")
+                scanThread.startProcess()
+                shotGroup.visible = false
+                processingGroup.visible = true
             }
         }
     }
@@ -47,16 +39,16 @@ Item{
     function saveface() {
         if(camera.imageCapture.ready) {
             print("save face")
-            var savepath = myThread.getDir() + "fetch/"
+            var savepath = scanThread.getDir() + "fetch/"
             camera.imageCapture.captureToLocation(savepath)
         }
     }
+
     VideoOutput {
         id: videoOutput
         source: camera
-        height: parent.height / 3 * 2
-        width: parent.width / 3 * 2
-        anchors.centerIn: parent
+
+        anchors.fill: parent
         focus: visible
         filters:[zxingFilter]
         Item {
@@ -65,7 +57,7 @@ Item{
             Rectangle {
                 id: capturezone
                 color: "red"
-                opacity: 0.1
+                opacity: 0.4
                 height: videoOutput.height/2
                 width: height
                 anchors.centerIn: parent
@@ -75,10 +67,11 @@ Item{
 
     Button {
         id: cancelbutton
-        width: 300
+        width: 200
         height: 200
         anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        anchors.margins: 10
         onClicked: {
             manager.popToPage("MainActivity.qml")
         }
@@ -119,29 +112,40 @@ Item{
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                print(tag)
-                var kind = myThread.processQR(tag)
+                print("find tag: " + tag)
+                if(scanstate == 0) {
+                var kind = scanThread.processQR(tag)
                 if(kind == "fetch") {
                     scanGroup.visible = false
-
-                    myThread.setCommand("get")
-                    myThread.startProcess()
-                    manager.popToPage("MainActivity.qml")
+                    scanstate = 1
                     //mytimer.start()
-                    //shotGroup.visible = true
+                    scanGroup.visible = false
+                    shotGroup.visible = true
+                    resultLab.text = "请在框内留下完整面部信息 "
                 }
                 else if(kind == "user") {
-                    //myThread.uploadGetter
-                    manager.popToPage("MainActivity.qml")
+                    print("in user")
+                    scanThread.setCommand("picker")
+                    scanThread.startProcess()
+                    scanstate = 1
+                    scanGroup.visible = false
+                    processingText.text = "非常感谢"
+                    processingGroup.visible = true
+                    resultLab.text = ""
                 }
                 else if(kind == "mark") {
-                    myThread.getNewUUID()
-                    myThread.setCommand("savemark")
-                    myThread.startProcess()
-                    manager.popToPage("MainActivity.qml")
+                    print("in mark")
+                    scanThread.getNewUUID()
+                    scanstate = 1
+                    scanThread.setCommand("savemark")
+                    scanThread.startProcess()
+                    processingText.text = "请放入物品"
+                    processingGroup.visible = true
+                    scanGroup.visible = false
                 }
                 else{
                     resultLab.text = "无效二维码"
+                }
                 }
             }
             tryHarder: false
@@ -153,10 +157,18 @@ Item{
     Item {
         id: processingGroup
         anchors.fill: parent
-        Text {
-            id: processingText
-            text: qsTr("处理中...")
-            font.pixelSize: 25
+        Rectangle {
+            anchors.centerIn: parent
+            width: videoOutput.width / 3 * 2
+            height: videoOutput.height / 3 * 2
+            opacity: 0.7
+            color: "gray"
+            Text {
+                anchors.centerIn: parent
+                id: processingText
+                text: qsTr("处理中...")
+                font.pixelSize: 25
+            }
         }
     }
 
@@ -164,6 +176,13 @@ Item{
     Item {
         id: shotGroup
         anchors.fill: parent
+        Rectangle {
+            anchors.centerIn: parent
+            height: parent.height / 3 * 2
+            width: height / 9 * 16
+            opacity: 0.4
+            color: "gray"
+        }
 
         Button {
             id: shotbutton
@@ -173,7 +192,7 @@ Item{
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
                 if(camera.imageCapture.ready) {
-                    var savepath = myThread.getDir() + "fetch/"
+                    var savepath = scanThread.getDir() + "fetch/"
                     camera.imageCapture.captureToLocation(savepath)
                     shotGroup.visible = false
                     processingGroup.visible = true
@@ -198,25 +217,35 @@ Item{
 
     }
     Connections {
-        target: myThread
-        onFinish: {
-            if(result == "true") {
-                myThread.setCommand("get")
-                myThread.setUUID(uuid)
-                myThread.startProcess()
-                manager.popToPage("MainActivity.qml")
-            }
-            else if(result == "false"){
-                mytimer.start()
-                print("start timer")
-            }
+        target: scanThread
+            onFinish: {
+                print("onFinish " + result)
+                if(result == "True") {
+                    scanThread.setCommand("get")
+                    scanThread.startProcess()
+                    processingGroup.visible = true
+                    processingText.text = "感谢使用"
+                }
+                else if(result == "False"){
+                    shotGroup.visible = true
+                    processingGroup.visible = false
+                    resultLab.text = "照片无效,请重试"
+                } else if(result == "pop") {
+                    killTimer.start()
+                }
+        }
     }
-
-
     Component.onCompleted: {
+        scanstate = 0
         processingGroup.visible = false
         scanGroup.visible = true
         shotGroup.visible = false
     }
-}
+    Timer {
+        id: killTimer
+              interval: 4000; running: false; repeat: false
+              onTriggered: {
+                  manager.popToPage("MainActivity.qml")
+              }
+          }
 }

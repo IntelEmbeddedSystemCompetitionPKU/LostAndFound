@@ -35,12 +35,17 @@ bool MyPython::isExist(QString uuid) {
 }
 bool MyPython::isFacePhoto(QString uuid){
     PyObject *pFunc = PyObject_GetAttrString(pModule, "isface");
+    qDebug()<< "after pFun";
     PyObject *pArg = Py_BuildValue("(s)", uuid.toStdString().c_str());
+    qDebug()<< "after pArg";
     PyObject *result = PyEval_CallObject(pFunc, pArg);
-    int res;
-    PyArg_ParseTuple(result, "i", &res);
+    qDebug() << result;
     qDebug()<< "after call";
-    if(res == 0)
+    char* res;
+    PyArg_ParseTuple(result, "s", &res);
+    qDebug()<< "after result";
+    QString res_string(res);
+    if(res_string == "True")
         return true;
     else
         return false;

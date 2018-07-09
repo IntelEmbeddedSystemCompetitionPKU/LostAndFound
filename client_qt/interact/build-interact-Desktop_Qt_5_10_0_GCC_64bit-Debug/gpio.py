@@ -15,9 +15,9 @@ def open_door(target):
     lock.dir(mraa.DIR_OUT)
     def tick():
         motor.write(1)
-        time.sleep(0.002)
+        time.sleep(0.003)
         motor.write(0)
-        time.sleep(0.002)
+        time.sleep(0.003)
 
     durcount = 0
     state = 0
@@ -45,11 +45,11 @@ def open_door(target):
             count = 0
             if(0 == nowstate):
                 state = 1
-        if(1 == state):
+        elif(1 == state):
             count += 1
             if(1 == nowstate):
                 state = 2
-        if(2 == state):
+        elif(2 == state):
             if(count > int(durcount / 2)):
                 state = 3
             else:
@@ -70,12 +70,13 @@ def open_door(target):
             if(count == target):
                 state = 3
             else:
+                print(count)
                 state = 1
-        if(1 == state):
+        elif(1 == state):
             if(0 == nowstate):
                 state = 2
                 count += 1
-        if(2 == state):
+        elif(2 == state):
             if(count == 19):
                 state = 0
             elif(1 == nowstate):
@@ -91,4 +92,4 @@ def open_door(target):
     print('after lock')
 
 if __name__ == '__main__':
-    open_door(sys.argv[1])
+    open_door(int(sys.argv[1]))

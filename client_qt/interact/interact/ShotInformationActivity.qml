@@ -10,6 +10,8 @@ Item{
     property int camstate : 0
     property int count: 0
     property int stage: 0
+   property int processCount: 0
+    property string basestring: "处理中"
     MyThread {
         id: myThread
     }
@@ -26,13 +28,12 @@ Item{
                      myThread.setCommand("classify")
                     myThread.setArgs(String(count))
                     myThread.startProcess()
-                    stage = 1
-                    shottext.text = "确认"
-                     showEdit.text = "处理中..."
                  }
                  else {
-                     showEdit.text = "已保存"
+                     shotGroup.visible = true
+                     processGroup.visible = false
                  }
+
              }
         }
     }
@@ -65,6 +66,7 @@ Item{
                     }
                     else if(camstate === 1){
                         savepath = myThread.getDir() + "HD/"
+                        processText.text = "保存中..."
                     }
                     camera.imageCapture.captureToLocation(savepath)
                     shotGroup.visible = false
@@ -99,12 +101,14 @@ Item{
                     camstate = 1
                     title.text = "次要照片拍摄"
                     count = 0
-                    thisConnections.enabled = false
                 }
                 else{
                     myThread.setCommand("save")
                     myThread.startProcess()
-                    manager.showPage("ScanActivity.qml")
+                    processGroup.visible = true
+                    basestring = "能留下身份二维码吗"
+                    shotGroup.visible = false
+                    title.text = ""
                 }
             }
             style: ButtonStyle {
@@ -127,7 +131,7 @@ Item{
     Item {
         id: processGroup
          z: -1
-        property int processCount: 0
+         anchors.fill: parent
         Text {
             id: processText
             anchors.centerIn: parent
@@ -135,16 +139,17 @@ Item{
             text: qsTr("处理中...")
         }
         Timer {
+            id: addTimer
               interval: 500; running: true; repeat: true
               onTriggered: {
                   if(processCount == 0) {
-                      processText.text = "处理中."
+                      processText.text = basestring + "."
                   }
                   else if(processCount == 1) {
-                      processText.text = "处理中.."
+                      processText.text = basestring + ".."
                   }
                   else if(processCount == 2) {
-                      processText.text = "处理中..."
+                      processText.text = basestring + "..."
                   }
                   processCount ++
                   if(processCount > 3) {
@@ -164,13 +169,12 @@ Item{
             height: parent.height / 2
             width: parent.width / 2
             id: processImage
-            visible: false
         }
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.left: imagegroup.right
-            height: imagegroup.height
+            anchors.left: processImage.right
+            height: processImage.height
             anchors.margins: 20
             color: "gray"
             TextEdit {
@@ -192,8 +196,8 @@ Item{
                     myThread.setArgs(count)
                     myThread.addDesc(showEdit.text)
                     myThread.startProcess()
-                showGroup.visible = False
-                shotGroup.visible = True
+                    showGroup.visible = false
+                    shotGroup.visible = true
             }
             style: ButtonStyle {
                 background: Rectangle {
@@ -229,6 +233,7 @@ Item{
         height: 200
         anchors.bottom: parent.bottom
         anchors.left: parent.left
+        anchors.margins: 10
         onClicked: {
             manager.popToPage("MainActivity.qml")
         }
@@ -251,15 +256,29 @@ Item{
         id: thisConnections
         target: myThread
         onFinish: {
-            showEdit.text = result
-            processImage.source = "file://" + myThread.getDir() + "mask/" + String(count - 1) + ".jpg"
-            processGroup.visible = false
-            showGroup.visible = true
+            if(result == "pop") {
+                jumpTimer.start()
+            }
+            else if(result != ""){
+                showEdit.text = result
+                processImage.source = "file://" + myThread.getDir() + "mask/" + String(count - 1) + ".jpg"
+                processGroup.visible = false
+                showGroup.visible = true
+            }
         }
     }
+    Timer {
+        id: jumpTimer
+          interval: 3000; running: flase; repeat: false
+          onTriggered: {manager.showPage("ScanActivity.qml")
+          }
+      }
 
     Component.onCompleted: {
         camstate = 0
+        processGroup.visible = false
+        showGroup.visible = false
+        shotGroup.visible = true
         myThread.getNewUUID()
         myThread.setCommand(String("classify"))
     }

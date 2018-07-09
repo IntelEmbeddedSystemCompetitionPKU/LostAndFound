@@ -23,6 +23,7 @@ ApplicationWindow {
             x: 0
             y: rootwindow.height
             width: rootwindow.width
+            opacity:0.5
 
             states: State {
                 name: "visible"

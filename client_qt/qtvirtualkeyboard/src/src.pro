@@ -1,6 +1,4 @@
 TEMPLATE = subdirs
-CONFIG += lang-zh_CN
-CONFIG += pinyin
 include(config.pri)
 !disable-hunspell:exists(virtualkeyboard/3rdparty/hunspell/src/hunspell/hunspell.h) {
     SUBDIRS += virtualkeyboard/3rdparty/hunspell

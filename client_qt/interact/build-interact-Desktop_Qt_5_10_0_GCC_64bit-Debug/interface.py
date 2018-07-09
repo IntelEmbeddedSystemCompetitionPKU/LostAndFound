@@ -27,53 +27,49 @@ def isface(uuid):
         for filename in filenames:
             if filename.endswith('.jpg'):
                 os.rename(root + filename, root + 'face.jpg')
-    result = call_me.face_deceting(croot + uuid + '/fetch/face.jpg')
+    result = call_me.face_detecting(croot + uuid + '/fetch/face.jpg')
     if True == result:
-        return tuple([0])
+        result = 'True'
     else:
         os.remove(croot + uuid + '/fetch/face.jpg')
-        return tuple([1]) # 0 = true
+        result = 'False' # 0 = true
+    return tuple([result])
 
 
 def classify_img(uuid, number):
     for root, dirs, filename in os.walk(croot + uuid + '/OCR/'):
         for files in filename:
-            print(root+files)
-            if not files.find(str(number)) == -1:
-                os.rename(root + files, root + str(number) + '.jpg') 
-                #shutil.copyfile(root + str(number) + '.jpg', croot + uuid + '/mask/' + str(number) + '.jpg')
-                #with open(croot + uuid + '/mask/' + str(number) + '.txt', 'w') as f:
-                #    f.write('kind test')
-                #    f.write('\n')
-                #    f.write('blank0 testing')
-                #time.sleep(0.5)
-                call_me.ocr_class(root + str(number) + '.jpg', croot + uuid + '/mask/')
-                
-                break
-    return
+            print('before class' + root+files)
+            if str(number) in files:
+                shutil.copyfile(root + files, croot + uuid + '/OCR/' + str(number-1) + '.jpg')
+                call_me.ocr_class(root + str(number-1) + '.jpg', croot + uuid + '/mask/')
+                return
 
 def loadresult(uuid, number):
     result = "Something wrong"
-    with open(croot + uuid + '/mask/' + str(number) + '.txt','r') as f:
+    with open(croot + uuid + '/mask/' + str(number-1) + '.txt','r') as f:
         result = f.read()
+    print(str(number - 1) + ' read ' + result)
     return tuple([result])
 
 
 def save(uuid):
     location = storagemanager.save_item(uuid)
     print('after saving to storagemanager')
-    gpio.open_door(location)
+    print('save location ' + str(location))
+    #call_me.open_door(location)
     print('after opening door')
     upload_path(croot + uuid + '/')
 
 def load(uuid):
     location = storagemanager.remove_item(uuid)
+    print('load location ' + str(location))
     if not location == -1:
-        gpio.open_door(location)
+        #call_me.open_door(location)
         upload_fecth(croot + uuid + '/')
 
 def refresh(uuid, number, desc):
-    with open(croot + uuid + '/mask/' + str(number) + '.txt','w') as f:
+    with open(croot + uuid + '/mask/' + str(number-1) + '.txt','w') as f:
         f.write(desc)
     return
 def uploadMark(uuid, desc):
@@ -81,6 +77,7 @@ def uploadMark(uuid, desc):
     return
 
 def uploadPicker(uuid, desc):
+    print('in upload Picker: ' + uuid + desc)
     upload_picker(uuid, desc)
     return 
 
@@ -93,10 +90,10 @@ def upload_path(path):
     upload_targz(path)
 
 def upload_fetch(imgdir):
+    base_url = load_config('/etc/upload.json')
     fetch_url = base_url + 'fetch/' + imgdir.split('/')[-2]
     with open(imdir,'rb') as f:
-        files = {'file':f}
-        response = requests.post(fetch_url, files=files)
+        response = requests.post(fetch_url, files={'file':f})
 
 def upload_mark(uuid, value):
     url = load_config('/etc/upload.json') + 'labelinfo'
@@ -127,6 +124,7 @@ def upload_targz(rootdir):
 
 
 def generate_txt(rootdir):
+    print('in generate txt')
     with open(rootdir + 'data.txt', 'w') as fin:
         body = {}
         body['uuid'] = rootdir.split('/')[-2]
@@ -151,7 +149,7 @@ def generate_txt(rootdir):
                     with open(root + filename,'r') as f:
                         for lines in f:
                             clips = lines.split(' ')
-                            if clips[0].contains('blank'):
+                            if 'blank' in clips[0]:
                                 j += 1
                                 if len(clips) == 1:
                                     tempbody[clips[0]] = ''
@@ -167,12 +165,14 @@ def generate_txt(rootdir):
         body['fecth_num'] = str(0)
         body['description'] = totaldesc
         json.dump(body, fin)
+        print('out generate txt')
 
 
 def reshape_photos(path):
     if not os.path.exists(path + 'LD/'):
         os.mkdir(path + 'LD/')
     count = 0
+    uuid = path.split('/')[-2]
     print('in mask')
     for root, dirs, filenames in os.walk(path + 'mask/'):
         for filename in filenames:

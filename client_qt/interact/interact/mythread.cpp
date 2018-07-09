@@ -23,7 +23,6 @@ void MyThread::run() {
         myPython.imageProcess(uuid, args);
         qDebug() << "before load";
         result = myPython.loadResult(uuid, args);
-        finish(result);
     }
     else if(command.contains("face")) {
         qDebug() << "before face";
@@ -33,40 +32,45 @@ void MyThread::run() {
         else {
             result = "False";
         }
-        finish(result);
     }
     else if(command.contains("save")) {
         qDebug() << "before save";
         myPython.saveItem(uuid);
+        if(command.contains("mark")) {
+            qDebug() << "before uploadmark";
+            myPython.uploadMark(uuid, desc);
+        }
+        result = "pop";
     }
     else if(command.contains("get")) {
         qDebug() << "before get";
         myPython.getItem(uuid);
+        result = "pop";
     }
     else if(command.contains("refresh")) {
         qDebug() << "before refresh";
         myPython.refreshDesc(uuid, args, desc);
-    }
-    else if(command.contains("savemark")) {
-        qDebug() << "before save";
-        myPython.saveItem(uuid);
-        qDebug() << "before uploadmark";
-        myPython.uploadMark(uuid, desc);
+        result = "";
     }
     else if(command.contains("picker")) {
         qDebug() << "before picker";
+        qDebug() << uuid << desc;
         myPython.uploadPicker(uuid, desc);
+        result = "pop";
     }
-    //myPython.finish();
+    finish(result);
+    qDebug() << "finish " << result;
     exit(0);
 }
 void MyThread::setCommand(QString _command) {
+    qDebug() << "set command " + _command;
     command = _command;
 }
 void MyThread::setArgs(QString _args) {
     args = _args;
 }
 void MyThread::startProcess() {
+    qDebug() << "try to start";
     this->start();
 }
 void MyThread::setUUID(QString _uuid) {
