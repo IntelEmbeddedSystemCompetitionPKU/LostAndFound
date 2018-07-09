@@ -23,7 +23,7 @@
 | 1.4 获取物品粗略信息         | /query/getinfo/\<uuid>                  | GET    | /                                                | {"description": <description>, "date", <date> "LD_num": <num>}| done |
 | 1.5 获取图片                 | /query/\<uuid>/\<picture_type>/\<order> | GET    | /                                                | **file**(picture)                                            | done |
 | 1.6 获取物品所有mask基本信息 | /query/maskinfo/\<uuid>                 | GET    | /                                                | {"mask_num":<num>, "block0_num":<num>, "block1_num":<num>, ...}  | not done |
-| 1.7 验证mask信息             | /query/maskcheck/\<uuid>                | GET    | /                                                | 'True'/'False'                                               | notdone |
+| 1.7 验证mask信息             | /query/maskcheck/\<uuid>/\<objuuid>                | POST    | /                                                | 'True'/'False'                                               | notdone |
 | 1.8 获取用户信息二维码       | /query/qrcode_user                      | POST   | {"username": <username>, "password": <password>} | **file**(image)                                              | done |
 | 1.9 获取指定失物二维码       | /query/qrcode_lost                      | POST   | {"useruuid": <useruuid>, "itemuuid": <itemuuid>} | **file**(image)                                              | done |
 | 1.10 可拿失物列表            | /query/lostlist/available/\<useruuid>   | GET    |                                                  | {"uuid_num": <num>, "uuid0": <uuid>, "uuid1": <uuid>, ...}   | not done |

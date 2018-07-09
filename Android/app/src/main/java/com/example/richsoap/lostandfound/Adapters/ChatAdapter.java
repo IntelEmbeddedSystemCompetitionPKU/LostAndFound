@@ -61,8 +61,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         ChatPiece chatPiece = chatList.get(position);
         if(chatPiece.getDate() - MyViewHolder.lasttime > 60000) {
-            //String format0 = SimpleDateFormat.M;
-            //SimpleDateFormat sf0 = new SimpleDateFormat(format0);
             String format1 = "MMMMd日H:mm";
             SimpleDateFormat sf1 = new SimpleDateFormat(format1);
             Date date = new Date(chatPiece.getDate());

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.5.0, 2018-07-07T04:19:41. -->
+<!-- Written by QtCreator 4.5.0, 2018-07-09T04:39:25. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{5b2e7c05-524a-45b8-8acc-d70346821a91}</value>
+  <value type="QByteArray">{cc7f2848-c9f0-43c8-aaf3-821910d33324}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -303,8 +303,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">basic</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/examples/virtualkeyboard/basic/basic.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">basic2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/examples/virtualkeyboard/basic/basic.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">examples/virtualkeyboard/basic/basic.pro</value>
@@ -361,8 +361,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">inputpanel</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/inputpanel/inputpanel.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">inputpanel2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/inputpanel/inputpanel.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">tests/auto/inputpanel/inputpanel.pro</value>
@@ -419,8 +419,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">layoutfilesystem</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/layoutfilesystem/layoutfilesystem.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">layoutfilesystem2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/layoutfilesystem/layoutfilesystem.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">tests/auto/layoutfilesystem/layoutfilesystem.pro</value>
@@ -477,8 +477,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">layoutresources</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/layoutresources/layoutresources.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">layoutresources2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/layoutresources/layoutresources.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">tests/auto/layoutresources/layoutresources.pro</value>
@@ -535,8 +535,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">styles</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/upsquared/workspace/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/styles/styles.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">styles2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/richsoap/Workspaces/LostAndFound/client_qt/qtvirtualkeyboard/tests/auto/styles/styles.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">tests/auto/styles/styles.pro</value>

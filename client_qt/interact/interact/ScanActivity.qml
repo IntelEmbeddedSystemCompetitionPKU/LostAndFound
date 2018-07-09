@@ -37,7 +37,6 @@ Item{
         imageCapture {
             onImageSaved: {
                 myThread.setCommand("face")
-                myThread.setArgs(uuid)
                 myThread.startProcess()
                 mytimer.stop()
                 print("stop timer")
@@ -102,9 +101,10 @@ Item{
     Text {
         id: resultLab
         font.pointSize: 15
+        anchors.margins: 10
         text: "扫描二维码"
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
     }
 
     QZXingFilter {
@@ -149,7 +149,7 @@ Item{
     }
 
 
-    ////////////////////////////////////////////////
+////////////////////////////////////////////////
     Item {
         id: processingGroup
         anchors.fill: parent
@@ -192,8 +192,7 @@ Item{
                 id: shottext
                 text: "拍摄"
                 font.pixelSize: 35
-                anchors.top: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.centerIn: parent
             }
         }
 

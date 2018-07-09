@@ -10,7 +10,7 @@
 # -*- coding:utf-8 -*-
 
 from Web_Server import app
-from flask import request, send_file, send_from_directory
+from flask import request, send_file#, send_from_directory
 import crypt
 #from Crypto.L
 import uuid
@@ -44,8 +44,9 @@ def handle_query_qrcode_lost():
     sql_update='update Lost set apply="1"'+' where objuuid="'+itemuuid+'" and owneruuid="'+useruuid+'";'
     db,c = mc.cnnct()
     r=c.execute(sql_select)
-    print(r)
+    print(sql_select)
     if r==0:
+        print('bad guy!')
         return ''
     c.execute(sql_update)
     db.close()

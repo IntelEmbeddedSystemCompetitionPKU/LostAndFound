@@ -80,6 +80,7 @@ public class ListActivity extends AppCompatActivity {
                 }
             }
         });
+        tryToGetUUIDList();
         stopIndex = 0;
     }
 
@@ -112,7 +113,12 @@ public class ListActivity extends AppCompatActivity {
 
     private void tryToGetUUIDList() {
         uuidListTask = new UUIDListTask(date, keywords, mProcess, this);
-        uuidListTask.execute();
+        if(command.equals("getable")) {
+            uuidListTask.execute("getable");
+        }
+        else {
+            uuidListTask.execute("search");
+        }
     }
 
     public void cancleTask() {

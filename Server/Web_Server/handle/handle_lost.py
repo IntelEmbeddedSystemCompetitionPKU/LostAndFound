@@ -10,14 +10,14 @@
 # -*- coding:utf-8 -*-
 
 from Web_Server import app
-from flask import request, send_file, send_from_directory
+from flask import request, send_file#, send_from_directory
 import json
 import os
 import pymysql
 import base64
 import qrcode
 import Web_Server.db_op.mysql_connect as mc
-basepath = '/home/ykx/Server_File/'
+basepath = '/home/lily/Server_File/'
 
 # order by similarity
 def sort_lost(lostlist,keyword):
@@ -32,10 +32,10 @@ def sort_lost(lostlist,keyword):
 
 
 def lostlist2json(lostlist):
-    data='{"uuid_num":'+str(len(lostlist))
+    data='{"uuid_num":"'+str(len(lostlist))
     for i, r in enumerate(lostlist):
-        data+=',num'+str(i)+':'+r[0]
-    data+='}'
+        data+='","uuid'+str(i)+'":"'+r[0]
+    data+='"}'
     print(data)
     return data
 
@@ -46,29 +46,30 @@ def handle_query_lostlist():
     keyword, date = json_data['description'], json_data['date']
     print('query lost about '+keyword+' after '+date)
     #time_keywords_dict=time_keywords.split('_')
-    lostlist = mc.query_mysql("objuuid,description", "Lost",'lostdate>='+date)
+    lostlist = mc.query_mysql('objuuid,description', 'Lost','lostdate>="'+date+'"')
     lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/available/<useruuid>', methods=['GET'])
 def handle_query_available(useruuid):
-    lostlist=mc.query_mysql("objuuid", "Lost",'owneruuid="'+useruuid+'"')
+    lostlist=mc.query_mysql('objuuid', 'Lost','owneruuid="'+useruuid+'"')
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/notapplied/<useruuid>', methods=['GET'])
 def handle_query_applied(useruuid):
-    lostlist=mc.query_mysql("objuuid", "Lost",'owneruuid="'+useruuid+'" and apply="0"')
+    lostlist=mc.query_mysql('objuuid', 'Lost','owneruuid="'+useruuid+'" and apply="0"')
     return lostlist2json(lostlist)
 
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
 def handle_query_getinfo(uuid):
-    lostlist=mc.query_mysql("description,lostdate", "Lost",'objuuid="'+uuid+'"')
+    lostlist=mc.query_mysql('description,lostdate', 'Lost','objuuid="'+uuid+'"')
     if len(lostlist)==0:
         return 'There is no such thing!'
     r=lostlist[0]
     ldpath = basepath + uuid + '/LD'
-    data = '{"description": "' + r[0] + '", "time": "' + r[1] + '", "LD_num": "' + str(os.listdir(ldpath)) + '"}'
+    print(r)
+    data = '{"description": "' + r[0] + '", "time": "' + r[1].isoformat()  + '", "LD_num": "' + str(len(os.listdir(ldpath))) + '"}'
     print(data)
     return data
 
@@ -85,47 +86,57 @@ def handle_query_LD(uuid, picture_type, order):
     return send_file(path,as_attachment=True)
 
 
-@app.route('/query/maskinfo/<uuid>')
+@app.route('/query/maskinfo/<uuid>', methods=['GET'])
 def handle_query_maskinfo(uuid):
-    path = basepath + uuid
+    path = basepath + uuid + '/data.txt'
     print(path)
     if os.path.exists(path) == False:
         return 'There is no such thing!'
-    #picture = path + '/' + picture_type + '/' + picture_type + order + '.jpg'
-    fr = open(path + '/data.txt', 'rb')
+    fr = open(path, 'rb')
     jdata = json.loads(fr.read().decode('utf-8'))
+    print(jdata)
     mask_num = jdata['mask_num']
     data = '{' + '"mask_num": "' + mask_num + '"'
     for k in range(0, int(mask_num)):
-        data = data + ', "block' + str(k) + '_num": "' + json.dumps(jdata['mask']['mask' + str(k)]['block_num']) + '"'
-    data = data + '}'
+        data += ', "block' + str(k) + '_num":' + json.dumps(jdata['mask' + str(k)]['block_num'])
+    data += '}'
+    fr.close()
     return data
 
 
-@app.route('/query/maskcheck/<uuid>')
-def handle_query_maskcheck(uuid):
-    data = request.get_data()
-    json_data = json.loads(data.decode('utf-8'))
-
-    path = basepath + uuid
-    print(path)
+@app.route('/query/maskcheck/<useruuid>/<objuuid>', methods=['POST'])
+def handle_query_maskcheck(useruuid,objuuid):
+    json_data = json.loads(request.get_data().decode('utf-8'))
+    path = basepath + objuuid
+    # print(path)
     if os.path.exists(path) == False:
         return 'There is no such thing!'
+    # print(json_data)
+    # return 'debug'
     fr = open(path + '/data.txt', 'rb')
     answer = fr.read()
     answer = json.loads(answer)
-
+    # print(answer)
     cnt_right = 0
     cnt_all = 0
     for item in json_data:
-        for jtem in json_data[item]:
-            cnt_all = cnt_all + 1;
-            if answer['mask'][item][jtem] == json_data[item][jtem]:
-                cnt_right = cnt_right + 1;
+        itemjson = json.loads(json_data[item])
+        for jtem in itemjson:
+            cnt_all = cnt_all + 1
+            print('compare real answer '+answer[item][jtem] + ' with user answer '+itemjson[jtem])
+            if answer[item][jtem] == itemjson[jtem]:
+                cnt_right = cnt_right + 1
+    # return 'debug'
     if cnt_right > cnt_all * 0.6:
         db,c = mc.cnnct()
-        c.execute("UPDATE Lost SET owneruuid=" + json_data['useruuid'] + " WHERE objuuid=" + uuid + ";")
-        c.execute("UPDATE Lost SET apply='1' WHERE objuuid=" + uuid + ";")
+        r=sql = 'UPDATE Lost SET owneruuid="' + useruuid + '" WHERE objuuid="' + objuuid + '";'
+        print(sql)
+        if r==0:
+            print('oops! no such obj')
+        c.execute(sql)
+        sql='UPDATE Lost SET apply="1" WHERE objuuid="' + objuuid + '";'
+        print(sql)
+        c.execute(sql)
         c.close()
         db.close()
         return 'True'

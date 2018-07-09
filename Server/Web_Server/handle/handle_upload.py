@@ -15,7 +15,8 @@ import json
 import os
 import Web_Server.db_op.mysql_connect as mc
 
-basepath = '/home/ykx/Server_File/'
+# basepath = '/home/ykx/Server_File/'
+basepath = '/home/lily/Server_File/'
 
 ##################
 ## Insert MySQL ##
@@ -27,12 +28,11 @@ def insert_mysql(uuid, path):
     item_info = fr.read()
     item_info = json.loads(item_info)
     db, c = mc.cnnct()
-    c.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES("
-            + uuid + ","
-            + item_info['time'] + ","
+    c.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES('"
+            + uuid + "','"
+            + item_info['time'] + "','"
             + item_info['description']# + ","
-            + ")")
-    db.commit()
+            + "');")
     c.close()
     db.close()
 
@@ -62,6 +62,14 @@ def handle_upload_compress(uuid):
     os.system('tar -xvf ' + basepath + 'compress/' + uuid + '.tar.gz -C ' + path)
     # insert information into database
     insert_mysql(uuid, path)
+    return 'True'
+
+# fetch
+@app.route('/upload/fetch/<uuid>', methods=['POST'])
+def handle_upload_fetch(uuid):
+    files = request.files['file']
+    path = basepath + uuid
+    files.save(os.path.join(path, 'fetch.jpg'))
     return 'True'
 
 @app.route('/upload/labelinfo', methods=['POST'])

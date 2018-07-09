@@ -6,6 +6,13 @@ host = 'localhost'
 dba, password='LostFoundDba','123'
 # dba, password='root','ykx970910'
 
+import hashlib
+
+def get_md5(s):
+    md5=hashlib.md5(s.encode('utf-8')).hexdigest()
+    return md5
+
+
 def cnnct():
     db = pymysql.connect(
         host, user=dba, password=password, database="LostFound",  autocommit=True)

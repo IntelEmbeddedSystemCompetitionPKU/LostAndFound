@@ -82,10 +82,6 @@
             android:name=".GenerateQRListActivity"
             android:label="@string/title_activity_generate_qrlist"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".GetableObjectListActivity"
-            android:label="@string/title_activity_getable_object_list"
-            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

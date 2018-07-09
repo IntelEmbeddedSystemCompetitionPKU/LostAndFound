@@ -54,12 +54,15 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         uuid = intent.getStringExtra("UUID");
+        Log.d(TAG, "onCreate: UUID = " + uuid);
         description = intent.getStringExtra("Description");
         date = intent.getStringExtra("Date");
         number = intent.getIntExtra("Number", 0);
         command = intent.getStringExtra("Command");
         TextView textView = findViewById(R.id.detail_description);
         textView.setText(description);
+        TextView dateView = findViewById(R.id.detail_date);
+        dateView.setText(date);
         recyclerView = (RecyclerView) findViewById(R.id.detail_recyclerview);
         adapter = new DetailImageAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -105,6 +108,7 @@ public class DetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, ObjectQRActivity.class);
                     intent.putExtra("UUID", uuid);
                     intent.putExtra("Description", description);
+                    intent.putExtra("command", "item");
                     startActivity(intent);
                 }
                 else {

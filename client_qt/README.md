@@ -56,4 +56,10 @@ uuid-location
 ### 返回值
 * 0: 有人脸
 * -1:没有人脸
-
+# IMPORTANT!!!
+## 中文输入法
+* cd client_qt/qtvituralkeyboard/
+* qmake CONFIG+="lang-en_GB" CONFIG+="lang-zh_CN"
+* make clean
+* make
+* sudo make install

@@ -22,6 +22,7 @@ import com.yanzhenjie.nohttp.rest.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +37,7 @@ import static com.example.richsoap.lostandfound.NetworkManager.LoginResult.SUCCE
 
 public class NetworkManager {
     private static final String TAG = "NetworkManager";
-    private static String ip = "10.1.170.107";
+    private static String ip = "10.1.172.209";
     private static String port = "5000";
     private static String userName = "tester";
     private static String password = "testing";
@@ -175,19 +176,21 @@ public class NetworkManager {
 
     static public Bitmap getImage(String uuid, String kind, int number, Context mContext) {// For every image from server
         InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
-                .cacheStore(new DBCacheStore(mContext).setEnable(true))
-                .cookieStore(new DBCookieStore(mContext).setEnable(true))
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
                 .build();
         NoHttp.initialize(initializationConfig);
         //NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/query/" + uuid + "/" + kind + "/" + Integer.toString(number);
         NoHttp.initialize(mContext);
         Log.d(TAG, "getImage: Try to get " + url);
-        Request<Bitmap> req = NoHttp.createImageRequest(url);
-        req.setCacheMode(CacheMode.NONE_CACHE_REQUEST_NETWORK);
+        Request<Bitmap> req = NoHttp.createImageRequest(url, RequestMethod.GET);
         Response<Bitmap> response = NoHttp.startRequestSync(req);
         if (response.isSucceed()) {
             Log.d(TAG, "getImage: Get image success");
+            if(response.get() == null) {
+                Log.d(TAG, "getImage: Get nothing");
+            }
             return response.get();
         } else {
             Log.d(TAG, "getImage: Get image fail");
@@ -196,7 +199,12 @@ public class NetworkManager {
     }
 
     static public Bitmap getQRImage(String uuid, Context mContext) {// For every image from server
-        NoHttp.initialize(mContext);/////////need more logic here
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
+        NoHttp.initialize(initializationConfig);
+        //NoHttp.initialize(mContext);/////////need more logic here
         String url = "http://" + ip + ":" + port +"/query/qrcode_lost";
         NoHttp.initialize(mContext);
         Log.d(TAG, "getQRImage: Try to get QRcode:" + url);
@@ -263,7 +271,23 @@ public class NetworkManager {
     }
 
     static public boolean tryToValid(String uuid, JSONObject jsonObject, Context mContext) {
-        return true;
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/query/maskcheck/" + userName + "/" + uuid;
+        Log.d(TAG, "tryToVaild: Json is " + jsonObject.toString());
+        Request<String> req = NoHttp.createStringRequest(url, RequestMethod.POST );
+        req.setDefineRequestBodyForJson(jsonObject);
+        Response<String> response = NoHttp.startRequestSync(req);
+        if(response.isSucceed()) {
+            Log.d(TAG, "sendMessage: Success");
+            if(response.get().equals("True")) {
+                return true;
+            }
+        }
+        else {
+            Log.d(TAG, "sendMessage: Failed");
+            return false;
+        }
+        return false;
     }
 
     static public boolean sendMessage(ChatPiece message, Context mContext) {
@@ -333,7 +357,12 @@ public class NetworkManager {
     }
 
     static public Bitmap generateQRCode(String description, Context mContext) {
-        NoHttp.initialize(mContext);
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
+        NoHttp.initialize(initializationConfig);
+        //NoHttp.initialize(mContext);
         String url = "http://" + ip + ":" + port +"/query/qrcode_anti";
         JSONObject jsonObject = new JSONObject();
         try {
@@ -394,16 +423,66 @@ public class NetworkManager {
     }
 
     static public List<String> getGetableItemList() {
-        return new ArrayList<>();
+        String url = "http://" + ip + ":" + port +"/query/lostlist/available/" + userName;
+        Request<String> request = NoHttp.createStringRequest(url,  RequestMethod.GET);
+        Response<String> response = NoHttp.startRequestSync(request);
+        List<String> imageList = new ArrayList<>();
+        if(response.isSucceed()) {
+            try {
+                String resString = response.get();
+                Log.d(TAG, "getUUIDList getable: response get " + resString);
+                JSONObject jsonObject = new JSONObject(resString);
+                int count = jsonObject.getInt("uuid_num");
+                Log.d(TAG, "getUUIDList getable: uuid_num = " + Integer.toString(count));
+                for(int i = 0;i < count;i ++) {
+                    imageList.add(jsonObject.getString("uuid" + Integer.toString(i)));
+                }
+            }
+            catch (JSONException e) {
+                Log.d(TAG, "getUUIDList getable: JSONException");
+                return imageList;
+            }
+        }
+        else {
+            Log.d(TAG, "getUUIDList getable: Something wrong with response");
+        }
+        return imageList;
     }
-    static public List<GettableLostObject> getUnreadGetableItemList() {
-        return new ArrayList<>();
+    static public List<LostObject> getUnreadGetableItemList(Context mContext) {
+        NoHttp.initialize(mContext);
+        String url = "http://" + ip + ":" + port +"/query/lostlist/notapplied/" + userName;
+        Request<String> request = NoHttp.createStringRequest(url,  RequestMethod.GET);
+        Response<String> response = NoHttp.startRequestSync(request);
+        List<LostObject> itemList = new ArrayList<>();
+        if(response.isSucceed()) {
+            try {
+                String resString = response.get();
+                Log.d(TAG, "getUUIDList getable: response get " + resString);
+                JSONObject jsonObject = new JSONObject(resString);
+                int count = jsonObject.getInt("uuid_num");
+                Log.d(TAG, "getUUIDList getable: uuid_num = " + Integer.toString(count));
+                for(int i = 0;i < count;i ++) {
+                    itemList.add(getUUIDDetail(jsonObject.getString("uuid" + Integer.toString(i)), mContext));
+                }
+            }
+            catch (JSONException e) {
+                Log.d(TAG, "getUUIDList getable: JSONException");
+            }
+        }
+        else {
+            Log.d(TAG, "getUUIDList getable: Something wrong with response");
+        }
+        return itemList;
     }
     static public Bitmap getUserQRImage(Context mContext) {
-        NoHttp.initialize(mContext);/////////need more logic here
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
+        NoHttp.initialize(initializationConfig);
+        //NoHttp.initialize(mContext);/////////need more logic here
         String url = "http://" + ip + ":" + port +"/query/qrcode_user";
         NoHttp.initialize(mContext);
-        Log.d(TAG, "getQRImage: Try to get QRcode:" + url);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", userName);
