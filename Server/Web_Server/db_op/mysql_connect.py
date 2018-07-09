@@ -21,8 +21,7 @@ def cnnct():
 
 def is_password_right(username,passwd):
     db, c =  cnnct()
-    password=get_md5(passwd + username + 'Author:fcg,yql,ykx')
-    # try:
+    passwd=get_md5(passwd) # + username + 'Author:fcg,yql,ykx')
     sql = 'select * from User where username="'+username+'" and password="'+passwd+'";'
     print(sql)
     r=c.execute(sql)
@@ -32,14 +31,13 @@ def is_password_right(username,passwd):
     else:
         db.close()
         return False
-    # except:
-    #     db.close()
-    #     return False
 
 
 def query_mysql(contents, table, where='true'):
     db,c =cnnct()
-    c.execute("SELECT " + contents + " FROM " + table + " WHERE "+where+";")
+    sql = "SELECT " + contents + " FROM " + table + " WHERE "+where+";"
+    print(sql)
+    c.execute(sql)
     results = c.fetchall() # type(results) == tuple
     c.close()
     db.close()
@@ -47,8 +45,9 @@ def query_mysql(contents, table, where='true'):
 
 
 if __name__=='__main__':
-    db,c = cnnct()
-    r=c.execute('select * from User where username="richsoap" and password="testinggg";')
-    print('return',r)
-    # c.execute('insert into User values("lily","pswd","lilyuiid");')
-    db.close()
+    # db,c = cnnct()
+    # r=c.execute('select * from User where username="richsoap" and password="testinggg";')
+    # print('return',r)
+    # # c.execute('insert into User values("lily","pswd","lilyuiid");')
+    # db.close()
+    pass
