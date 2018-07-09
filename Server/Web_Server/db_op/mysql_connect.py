@@ -21,7 +21,7 @@ def cnnct():
 
 def is_password_right(username,passwd):
     db, c =  cnnct()
-    password=get_md5(passwd + username + 'Author:fcg,yql,ykx')
+    passwd=get_md5(passwd + username + 'Author:fcg,yql,ykx')
     # try:
     sql = 'select * from User where username="'+username+'" and password="'+passwd+'";'
     print(sql)

@@ -39,11 +39,11 @@ def handle_sign_signup():
     print(username+' trys to sign up with password '+passwd)
     #若不冲突且合法则存入数据库
     useruuid = uuid.uuid1().__str__().replace('-','')
-    password=get_md5(jdata['password'] + jdata['username'] + 'Author:fcg,yql,ykx')
+    passwd=get_md5(jdata['password'] + jdata['username'] + 'Author:fcg,yql,ykx')
     db,c=mc.cnnct()
     try:
         sql='insert into User values("'+username+'","'+passwd+'","'+useruuid+'");'
-        r = c.execute(sql)
+        c.execute(sql)
     except:
         db.close()
         return 'False'
@@ -60,5 +60,4 @@ def handle_sign_signin():
     jdata = json.loads(data.decode('utf-8'))
     username, passwd = jdata['username'], jdata['password']
     print(username+' trys to login with password '+passwd)
-    password=get_md5(jdata['password'] + jdata['username'] + 'Author:fcg,yql,ykx')
     return str(mc.is_password_right(username,passwd))

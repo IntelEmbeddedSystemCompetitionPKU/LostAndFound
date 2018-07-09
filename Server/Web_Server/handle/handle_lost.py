@@ -17,6 +17,8 @@ import pymysql
 import base64
 import qrcode
 import Web_Server.db_op.mysql_connect as mc
+from Levenshtein import distance as dist #字符串间的编辑距离
+
 basepath = '/home/lily/Server_File/'
 
 # order by similarity
@@ -45,7 +47,6 @@ def handle_query_lostlist():
     json_data = json.loads(request.get_data().decode('utf-8'))
     keyword, date = json_data['description'], json_data['date']
     print('query lost about '+keyword+' after '+date)
-    #time_keywords_dict=time_keywords.split('_')
     lostlist = mc.query_mysql('objuuid,description', 'Lost','lostdate>="'+date+'"')
     lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
@@ -57,7 +58,7 @@ def handle_query_available(useruuid):
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/notapplied/<useruuid>', methods=['GET'])
-def handle_query_applied(useruuid):
+def handle_query_notapplied(useruuid):
     lostlist=mc.query_mysql('objuuid', 'Lost','owneruuid="'+useruuid+'" and apply="0"')
     return lostlist2json(lostlist)
 
@@ -119,14 +120,18 @@ def handle_query_maskcheck(useruuid,objuuid):
     # print(answer)
     cnt_right = 0
     cnt_all = 0
+    len_sum = 0
+    dis_sum = 0
     for item in json_data:
         itemjson = json.loads(json_data[item])
         for jtem in itemjson:
             cnt_all = cnt_all + 1
             print('compare real answer '+answer[item][jtem] + ' with user answer '+itemjson[jtem])
+            len_sum+=len(answer[item][jtem])+len(itemjson[jtem])
+            dis_sum+=dist(answer[item][jtem],itemjson[jtem])
             if answer[item][jtem] == itemjson[jtem]:
                 cnt_right = cnt_right + 1
-    # return 'debug'
+    # if dis_sum/len_sum<0.8:
     if cnt_right > cnt_all * 0.6:
         db,c = mc.cnnct()
         r=sql = 'UPDATE Lost SET owneruuid="' + useruuid + '" WHERE objuuid="' + objuuid + '";'
