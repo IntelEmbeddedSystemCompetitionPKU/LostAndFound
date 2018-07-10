@@ -54,12 +54,12 @@ def handle_query_lostlist():
 
 @app.route('/query/lostlist/available/<username>', methods=['GET'])
 def handle_query_available(username):
-    lostlist=mc.query_mysql('objuuid', 'Lost l join User u on l.owneruuid=u.useruuid','u.username="'+username+'"')
+    lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'"')
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/notapplied/<username>', methods=['GET'])
 def handle_query_notapplied(username):
-    lostlist=mc.query_mysql('objuuid', 'Lost l join User u on l.owneruuid=u.useruuid','u.username="'+username+'" and apply="0"')
+    lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" and apply="0"')
     return lostlist2json(lostlist)
 
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
@@ -105,8 +105,8 @@ def handle_query_maskinfo(uuid):
     return data
 
 
-@app.route('/query/maskcheck/<useruuid>/<objuuid>', methods=['POST'])
-def handle_query_maskcheck(useruuid,objuuid):
+@app.route('/query/maskcheck/<username>/<objuuid>', methods=['POST'])
+def handle_query_maskcheck(username,objuuid):
     json_data = json.loads(request.get_data().decode('utf-8'))
     path = basepath + objuuid
     # print(path)
@@ -134,7 +134,7 @@ def handle_query_maskcheck(useruuid,objuuid):
     # if dis_sum/len_sum<0.8:
     if cnt_right > cnt_all * 0.6:
         db,c = mc.cnnct()
-        r=sql = 'UPDATE Lost SET owneruuid="' + useruuid + '" WHERE objuuid="' + objuuid + '";'
+        r=sql = 'UPDATE Lost SET ownername="' + username + '" WHERE objuuid="' + objuuid + '";'
         print(sql)
         if r==0:
             print('oops! no such obj')

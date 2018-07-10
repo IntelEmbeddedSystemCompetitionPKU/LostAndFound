@@ -27,13 +27,15 @@ def insert_mysql(uuid, path):
     fr = open(path + '/data.txt', 'r')
     item_info = fr.read()
     item_info = json.loads(item_info)
+    print(item_info)
     db, c = mc.cnnct()
-    c.execute("INSERT INTO Lost(objuuid, lostdate, description) VALUES('"
-            + uuid + "','"
-            + item_info['time'] + "','"
-            + item_info['description']# + ","
-            + "');")
-    c.close()
+    sql = 'insert into Lost(objuuid, lostdate, description) VALUES("'
+    sql +=uuid + '","'
+    sql += item_info['time'] 
+    sql += '","'+ item_info['description']+ '");'
+    #sql = 'insert into Lost(objuuid, lostdate, description) VALUES("'+ uuid + '","' + item_info['time'] + '","'+ item_info['description']+ '");'
+    print(sql)
+    c.execute(sql)
     db.close()
 
 # json.loads(): transfer str to json
@@ -80,16 +82,16 @@ def handle_upload_labelinfo():
     objuuid = json_data['uuid']
     anti_code = json_data['value']
     db,c = mc.cnnct()
-    # username=anti_code.split('*')[0]
-    username=anti_code[:8]
-    dscr=anti_code[9:]
-    sql = 'select useruuid from User where username="' + username + '";'
-    c.execute(sql)
-    print(sql)
-    results = c.fetchall()
-    owneruuid = results[0][0]
+    l = anti_code.split('*')
+    username=l[0]
+    dscr=l[1]
+    # sql = 'select useruuid from User where username="' + username + '";'
+    # c.execute(sql)
+    # print(sql)
+    # results = c.fetchall()
+    # owneruuid = results[0][0]
     # distribute owneruuid to lost property
-    c.execute('UPDATE Lost SET owneruuid="' + owneruuid + '" WHERE objuuid="' + objuuid + '";')
+    c.execute('UPDATE Lost SET ownername="' + username + '" WHERE objuuid="' + objuuid + '";')
     sql = 'UPDATE Lost SET description=concat("' + dscr + '" ,description) WHERE objuuid="' + objuuid + '";'
     print(sql)
     c.execute(sql)
@@ -105,11 +107,11 @@ def handle_upload_finderinfo():
     username = json_data['username']
     objuuid = json_data['uuid']
     db,c = mc.cnnct()
-    c.execute('SELECT useruuid FROM User WHERE username="' + username + '";')
-    results = c.fetchall()
-    owneruuid = results[0][0]
+    # c.execute('SELECT useruuid FROM User WHERE username="' + username + '";')
+    # results = c.fetchall()
+    # owneruuid = results[0][0]
     # distribute finderuuid to lost property
-    c.execute('UPDATE Lost SET finderuuid="' + owneruuid + '" WHERE objuuid="' + objuuid + '";')
+    c.execute('UPDATE Lost SET findername="' + username + '" WHERE objuuid="' + objuuid + '";')
     db.close()
     return 'True'
 
