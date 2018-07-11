@@ -27,16 +27,7 @@ def insert_mysql(uuid, path):
     fr = open(path + '/data.txt', 'r')
     item_info = json.loads(fr.read())
     print(item_info)
-    # db, c = mc.cnnct()
-    # sql = 'insert into Lost(objuuid, lostdate, description) VALUES("'
-    # sql +=uuid + '","'
-    # sql += item_info['time'] 
-    # sql += '","'+ item_info['description']+ '");'
     mc.nofetchall_sql('insert into Lost(objuuid, lostdate, description) values(%s,%s,%s)',(uuid,item_info['time'],item_info['description']))
-    #sql = 'insert into Lost(objuuid, lostdate, description) VALUES("'+ uuid + '","' + item_info['time'] + '","'+ item_info['description']+ '");'
-    # print(sql)
-    # c.execute(sql)
-    # db.close()
 
 # json.loads(): transfer str to json
 # json.dumps(): transfer json to str
@@ -83,14 +74,8 @@ def handle_upload_labelinfo():
     l = anti_code.split('*')
     username=l[0]
     dscr=l[1]
-    # sql = 'select useruuid from User where username="' + username + '";'
-    # c.execute(sql)
-    # print(sql)
-    # results = c.fetchall()
-    # owneruuid = results[0][0]
     # distribute owneruuid to lost property
     c.execute('update Lost set ownername=%s where objuuid=%s',(username,objuuid))
-    # sql = 'UPDATE Lost SET description=concat("' + dscr + '" ,description) WHERE objuuid="' + objuuid + '";'
     c.execute('update Lost set description=concat(%s ,description) WHERE objuuid=%s',(dscr,objuuid))
     db.close()
     return 'True'
@@ -99,13 +84,6 @@ def handle_upload_labelinfo():
 def handle_upload_finderinfo():
     json_data = json.loads(request.get_data().decode('utf-8'))
     username,objuuid = json_data['username'],json_data['uuid']
-    # db,c = mc.cnnct()
-    # c.execute('SELECT useruuid FROM User WHERE username="' + username + '";')
-    # results = c.fetchall()
-    # owneruuid = results[0][0]
-    # distribute finderuuid to lost property
-    # c.execute('UPDATE Lost SET findername="' + username + '" WHERE objuuid="' + objuuid + '";')
     mc.nofetchall_sql('update Lost set findername=%s where objuuid=%s',(username,objuuid))
-    # db.close()
     return 'True'
 

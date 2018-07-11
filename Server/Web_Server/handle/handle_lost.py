@@ -48,26 +48,22 @@ def handle_query_lostlist():
     keyword, date = json_data['description'], json_data['date']
     print('query lost about '+keyword+' after '+date)
     lostlist = mc.query_sql('select objuuid,description from Lost where ownername=%s and lostdate>=%s',(' ',date))
-    # lostlist = mc.query_mysql('objuuid,description', 'Lost','ownername=" " and lostdate>="'+date+'"')
     lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/available/<username>', methods=['GET'])
 def handle_query_available(username):
-    # lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" ')
     lostlist=mc.query_sql('select objuuid from Lost where ownername=%s',(username))
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/notapplied/<username>', methods=['GET'])
 def handle_query_notapplied(username):
-    # lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" and apply="0"')
     lostlist=mc.query_sql('select objuuid from Lost where ownername=%s and apply="0"',(username))
     return lostlist2json(lostlist)
 
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
 def handle_query_getinfo(uuid):
-    # lostlist=mc.query_mysql('description,lostdate', 'Lost','objuuid="'+uuid+'"')
     lostlist=mc.query_sql('select description,lostdate from Lost where objuuid=%s',(uuid))
     if len(lostlist)==0:
         return 'There is no such thing!'
@@ -88,8 +84,8 @@ def handle_query_getinfo(uuid):
 # order: 0, 1, 2, ...
 def handle_query_LD(uuid, picture_type, order):
     path = basepath + uuid + '/' + picture_type + '/' + order + '.jpg'
-    print(path)
     if os.path.exists(path) == False:
+        print('There is no such thing named '+path)
         return send_file(blank_img,as_attachment=True)
     return send_file(path,as_attachment=True)
 
@@ -97,9 +93,8 @@ def handle_query_LD(uuid, picture_type, order):
 @app.route('/query/maskinfo/<uuid>', methods=['GET'])
 def handle_query_maskinfo(uuid):
     path = basepath + uuid + '/data.txt'
-    print(path)
     if os.path.exists(path) == False:
-        return 'There is no such thing!'
+        return 'There is no such thing named '+path
     fr = open(path, 'rb')
     jdata = json.loads(fr.read().decode('utf-8'))
     print(jdata)
@@ -116,42 +111,28 @@ def handle_query_maskinfo(uuid):
 def handle_query_maskcheck(username,objuuid):
     json_data = json.loads(request.get_data().decode('utf-8'))
     path = basepath + objuuid
-    # print(path)
     if os.path.exists(path) == False:
         return 'There is no such thing!'
-    # print(json_data)
-    # return 'debug'
     fr = open(path + '/data.txt', 'rb')
-    answer = fr.read()
-    answer = json.loads(answer)
-    # print(answer)
-    cnt_right = 0
-    cnt_all = 0
-    len_sum = 0
-    dis_sum = 0
+    answer = json.loads(fr.read())
+    # cnt_right = 0
+    # cnt_all = 0
+    len_sum,dis_sum = 0,0
     for item in json_data:
         itemjson = json.loads(json_data[item])
         for jtem in itemjson:
-            cnt_all = cnt_all + 1
-            print('compare real answer '+answer[item][jtem] + ' with user answer '+itemjson[jtem])
-            len_sum+=len(answer[item][jtem])+len(itemjson[jtem])
             dis_sum+=dist(answer[item][jtem],itemjson[jtem])
-            if answer[item][jtem] == itemjson[jtem]:
-                cnt_right = cnt_right + 1
+            # cnt_all = cnt_all + 1
+            # print('compare real answer '+answer[item][jtem] + ' with user answer '+itemjson[jtem])
+            # len_sum+=len(answer[item][jtem])+len(itemjson[jtem])
+            # if answer[item][jtem] == itemjson[jtem]:
+            #     cnt_right = cnt_right + 1
     if dis_sum/len_sum<0.8:
     # if cnt_right > cnt_all * 0.6:
-        # db,c = mc.cnnct()
         r=mc.nofetchall_sql('UPDATE Lost SET ownername=%s WHERE objuuid=%s',(username,objuuid))
         if r==0:
             print('oops! no such obj')
-        # c.execute(sql)
-        
-        # sql='UPDATE Lost SET apply="1" WHERE objuuid="' + objuuid + '";'
         mc.nofetchall_sql('UPDATE Lost SET apply="1" WHERE objuuid=%s',(objuuid))
-        # print(sql)
-        # c.execute(sql)
-        # c.close()
-        # db.close()
         return 'True'
     else:
         return 'False'

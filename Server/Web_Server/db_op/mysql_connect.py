@@ -21,8 +21,7 @@ def cnnct():
 
 def is_password_right(username,passwd):
     db, c =  cnnct()
-    passwd=get_md5(passwd) # + username + 'Author:fcg,yql,ykx')
-    # sql = 'select * from User where username="'+username+'" and password="'+passwd+'";'
+    passwd=get_md5(passwd)
     r=c.execute('select * from User where username=%s and password=%s', (username,passwd))
     if r==1:
         db.close()
@@ -38,7 +37,7 @@ def query_mysql(contents, table, where='true'):
     sql = "SELECT " + contents + " FROM " + table + " WHERE "+where+";"
     print(sql)
     c.execute(sql)
-    results = c.fetchall() # type(results) == tuple
+    results = c.fetchall()
     c.close()
     db.close()
     return results
@@ -48,7 +47,7 @@ def query_sql(sql, params):
     db,c =cnnct()
     print(sql)
     c.execute(sql,params)
-    results = c.fetchall() # type(results) == tuple
+    results = c.fetchall()
     c.close()
     db.close()
     return results

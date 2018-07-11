@@ -21,7 +21,6 @@ def handle_upload_msg():
     else:
         targetname=r[0][0]
     print(username+' sent '+message+' to '+targetname+' about '+objuuid+'at time:',time)
-    # sql='insert into Messages(username, targetname, message,time, objuuid) values("'+username+'", "'+targetname+'", "'+message+'", "'+str(time)+'", "'+objuuid+'");'
     sql='insert into Messages(username, targetname, message,time, objuuid) values(%s,%s,%s,%s,%s);'
     c.execute(sql, (username,targetname,message,str(time),objuuid))
     db.close()
@@ -48,12 +47,6 @@ def handle_query_noreplylist():
     jdata = json.loads(request.get_data().decode('utf-8'))
     username = jdata['username']
     print(username+' get noreplylist ')
-    # db,c=mc.cnnct()
-    # subqery=' (select objuuid from Messages where username="'+username+'")'
-    # sql='select distinct objuuid from Messages where targetname="'+username+'" and objuuid not in' +subqery
-    # print(sql)
-    # c.execute(sql)
-    # r = c.fetchall()
     r=mc.query_sql('select distinct objuuid from Messages where targetname=%s and objuuid not in (select objuuid from Messages where username=%s)',(username,username))
     data='{"user_num":'+str(len(r))
     for i, u in enumerate(r):
@@ -62,7 +55,6 @@ def handle_query_noreplylist():
     data+='}'
     print(r)
     print(data)
-    # db.close()
     return data
 
 @app.route('/upload/pass', methods=['POST'])
@@ -70,15 +62,10 @@ def handle_upload_pass():
     jdata = json.loads(request.get_data().decode('utf-8'))
     username, objuuid = jdata['username'], jdata['targetuuid']
     print(username+' thinks '+objuuid+' is right!')
-    # db,c=mc.cnnct()
-    # sql='select distinct username, targetname from Messages where objuuid="'+objuuid+'";'
     r=mc.query_sql('select distinct username, targetname from Messages where objuuid=%s',(objuuid))
-    # r=c.fetchall()
     if username==r[0][0]:
         targetname=r[0][1]
     else:
         targetname=r[0][0]
     mc.nofetchall_sql('update Lost set ownername=%s where objuuid=%s',(targetname,objuuid))
-    # c.execute(sql)
-    # db.close()
     return 'True'
