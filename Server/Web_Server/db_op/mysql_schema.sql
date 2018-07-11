@@ -5,7 +5,8 @@ lost(uuid char(32) not null primary key, lost_date date, description tinytext, o
 user_qrcode(usruuid char(32), qrcode char(256))
 
 ---create and initialize the database---
-create database LostFound;
+create database LostFound character set utf8mb4 collate utf8mb4_unicode_ci;
+--alter database LostFound character set utf8mb4 collate utf8mb4_unicode_ci;
 use LostFound;
 create table User(
     username varchar(16),

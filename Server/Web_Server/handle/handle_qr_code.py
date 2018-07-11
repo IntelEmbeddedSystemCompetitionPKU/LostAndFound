@@ -25,7 +25,6 @@ blank_img = basepath+'default.png'
 
 @app.route('/query/qrcode_user', methods=['POST'])
 def handle_query_qrcode_user():
-    print('handle_query_qrcode_user')
     jdata = json.loads(request.get_data().decode('utf-8'))
     username, passwd = jdata['username'], jdata['password']
     if not mc.is_password_right(username,passwd):
@@ -44,20 +43,16 @@ def handle_query_qrcode_lost():
     jdata = json.loads(request.get_data().decode('utf-8'))
     print(jdata)
     username, itemuuid = jdata['useruuid'], jdata['itemuuid']
-    sql_select='select * from Lost where objuuid="'+itemuuid+'" and ownername="'+username+'";'
-    sql_update='update Lost set apply="1"'+' where objuuid="'+itemuuid+'" and ownername="'+username+'";'
-    db,c = mc.cnnct()
-    r=c.execute(sql_select)
-    print(sql_select)
+    sql_select=('select * from Lost where objuuid=%s and ownername=%s',(itemuuid,username))
+    sql_update=('update Lost set apply="1" where objuuid=%s and ownername=%s',(itemuuid,username))
+    r=mc.query_sql(*sql_select)
     if r==0:
         print('-'*6)
         print(sql_select)
         return send_file(blank_img,as_attachment=True)
-    r = c.execute(sql_update)
+    r=mc.nofetchall_sql(*sql_update)
     if r==0:
-        print(sql_update)
         print('bad update')
-    db.close()
     code='fetc'+itemuuid
     qrcode.make(code).save(qrimg_path)
     return send_file(qrimg_path,as_attachment=True)
@@ -65,7 +60,6 @@ def handle_query_qrcode_lost():
 
 @app.route('/query/qrcode_anti', methods=['POST'])
 def handle_query_qrcode_anti():
-    print('handle_query_qrcode_user')
     jdata = json.loads(request.get_data().decode('utf-8'))
     print(jdata)
     username, passwd, dscpt = jdata['username'], jdata['password'], jdata['description']
@@ -73,12 +67,6 @@ def handle_query_qrcode_anti():
         return send_file(blank_img,as_attachment=True)
     print(username+'gets a qrcode with description: '+dscpt)
     code='mark'+username +'*'+ dscpt+'*'+(uuid.uuid1().__str__().replace('-',''))
-    db,c=mc.cnnct()
-    sql='insert into Anti_qrcode values("'+username+'", "'+code+'");'
-    # sql='insert into Anti_qrcode values(%s,%s);'
-    # c.execute(sql, (username, code))
-    print(sql)
-    c.execute(sql)
+    mc.nofetchall_sql('insert into Anti_qrcode(username,qrcode) values(%s,%s)',(username,code))
     qrcode.make(code).save(qrimg_path)
-    db.close()
     return send_file(qrimg_path,as_attachment=True)

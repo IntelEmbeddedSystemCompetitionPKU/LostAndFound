@@ -21,9 +21,8 @@ def handle_upload_msg():
     else:
         targetname=r[0][0]
     print(username+' sent '+message+' to '+targetname+' about '+objuuid+'at time:',time)
-    sql='insert into Messages(username, targetname, message,time, objuuid) values("'+username+'", "'+targetname+'", "'+message+'", "'+str(time)+'", "'+objuuid+'");'
-    print(sql)
-    c.execute(sql)
+    sql='insert into Messages(username, targetname, message,time, objuuid) values(%s,%s,%s,%s,%s);'
+    c.execute(sql, (username,targetname,message,str(time),objuuid))
     db.close()
     return 'True'
 
@@ -33,15 +32,7 @@ def handle_query_msg():
     jdata = json.loads(request.get_data().decode('utf-8'))
     username, objuuid, time = jdata['username'], jdata['targetuuid'], jdata['time']
     print(username+' get message after '+str(time))
-    db,c=mc.cnnct()
-    # sql='select findername from Lost where objuuid="'+objuuid+'";'
-    # print(sql)
-    # c.execute(sql)
-    # r=c.fetchall()
-    # thename=r[0][0]
-    sql='select message, time from Messages where objuuid="'+objuuid+'" and targetname="'+username+'" and time>"'+str(time)+'";'
-    c.execute(sql)
-    r = c.fetchall()
+    r=mc.query_sql('select message, time from Messages where objuuid=%s and targetname=%s and time>%s',(objuuid,username,str(time)))
     print(r)
     data='{"message_num":'+str(len(r))
     for i, u in enumerate(r):
@@ -49,7 +40,6 @@ def handle_query_msg():
         data+=',"message'+str(i)+'":"'+message+'",'+'"time'+str(i)+'":'+str(time)
     data+='}'
     print(data)
-    db.close()
     return data
 
 @app.route('/query/noreplylist', methods=['POST'])
@@ -57,12 +47,7 @@ def handle_query_noreplylist():
     jdata = json.loads(request.get_data().decode('utf-8'))
     username = jdata['username']
     print(username+' get noreplylist ')
-    db,c=mc.cnnct()
-    subqery=' (select objuuid from Messages where username="'+username+'")'
-    sql='select distinct objuuid from Messages where targetname="'+username+'" and objuuid not in' +subqery
-    print(sql)
-    c.execute(sql)
-    r = c.fetchall()
+    r=mc.query_sql('select distinct objuuid from Messages where targetname=%s and objuuid not in (select objuuid from Messages where username=%s)',(username,username))
     data='{"user_num":'+str(len(r))
     for i, u in enumerate(r):
         uuid=u[0]
@@ -70,27 +55,17 @@ def handle_query_noreplylist():
     data+='}'
     print(r)
     print(data)
-    db.close()
     return data
 
 @app.route('/upload/pass', methods=['POST'])
 def handle_upload_pass():
-    print('handle_upload_pass')
-    data = request.get_data()
-    jdata = json.loads(data.decode('utf-8'))
+    jdata = json.loads(request.get_data().decode('utf-8'))
     username, objuuid = jdata['username'], jdata['targetuuid']
     print(username+' thinks '+objuuid+' is right!')
-    db,c=mc.cnnct()
-    sql='select distinct username, targetname from Messages where objuuid="'+objuuid+'";'
-    print(sql)
-    c.execute(sql)
-    r=c.fetchall()
+    r=mc.query_sql('select distinct username, targetname from Messages where objuuid=%s',(objuuid))
     if username==r[0][0]:
         targetname=r[0][1]
     else:
         targetname=r[0][0]
-    sql= 'update Lost set ownername="'+targetname+'" where objuuid="'+objuuid+'";'
-    print(sql)
-    c.execute(sql)
-    db.close()
+    mc.nofetchall_sql('update Lost set ownername=%s where objuuid=%s',(targetname,objuuid))
     return 'True'
