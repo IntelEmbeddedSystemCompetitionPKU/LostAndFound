@@ -25,18 +25,18 @@ basepath = '/home/lily/Server_File/'
 # used to insert information of lost property into database
 def insert_mysql(uuid, path):
     fr = open(path + '/data.txt', 'r')
-    item_info = fr.read()
-    item_info = json.loads(item_info)
+    item_info = json.loads(fr.read())
     print(item_info)
-    db, c = mc.cnnct()
-    sql = 'insert into Lost(objuuid, lostdate, description) VALUES("'
-    sql +=uuid + '","'
-    sql += item_info['time'] 
-    sql += '","'+ item_info['description']+ '");'
+    # db, c = mc.cnnct()
+    # sql = 'insert into Lost(objuuid, lostdate, description) VALUES("'
+    # sql +=uuid + '","'
+    # sql += item_info['time'] 
+    # sql += '","'+ item_info['description']+ '");'
+    mc.nofetchall_sql('insert into Lost(objuuid, lostdate, description) values(%s,%s,%s)',(uuid,item_info['time'],item_info['description']))
     #sql = 'insert into Lost(objuuid, lostdate, description) VALUES("'+ uuid + '","' + item_info['time'] + '","'+ item_info['description']+ '");'
-    print(sql)
-    c.execute(sql)
-    db.close()
+    # print(sql)
+    # c.execute(sql)
+    # db.close()
 
 # json.loads(): transfer str to json
 # json.dumps(): transfer json to str
@@ -76,11 +76,9 @@ def handle_upload_fetch(uuid):
 
 @app.route('/upload/labelinfo', methods=['POST'])
 def handle_upload_labelinfo():
-    data = request.get_data()
-    json_data = json.loads(data.decode('utf-8'))
+    json_data = json.loads(request.get_data().decode('utf-8'))
     # get username and information of qrcode
-    objuuid = json_data['uuid']
-    anti_code = json_data['value']
+    objuuid,anti_code = json_data['uuid'],json_data['value']
     db,c = mc.cnnct()
     l = anti_code.split('*')
     username=l[0]
@@ -91,27 +89,23 @@ def handle_upload_labelinfo():
     # results = c.fetchall()
     # owneruuid = results[0][0]
     # distribute owneruuid to lost property
-    c.execute('UPDATE Lost SET ownername="' + username + '" WHERE objuuid="' + objuuid + '";')
-    sql = 'UPDATE Lost SET description=concat("' + dscr + '" ,description) WHERE objuuid="' + objuuid + '";'
-    print(sql)
-    c.execute(sql)
-    
+    c.execute('update Lost set ownername=%s where objuuid=%s',(username,objuuid))
+    # sql = 'UPDATE Lost SET description=concat("' + dscr + '" ,description) WHERE objuuid="' + objuuid + '";'
+    c.execute('update Lost set description=concat(%s ,description) WHERE objuuid=%s',(dscr,objuuid))
     db.close()
     return 'True'
 
 @app.route('/upload/finderinfo', methods=['POST'])
 def handle_upload_finderinfo():
-    data = request.get_data()
-    json_data = json.loads(data.decode('utf-8'))
-    # get username and objuuid
-    username = json_data['username']
-    objuuid = json_data['uuid']
-    db,c = mc.cnnct()
+    json_data = json.loads(request.get_data().decode('utf-8'))
+    username,objuuid = json_data['username'],json_data['uuid']
+    # db,c = mc.cnnct()
     # c.execute('SELECT useruuid FROM User WHERE username="' + username + '";')
     # results = c.fetchall()
     # owneruuid = results[0][0]
     # distribute finderuuid to lost property
-    c.execute('UPDATE Lost SET findername="' + username + '" WHERE objuuid="' + objuuid + '";')
-    db.close()
+    # c.execute('UPDATE Lost SET findername="' + username + '" WHERE objuuid="' + objuuid + '";')
+    mc.nofetchall_sql('update Lost set findername=%s where objuuid=%s',(username,objuuid))
+    # db.close()
     return 'True'
 

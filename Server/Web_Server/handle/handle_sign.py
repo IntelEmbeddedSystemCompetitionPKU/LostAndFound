@@ -38,8 +38,10 @@ def handle_sign_signup():
     passwd=mc.get_md5(passwd)# + jdata['username'] + 'Author:fcg,yql,ykx')
     db,c=mc.cnnct()
     try:
-        sql='insert into User values("'+username+'","'+passwd+'","'+useruuid+'");'
-        c.execute(sql)
+        # sql='insert into User values("'+username+'","'+passwd+'","'+useruuid+'");'
+        # c.execute(sql)
+        sql='insert into User(username,password,useruuid) values(%s,%s,%s);'
+        c.execute(sql, (username, passwd, useruuid))
     except:
         db.close()
         return 'False'

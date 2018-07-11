@@ -47,24 +47,28 @@ def handle_query_lostlist():
     json_data = json.loads(request.get_data().decode('utf-8'))
     keyword, date = json_data['description'], json_data['date']
     print('query lost about '+keyword+' after '+date)
-    lostlist = mc.query_mysql('objuuid,description', 'Lost','ownername=" " and lostdate>="'+date+'"')
+    lostlist = mc.query_sql('select objuuid,description from Lost where ownername=%s and lostdate>=%s',(' ',date))
+    # lostlist = mc.query_mysql('objuuid,description', 'Lost','ownername=" " and lostdate>="'+date+'"')
     lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/available/<username>', methods=['GET'])
 def handle_query_available(username):
-    lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" ')
+    # lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" ')
+    lostlist=mc.query_sql('select objuuid from Lost where ownername=%s',(username))
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/notapplied/<username>', methods=['GET'])
 def handle_query_notapplied(username):
-    lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" and apply="0"')
+    # lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" and apply="0"')
+    lostlist=mc.query_sql('select objuuid from Lost where ownername=%s and apply="0"',(username))
     return lostlist2json(lostlist)
 
 @app.route('/query/getinfo/<uuid>', methods=['GET'])
 def handle_query_getinfo(uuid):
-    lostlist=mc.query_mysql('description,lostdate', 'Lost','objuuid="'+uuid+'"')
+    # lostlist=mc.query_mysql('description,lostdate', 'Lost','objuuid="'+uuid+'"')
+    lostlist=mc.query_sql('select description,lostdate from Lost where objuuid=%s',(uuid))
     if len(lostlist)==0:
         return 'There is no such thing!'
     r=lostlist[0]
@@ -134,19 +138,20 @@ def handle_query_maskcheck(username,objuuid):
             dis_sum+=dist(answer[item][jtem],itemjson[jtem])
             if answer[item][jtem] == itemjson[jtem]:
                 cnt_right = cnt_right + 1
-    # if dis_sum/len_sum<0.8:
-    if cnt_right > cnt_all * 0.6:
-        db,c = mc.cnnct()
-        r=sql = 'UPDATE Lost SET ownername="' + username + '" WHERE objuuid="' + objuuid + '";'
-        print(sql)
+    if dis_sum/len_sum<0.8:
+    # if cnt_right > cnt_all * 0.6:
+        # db,c = mc.cnnct()
+        r=mc.nofetchall_sql('UPDATE Lost SET ownername=%s WHERE objuuid=%s',(username,objuuid))
         if r==0:
             print('oops! no such obj')
-        c.execute(sql)
-        sql='UPDATE Lost SET apply="1" WHERE objuuid="' + objuuid + '";'
-        print(sql)
-        c.execute(sql)
-        c.close()
-        db.close()
+        # c.execute(sql)
+        
+        # sql='UPDATE Lost SET apply="1" WHERE objuuid="' + objuuid + '";'
+        mc.nofetchall_sql('UPDATE Lost SET apply="1" WHERE objuuid=%s',(objuuid))
+        # print(sql)
+        # c.execute(sql)
+        # c.close()
+        # db.close()
         return 'True'
     else:
         return 'False'

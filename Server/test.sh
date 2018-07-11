@@ -11,9 +11,10 @@ curl -X GET --data '{}' http://162.105.91.179:5000/query/5c946bd2292c4c658ca9e85
 curl -X POST --data '{"test": "Can I compare thee to a summer''s day?"}' http://162.105.91.179:5000/query/qrcode
 curl -X GET --data '{}' http://162.105.91.179:5000/query/maskinfo/5c946bd2292c4c658ca9e856746337d
 10.2.15.121
-curl -X POST --data '{ "username":"poorsoap", "targetuuid": "objobjuuid", "message":"u must give back!", "time":12345}' http://10.128.171.216:5000/upload/message
+curl -X POST --data '{ "username":"richsoap", "targetuuid": "objobjuuid2", "message":"还给我！!!", "time":12345}' http://	162.105.91.98:5000/upload/message
 curl -X POST --data '{ "username":"fcgfcg"}' http://10.128.171.216:5000/query/noreplylist
-curl -X POST --data '{ "username":"poorsoap", "targetuuid":"objobjuuid","time":123}' http://10.128.171.216:5000/query/messages
+curl -X POST --data '{ "username":"fcgfcg", "targetuuid":"objobjuuid","time":123}' http://10.128.171.216:5000/query/messages
+curl -X POST --data '{ "username":"richsoap", "targetuuid":"objobjuuid2","time":123}' http://10.128.171.216:5000/query/messages
 curl -X POST --data '{ "username":"fcg", "password": "MYHD"}' http://162.105.91.179:5000/query/qrcode_usr
 curl -X POST --data '{ "username":"fcg", "password": "MYHD", "description":"my property!"}' http://10.1.173.3:5000/query/qrcode_usr
 
