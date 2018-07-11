@@ -9,19 +9,19 @@ import Web_Server.db_op.mysql_connect as mc
 
 @app.route('/upload/message', methods=['POST'])
 def handle_upload_msg():
-    print('handle_upload_msg')
-    data = request.get_data()
-    jdata = json.loads(data.decode('utf-8'))
-    username, targetuuid, message, time = jdata['username'], jdata['targetuuid'], jdata['message'], jdata['time']
-    print(username+' sent '+message+' to '+targetuuid+'at time:',time)
+    jdata = json.loads(request.get_data().decode('utf-8'))
+    username, objuuid, message, time = jdata['username'], jdata['targetuuid'], jdata['message'], jdata['time']
     db,c=mc.cnnct()
-    sql='select username from User where useruuid="'+targetuuid+'";'
+    sql='select distinct username, targetname from Messages where objuuid="'+objuuid+'";'
     print(sql)
     c.execute(sql)
     r=c.fetchall()
-    targetname=r[0][0]
-    print('target name is',targetname)
-    sql='insert into Messages values("'+username+'", "'+targetname+'", "'+message+'", "'+str(time)+'");'
+    if username==r[0][0]:
+        targetname=r[0][1]
+    else:
+        targetname=r[0][0]
+    print(username+' sent '+message+' to '+targetname+' about '+objuuid+'at time:',time)
+    sql='insert into Messages(username, targetname, message,time, objuuid) values("'+username+'", "'+targetname+'", "'+message+'", "'+str(time)+'", "'+objuuid+'");'
     print(sql)
     c.execute(sql)
     db.close()
@@ -30,20 +30,16 @@ def handle_upload_msg():
 
 @app.route('/query/messages', methods=['POST'])
 def handle_query_msg():
-    print('handle_query_msg')
-    data = request.get_data()
-    jdata = json.loads(data.decode('utf-8'))
-    username, targetuuid, time = jdata['username'], jdata['targetuuid'], jdata['time']
+    jdata = json.loads(request.get_data().decode('utf-8'))
+    username, objuuid, time = jdata['username'], jdata['targetuuid'], jdata['time']
     print(username+' get message after '+str(time))
     db,c=mc.cnnct()
-    sql='select username from User where useruuid="'+targetuuid+'";'
-    print(sql)
-    c.execute(sql)
-    r=c.fetchall()
-    targetname=r[0][0]
-    targetname, username = username, targetname
-    print('target name is',targetname)
-    sql='select message, time from Messages where username="'+username+'" and targetname="'+targetname+'" and time>"'+str(time)+'";'
+    # sql='select findername from Lost where objuuid="'+objuuid+'";'
+    # print(sql)
+    # c.execute(sql)
+    # r=c.fetchall()
+    # thename=r[0][0]
+    sql='select message, time from Messages where objuuid="'+objuuid+'" and targetname="'+username+'" and time>"'+str(time)+'";'
     c.execute(sql)
     r = c.fetchall()
     print(r)
@@ -58,14 +54,13 @@ def handle_query_msg():
 
 @app.route('/query/noreplylist', methods=['POST'])
 def handle_query_noreplylist():
-    print('handle_query_noreplylist')
-    data = request.get_data()
-    jdata = json.loads(data.decode('utf-8'))
+    jdata = json.loads(request.get_data().decode('utf-8'))
     username = jdata['username']
     print(username+' get noreplylist ')
     db,c=mc.cnnct()
-    subqery=' (select targetname from Messages where username="'+username+'")'
-    sql='select distinct U.useruuid from Messages M, User U where  M.username=U.username and M.targetname="'+username+'" and M.username not in' +subqery
+    subqery=' (select objuuid from Messages where username="'+username+'")'
+    sql='select distinct objuuid from Messages where targetname="'+username+'" and objuuid not in' +subqery
+    print(sql)
     c.execute(sql)
     r = c.fetchall()
     data='{"user_num":'+str(len(r))
@@ -83,8 +78,19 @@ def handle_upload_pass():
     print('handle_upload_pass')
     data = request.get_data()
     jdata = json.loads(data.decode('utf-8'))
-    username, targetuuid = jdata['username'], jdata['targetuuid']
-    print(username+' thinks '+targetuuid+' is right!')
-    # db,c=mc.cnnct()
-    # db.close()
+    username, objuuid = jdata['username'], jdata['targetuuid']
+    print(username+' thinks '+objuuid+' is right!')
+    db,c=mc.cnnct()
+    sql='select distinct username, targetname from Messages where objuuid="'+objuuid+'";'
+    print(sql)
+    c.execute(sql)
+    r=c.fetchall()
+    if username==r[0][0]:
+        targetname=r[0][1]
+    else:
+        targetname=r[0][0]
+    sql= 'update Lost set ownername="'+targetname+'" where objuuid="'+objuuid+'";'
+    print(sql)
+    c.execute(sql)
+    db.close()
     return 'True'
