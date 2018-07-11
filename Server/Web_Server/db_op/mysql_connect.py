@@ -30,6 +30,7 @@ def is_password_right(username,passwd):
         return True
     else:
         db.close()
+        print(passwd+' is wrong passwd_md5')
         return False
 
 

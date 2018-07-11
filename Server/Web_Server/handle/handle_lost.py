@@ -47,14 +47,14 @@ def handle_query_lostlist():
     json_data = json.loads(request.get_data().decode('utf-8'))
     keyword, date = json_data['description'], json_data['date']
     print('query lost about '+keyword+' after '+date)
-    lostlist = mc.query_mysql('objuuid,description', 'Lost','lostdate>="'+date+'"')
+    lostlist = mc.query_mysql('objuuid,description', 'Lost','ownername=" " and lostdate>="'+date+'"')
     lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/available/<username>', methods=['GET'])
 def handle_query_available(username):
-    lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'"')
+    lostlist=mc.query_mysql('objuuid', 'Lost','ownername="'+username+'" ')
     return lostlist2json(lostlist)
 
 @app.route('/query/lostlist/notapplied/<username>', methods=['GET'])
@@ -68,9 +68,12 @@ def handle_query_getinfo(uuid):
     if len(lostlist)==0:
         return 'There is no such thing!'
     r=lostlist[0]
+    ld_num = 1
     ldpath = basepath + uuid + '/LD'
+    if os.path.exists(ldpath):
+        ld_num=str(len(os.listdir(ldpath)))
     print(r)
-    data = '{"description": "' + r[0] + '", "time": "' + r[1].isoformat()  + '", "LD_num": "' + str(len(os.listdir(ldpath))) + '"}'
+    data = '{"description": "' + r[0] + '", "time": "' + r[1].isoformat()  + '", "LD_num": "' + str(ld_num) + '"}'
     print(data)
     return data
 
