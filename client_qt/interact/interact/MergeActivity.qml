@@ -93,7 +93,7 @@ Item{
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
                 if(camera.imageCapture.ready) {
-                    var savepath
+                    var savepath = ""
                     if(activityState == "shotInfo") {
                        savepath = myThread.getDir() + "OCR/"
                         basestring = "处理中"
@@ -103,10 +103,10 @@ Item{
                         basestring = "保存中"
                     }
                     else if(activityState == "shotFace") {
-                        savepath = scanThread.getDir() + "fetch/"
+                        savepath = myThread.getDir() + "fetch/"
                         basestring = "处理中"
                     }
-
+                    print("save location is " + savepath)
                     camera.imageCapture.captureToLocation(savepath)
                     shotGroup.visible = false
                     processGroup.visible = true
@@ -311,21 +311,20 @@ Item{
             else if(activityState == "shotFace") {
                 print("onFinish " + result)
                 if(result == "True") {
-                    scanThread.setCommand("get")
-                    scanThread.startProcess()
-                    processingGroup.visible = true
-                    processingText.text = "感谢使用"
+                    myThread.setCommand("get")
+                    myThread.startProcess()
+                    processGroup.visible = true
+                    basestring = "感谢使用"
                 }
                 else if(result == "False"){
                     shotGroup.visible = true
-                    processingGroup.visible = false
-                    resultLab.text = "照片无效,请重试"
+                    processGroup.visible = false
+                    title.text = "照片无效,请重试"
                 }
                 else if(result == "pop") {
                     killTimer.start()
                 }
             }
-
             else {
                 if(result == "pop") {
                     jumpTimer.start()
@@ -354,38 +353,37 @@ Item{
             onTagFound: {
                 print("find tag: " + tag)
                 if(activityState == "scan") {
-                var kind = scanThread.processQR(tag)
-                if(kind == "fetch") {
-                    scanGroup.visible = false
-                    scanstate = 1
-                    //mytimer.start()
-                    scanGroup.visible = false
-                    shotGroup.visible = true
-                    resultLab.text = "请在框内留下完整面部信息 "
-                }
-                else if(kind == "user") {
-                    print("in user")
-                    scanThread.setCommand("picker")
-                    scanThread.startProcess()
-                    scanstate = 1
-                    scanGroup.visible = false
-                    processingText.text = "非常感谢"
-                    processingGroup.visible = true
-                    resultLab.text = ""
-                }
-                else if(kind == "mark") {
-                    print("in mark")
-                    scanThread.getNewUUID()
-                    scanstate = 1
-                    scanThread.setCommand("savemark")
-                    scanThread.startProcess()
-                    processingText.text = "请放入物品"
-                    processingGroup.visible = true
-                    scanGroup.visible = false
-                }
-                else{
-                    title.text = "无效二维码"
-                }
+                var kind = myThread.processQR(tag)
+                    if(camstate == 0){
+                        if(kind == "fetch") {
+                            camstate = 1
+                            activityState = "shotFace"
+                            changeGroup()
+                            title.text = "请在框内留下完整面部信息 "
+                        }
+                        else if(kind == "user") {
+                            print("in user")
+                            myThread.setCommand("picker")
+                            myThread.startProcess()
+                            basestring = "非常感谢"
+                            scanGroup.visible = false
+                            camstate = 1
+                            processGroup.visible = true
+                        }
+                        else if(kind == "mark") {
+                            print("in mark")
+                            myThread.getNewUUID()
+                            camstate = 1
+                            myThread.setCommand("savemark")
+                            myThread.startProcess()
+                            basestring = "请放入物品"
+                            processGroup.visible = true
+                            scanGroup.visible = false
+                        }
+                        else{
+                            title.text = "无效二维码"
+                        }
+                    }
                 }
             }
             tryHarder: false

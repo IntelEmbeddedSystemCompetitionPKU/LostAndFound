@@ -57,7 +57,7 @@ def save(uuid):
     location = storagemanager.save_item(uuid)
     print('after saving to storagemanager')
     print('save location ' + str(location))
-    #call_me.open_door(location)
+    call_me.open_door(location)
     print('after opening door')
     upload_path(croot + uuid + '/')
 
@@ -65,7 +65,7 @@ def load(uuid):
     location = storagemanager.remove_item(uuid)
     print('load location ' + str(location))
     if not location == -1:
-        #call_me.open_door(location)
+        call_me.open_door(location)
         upload_fecth(croot + uuid + '/')
 
 def refresh(uuid, number, desc):
