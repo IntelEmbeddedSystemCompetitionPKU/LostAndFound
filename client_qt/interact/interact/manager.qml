@@ -5,7 +5,7 @@ Item {
 
     property var lastPages: []
     property int __currentIndex: 0
-
+    property string intent: ""
     Component.onCompleted: {
        showPage("MainActivity.qml");
     }
@@ -28,6 +28,12 @@ Item {
         }
         pageLoader.setSource(lastPages[lastPages.length-1]);
         __currentIndex = lastPages.length-1;
+    }
+    function setIntent(name) {
+        intent = name
+    }
+    function getIntent() {
+        return intent
     }
 
     Loader {

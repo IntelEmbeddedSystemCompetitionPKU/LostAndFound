@@ -37,7 +37,7 @@ import static com.example.richsoap.lostandfound.NetworkManager.LoginResult.SUCCE
 
 public class NetworkManager {
     private static final String TAG = "NetworkManager";
-    private static String ip = "10.1.172.209";
+    private static String ip = "10.128.171.216";
     private static String port = "5000";
     private static String userName = "tester";
     private static String password = "testing";
@@ -291,12 +291,15 @@ public class NetworkManager {
     }
 
     static public boolean sendMessage(ChatPiece message, Context mContext) {
-        NoHttp.initialize(mContext);
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
         String url = "http://" + ip + ":" + port +"/upload/message";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", userName);
-            jsonObject.put("targetuuid", "05924b5e7f9111e8ba66e4f89c86f5ba");
+            jsonObject.put("targetuuid", message.getUser());
             jsonObject.put("message", message.getText());
             jsonObject.put("time", message.getDate());
         }
@@ -320,7 +323,10 @@ public class NetworkManager {
         return false;
     }
     static public List<ChatPiece> getMessages(String uuid, long time, Context mContext) {
-        NoHttp.initialize(mContext);
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
         String url = "http://" + ip + ":" + port +"/query/messages";
         JSONObject jsonObject = new JSONObject();
         try {
@@ -388,7 +394,10 @@ public class NetworkManager {
     }
 
     static public List<OtherUser> getWaitUserList(Context mContext) {
-        NoHttp.initialize(mContext);
+        InitializationConfig initializationConfig = InitializationConfig.newBuilder(mContext)
+                .cacheStore(new DBCacheStore(mContext).setEnable(false))
+                .cookieStore(new DBCookieStore(mContext).setEnable(false))
+                .build();
         String url = "http://" + ip + ":" + port +"/query/noreplylist";
         JSONObject jsonObject = new JSONObject();
         try {

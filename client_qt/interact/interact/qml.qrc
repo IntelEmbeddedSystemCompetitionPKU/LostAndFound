@@ -5,5 +5,7 @@
         <file>MainActivity.qml</file>
         <file>ScanActivity.qml</file>
         <file>ShotInformationActivity.qml</file>
+        <file>MergeActivity.qml</file>
+        <file>ScanActivity_copy.qml</file>
     </qresource>
 </RCC>
