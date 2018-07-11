@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/8429fd34e5e3930d357d56bdf4810ed5/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ec657bb192b20229696216bf233779b16bf75a54">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/27.1.1/39ded76b5e1ce1c5b2688e1d25cdc20ecee32007/support-annotations-27.1.1.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="39ded76b5e1ce1c5b2688e1d25cdc20ecee32007">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/db0d6c0f05df05cfc495cd8a24316434/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="88c68e5ef7c5ace393d014c9ec5fe736b1ca55cf">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/dbflow-rx-4.2.4.aar/2bf22ad59f407514864697051b587ebe/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="985666cb90ca00a209e512fe0a5e1a29eea01633">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/dbflow-4.2.4.aar/c0e9fdd10f21d19c8aa922afcbcc31de/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b24164e00e0adb482a07d874d873064147c42911">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/ebeb3c6078a84a2fa186bd5a2cc14861/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8a9fd7c97f1d13f97f3b52f9d2e54cd857d5acf9">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/27.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/android-database-sqlcipher-3.5.7.aar/0e4906e3909b1b254844a0614e92d661/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a510df52da6402338b2debf32e637277de18c293">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.1.1.aar/6998f627492c7c27035658e8d33b7372/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="4798b2c2dd1fa53176696fa416890d27acbf5617">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.10.0/ec614c05825ddd2267677a99f585d3913474b125/okhttp-urlconnection-3.10.0.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ec614c05825ddd2267677a99f585d3913474b125">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/25.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.14.0/102d7be47241d781ef95f1581d414b0943053130/okio-1.14.0.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="102d7be47241d781ef95f1581d414b0943053130">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/33.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/b9b46e5dfe86350f4a53b27d212e5aee/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ae6d33f37143b08cd8c477c9e348d61ef7ed7eba">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/8f08fd0ad427f3e728105850a2e1766b/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="23dcb4803d3103bde3f3f5db978a726338fe49ae">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/19.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.1.0/edf3f7bfb84a7521d0599efa3b0113a0ee90f85/common-1.1.0.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0edf3f7bfb84a7521d0599efa3b0113a0ee90f85">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/30.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/7d162f69e3e883f9ed42238f1d927eab/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3304d33470ff64cf83bce9189ff3648a42eb2aa7">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/13.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/dbflow-sqlcipher-4.2.4.aar/98595852ef426eaae451559acb33cdc4/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0538fea4f7a981dfe8c6119e0cbeb2cc0175776e">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.1.0/8007981f7d7540d89cd18471b8e5dcd2b4f99167/common-1.1.0.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8007981f7d7540d89cd18471b8e5dcd2b4f99167">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/32.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/4c7ebf89adf9cb993215f80d91506acc/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e2bbe48deed35056023eed2cdc0cc92e5c7d3617">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/nohttp-1.1.10.aar/b2cc33f92ba00c82452c1ef234cafeda/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3902388ebd898ce47104eb594682e7fc59f69a9f">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/okhttp-1.1.10.aar/d2f5b5a8bba170c9279d0ad5af2a5ba9/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="52279e8f5179da15c20abedf2d1455cc4c3ed1cf">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/transition-27.1.1.aar/5be0c02d5b849950f6da1388dd0ec061/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7038c6d960d3fe26fd41bc509f256c9692d886ce">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/11.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/com.android.support.constraint/constraint-layout-solver/1.1.0/931532e953a477f876f2de18c2e7f16eee01078f/constraint-layout-solver-1.1.0.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="931532e953a477f876f2de18c2e7f16eee01078f">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/23.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.1.aar/974f96697c5adc2de8bf16af45c9a545/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="4d2b8ad415048e88b41ba4afcaafe36150e69b8c">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/1b95745b298043f972e05db68308d6c5/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2feadd535770271ca57b7b431f42151aa4af324a">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/09869cfdd6e81934ca9fb9f1e713a3e3/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="71d380aeac037e63bab7bda2ba211777e16a2f42">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/31.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/01f92039eba0202253adf2f46706c49d/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="874f1143c11f5d38533efe512bf913e3e847e7df">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/1ff14e625dbe9ea744093d5a44609c07/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c9a721adcd7dbae7a197b0ef81102336539f63ff">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/17.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.10.0/7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e/okhttp-3.10.0.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/29.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/22653a7f7b7e0a58200a4638f3563e0b/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="1fd3ceac7f415975323d52c6c6057db409a907f6">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/28.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.2.7/138872ff3173fb7bee8b1d6303d6edb57d76599/rxjava-1.2.7.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0138872ff3173fb7bee8b1d6303d6edb57d76599">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/22.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/049a0c5ddd09525a61c683f0da50417d/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d968b9bd0011800e0d333d1571b8d34bcb8a0b6e">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/modules-2/files-2.1/com.github.Raizlabs.DBFlow/dbflow-core/4.2.4/e0c38eca04d30ff95983eca1ed1e68d289c8befd/dbflow-core-4.2.4.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e0c38eca04d30ff95983eca1ed1e68d289c8befd">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/richsoap/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/3b1c1a5e6a2b62acc55629813e46216c/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f46121a7c3b3ba958fc27c39447ae205be23ac4a">
+        <dex dex="/home/richsoap/Workspaces/LostAndFound/Android/app/build/intermediates/transforms/preDex/release/9.jar" />
+    </item>
+
+</items>

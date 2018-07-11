@@ -75,7 +75,9 @@ Item{
                 font.pixelSize: 20
             }
             onClicked: {
-                manager.showPage("ShotInformationActivity.qml")
+                manager.setIntent("shotInfo")
+                //manager.showPage("ShotInformationActivity.qml")
+                manager.showPage("MergeActivity.qml")
             }
         }
         Button {
@@ -100,7 +102,9 @@ Item{
                 font.pixelSize: 20
             }
             onClicked: {
-                manager.showPage("ScanActivity.qml")
+                manager.setIntent("scan")
+                //manager.showPage("ScanActivity.qml")
+                manager.showPage("MergeActivity.qml")
             }
         }
     }

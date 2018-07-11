@@ -49,7 +49,9 @@ public class CheckService extends Service {
     public void onCreate() {
         super.onCreate();
         itemList = new ArrayList<>();
+        itemList.add(new LostObject("null"));
         userList = new ArrayList<>();
+        userList.add(new OtherUser("null"));
         timer = new Timer();
         context = this;
         counter = 1;
@@ -80,7 +82,7 @@ public class CheckService extends Service {
                         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
                         Notification notification = new NotificationCompat.Builder(context)
                                 .setContentTitle("新物品")
-                                .setContentText("New Text")////// Description
+                                .setContentText("New Item")////// Description
                                 .setWhen(System.currentTimeMillis())
                                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.objects))
                                 .setSmallIcon(R.mipmap.objects)
@@ -94,25 +96,27 @@ public class CheckService extends Service {
                 }
                 List<OtherUser> tempUserList = NetworkManager.getWaitUserList(context);
                 for(int i = 0;i < tempUserList.size();i ++) {
-                    if(!userList.contains(tempUserList.get(i))) {
-                        Intent intent = new Intent(context, ChatActivity.class);
-                        intent.putExtra("uuid", tempUserList.get(i).getUuid());
-                        intent.putExtra("kind", 0); // 0 =receive
-                        intent.putExtra("description", "Need auth");
-                        // Description??
-                        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-                        Notification notification = new NotificationCompat.Builder(context)
-                                .setContentTitle("新消息")
-                                .setContentText("New Text")////// Description
-                                .setWhen(System.currentTimeMillis())
-                                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.user))
-                                .setSmallIcon(R.mipmap.user)
-                                .setContentIntent(pendingIntent)
-                                .setAutoCancel(true)
-                                .build();
-                        manager.notify(counter, notification);
-                        counter ++;
-                        userList.add(tempUserList.get(i));
+                    for(int j = 0;j < userList.size();j ++) {
+                        if(!userList.get(j).getUuid().equals(tempUserList.get(i).getUuid())) {
+                            Intent intent = new Intent(context, ChatActivity.class);
+                            intent.putExtra("uuid", tempUserList.get(i).getUuid());
+                            intent.putExtra("kind", 0); // 0 =receive
+                            intent.putExtra("description", "Need auth");
+                            // Description??
+                            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                            Notification notification = new NotificationCompat.Builder(context)
+                                    .setContentTitle("新消息")
+                                    .setContentText("New Text")////// Description
+                                    .setWhen(System.currentTimeMillis())
+                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.user))
+                                    .setSmallIcon(R.mipmap.user)
+                                    .setContentIntent(pendingIntent)
+                                    .setAutoCancel(true)
+                                    .build();
+                            manager.notify(counter, notification);
+                            counter ++;
+                            userList.add(tempUserList.get(i));
+                        }
                     }
                 }
             }
