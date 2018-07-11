@@ -46,13 +46,14 @@ Item{
     Item {
         id: liveGroup
         anchors.fill: parent
+        z:-3
         Text {
             anchors.centerIn: parent
             text: qsTr("初始化中...")
             font.pixelSize: 30
         }
         VideoOutput {
-            id: liveImage
+            id: videoOutput
             source: camera
             anchors.fill: parent
             focus: visible
@@ -243,6 +244,7 @@ Item{
                     myThread.startProcess()
                     showGroup.visible = false
                     shotGroup.visible = true
+                    liveGroup.visible = true
             }
             style: ButtonStyle {
                 background: Rectangle {
@@ -333,6 +335,7 @@ Item{
                     processImage.source = "file://" + myThread.getDir() + "mask/" + String(count - 1) + ".jpg"
                     processGroup.visible = false
                     showGroup.visible = true
+                    liveGroup.visible = false
                 }
             }
         }
@@ -390,7 +393,7 @@ Item{
     }
     Timer {
         id: jumpTimer
-          interval: 2000; running: flase; repeat: false
+          interval: 2000; running: false; repeat: false
           onTriggered: {
               activityState = "scan"
               changeGroup()
