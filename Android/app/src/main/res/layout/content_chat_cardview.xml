@@ -17,38 +17,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
-        android:id="@+id/chat_cardview_linear_left"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="10dp"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        app:layout_constraintTop_toBottomOf="@id/chat_time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_time"
-        android:background="@mipmap/chat_left">
-        <TextView
-            android:id="@+id/chat_cardview_left"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/chat_cardview_linear_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text="left" />
-    </LinearLayout>
+            android:layout_gravity="start"
+            android:background="@mipmap/chat_left">
+            <TextView
+                android:id="@+id/chat_cardview_left"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="left" />
+        </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/chat_cardview_linear_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_time"
-        android:background="@mipmap/chat_right">
-        <TextView
-            android:id="@+id/chat_cardview_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text="left" />
+            <LinearLayout
+                android:id="@+id/chat_cardview_linear_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@mipmap/chat_right">
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/chat_cardview_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="left" />
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

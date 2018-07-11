@@ -86,7 +86,7 @@ public class AnswerActivity extends AppCompatActivity {
     private void startCommunicate() {
         Intent intent = new Intent(this, ChatActivity.class);
         intent.putExtra("uuid", uuid);
-        intent.putExtra("kind", 0);
+        intent.putExtra("kind", 1);
         intent.putExtra("description", description);
         startActivity(intent);
         finish();

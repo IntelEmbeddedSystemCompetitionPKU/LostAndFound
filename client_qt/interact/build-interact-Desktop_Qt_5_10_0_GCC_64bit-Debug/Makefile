@@ -1093,6 +1093,7 @@ qrc_qml.cpp: ../interact/qml.qrc \
 		../interact/manager.qml \
 		../interact/ShotInformationActivity.qml \
 		../interact/MainActivity.qml \
+		../interact/MergeActivity.qml \
 		../interact/main.qml
 	/opt/Qt5.10.0/5.10.0/gcc_64/bin/rcc -name qml ../interact/qml.qrc -o qrc_qml.cpp
 

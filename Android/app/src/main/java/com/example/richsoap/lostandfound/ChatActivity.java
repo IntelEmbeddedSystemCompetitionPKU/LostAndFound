@@ -129,7 +129,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(kind == 1) {
+        if(kind == 0) {
             getMenuInflater().inflate(R.menu.toolbar_check, menu);
         }
         return true;
