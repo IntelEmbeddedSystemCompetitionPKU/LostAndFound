@@ -42,7 +42,11 @@ def classify_img(uuid, number):
             print('before class' + root+files)
             if str(number) in files:
                 shutil.copyfile(root + files, croot + uuid + '/OCR/' + str(number-1) + '.jpg')
-                call_me.ocr_class(root + str(number-1) + '.jpg', croot + uuid + '/mask/')
+                shutil.copyfile(root + files, croot + uuid + '/mask/' + str(number-1) + '.jpg')
+                with open(croot + uuid + '/mask/' + str(number - 1) + '.txt', 'w') as f:
+                    f.write('kind card\n')
+                    f.write('blank0 test')
+                #call_me.ocr_class(root + str(number-1) + '.jpg', croot + uuid + '/mask/')
                 return
 
 def loadresult(uuid, number):
