@@ -18,7 +18,10 @@ Item{
         id: myThread
     }
     Camera {
+        deviceId: "/dev/video0"
         id: camera
+        digitalZoom: 1.0
+        viewfinder.resolution: Qt.size(1280, 720)
         focus {
             focusMode: CameraFocus.FocusContinuous
             focusPointMode: CameraFocus.FocusPointAuto
@@ -31,13 +34,27 @@ Item{
                     myThread.setArgs(String(count))
                     myThread.startProcess()
                  }
-                 else if(activityState == "shotShape"){
+                 /*else if(activityState == "shotShape"){
                      shotGroup.visible = true
                      processGroup.visible = false
-                 }
+                 }*/
                  else {
                      myThread.setCommand("face")
                      myThread.startProcess()
+                 }
+             }
+        }
+    }
+    Camera {
+        deviceId: "/dev/video1"
+        id: faceCamera
+        digitalZoom: 1.0
+        viewfinder.resolution: Qt.size(1280, 720)
+          imageCapture {
+             onImageSaved: {
+                 if(activityState == "shotShape"){
+                     shotGroup.visible = true
+                     processGroup.visible = false
                  }
 
              }
@@ -58,6 +75,13 @@ Item{
             anchors.fill: parent
             focus: visible
             filters:[zxingFilter]
+        }
+        VideoOutput {
+            id: faceOutput
+            source: faceCamera
+            anchors.fill: parent
+            focus: visible
+            visible: false
         }
     }
 
@@ -420,6 +444,8 @@ Item{
             processGroup.visible = false
         }
         else if(activityState === "shotFace"){
+            videoOutput.visible = false
+            faceOutput.visible = true
             scanGroup.visible = false
             shotGroup.visible = true
             showGroup.visible = false
@@ -439,6 +465,7 @@ Item{
 
 
     Component.onCompleted: {
+        videoOutput.source = camera
         activityState =  manager.getIntent()
         if(activityState === "shotInfo") {
             myThread.getNewUUID()
