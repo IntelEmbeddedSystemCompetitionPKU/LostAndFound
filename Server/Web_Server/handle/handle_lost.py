@@ -18,18 +18,19 @@ import base64
 import qrcode
 import Web_Server.db_op.mysql_connect as mc
 from Levenshtein import distance as dist #字符串间的编辑距离
+from Web_Server.settings import basepath,blank_img
 
-basepath = '/home/lily/Server_File/'
-blank_img = basepath+'default.png'
 # order by similarity
 def sort_lost(lostlist,keyword):
     words=keyword.split(' ')
-    # keyword=keyword.replace(' ','')
-    # chars=[c for c in keyword]
-    # l=[[r,sum([1 for word in words if word in r[1]]), sum([1 for char in chars if char in r[1]]) ] for r in lostlist]
-    l=[[r,sum([1 for word in words if word in r[1]]) ] for r in lostlist]
-    l.sort(key=lambda x: -x[1])
-    lostlist=[e[0] for e in l if e[1]>0]
+    keyword=keyword.replace(' ','')
+    chars=[c for c in keyword if c.isalnum()]
+    print('chars:',chars)
+    l=[[r,sum([1 for word in words if word in r[1]]), sum([1 for char in chars if char in r[1]]) ] for r in lostlist]
+    print(l)
+    # l=[[r,sum([1 for word in words if word in r[1]]) ] for r in lostlist]
+    l.sort(key=lambda x: -x[1]*100-x[2])
+    lostlist=[e[0] for e in l if e[1]+e[2]>0]
     return lostlist
 
 
@@ -124,10 +125,10 @@ def handle_query_maskcheck(username,objuuid):
             dis_sum+=dist(answer[item][jtem],itemjson[jtem])
             # cnt_all = cnt_all + 1
             # print('compare real answer '+answer[item][jtem] + ' with user answer '+itemjson[jtem])
-            # len_sum+=len(answer[item][jtem])+len(itemjson[jtem])
+            len_sum+=len(answer[item][jtem])+len(itemjson[jtem])
             # if answer[item][jtem] == itemjson[jtem]:
             #     cnt_right = cnt_right + 1
-    if dis_sum/len_sum<0.8:
+    if (dis_sum+1)/(len_sum+1)<0.8:
     # if cnt_right > cnt_all * 0.6:
         r=mc.nofetchall_sql('UPDATE Lost SET ownername=%s WHERE objuuid=%s',(username,objuuid))
         if r==0:

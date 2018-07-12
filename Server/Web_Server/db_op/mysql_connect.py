@@ -1,5 +1,6 @@
 import pymysql
 import hashlib
+from Crypto.Cipher import AES
 
 host = 'localhost'
 # host = '10.128.171.97'
@@ -11,6 +12,10 @@ import hashlib
 def get_md5(s):
     md5=hashlib.md5(s.encode('utf-8')).hexdigest()
     return md5
+
+def encrypt(plaintext):
+    obj = AES.new('lostfound', AES.MODE_CFB, 'This is an IV456')
+    return obj.encrypt(plaintext)
 
 
 def cnnct():
@@ -45,7 +50,7 @@ def query_mysql(contents, table, where='true'):
 
 def query_sql(sql, params):
     db,c =cnnct()
-    print(sql)
+    print(sql,params)
     c.execute(sql,params)
     results = c.fetchall()
     c.close()

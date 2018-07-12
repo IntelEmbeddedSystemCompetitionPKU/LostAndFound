@@ -19,9 +19,10 @@ create table Lost(
     objuuid varchar(32),
     lostdate date,
     description varchar(256),
+    hiddeninfo varchar(512),
     ocr varchar(256),
-    findername varchar(32) default '',
-    ownername varchar(32) default '',
+    findername varchar(32) default ' ',
+    ownername varchar(32) default ' ',
     apply varchar(32) default '0',
     constraint PK_Lost primary key(objuuid)
 );
@@ -38,7 +39,7 @@ create table Messages(
     targetname varchar(16),
     message varchar(512),
     time bigint,
-    replied TINYINT
+    objuuid varchar(32)
 );
     --constraint FK_User_qrcode_useruuid foreign key(useruuid) references User(useruuid)
 

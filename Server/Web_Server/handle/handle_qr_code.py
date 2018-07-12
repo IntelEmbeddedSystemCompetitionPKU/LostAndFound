@@ -16,12 +16,10 @@ import crypt
 import uuid
 import qrcode
 import json
+from Web_Server.settings import qrcode_size
 import Web_Server.db_op.mysql_connect as mc
-
-basepath = '/home/lily/Server_File/'
-qrimg_path='/home/lily/testqrcode.png'
-blank_img = basepath+'default.png'
-# qrimg_path='/home/ykx/testqrcode.png'
+from Web_Server.settings import basepath,blank_img,qrimg_path
+import Web_Server.db_op.mysql_connect as mc
 
 @app.route('/query/qrcode_user', methods=['POST'])
 def handle_query_qrcode_user():
@@ -33,7 +31,7 @@ def handle_query_qrcode_user():
     code='user'+username#+passwd
     print(code)
     print('\n'*5)
-    qrcode.make(code).save(qrimg_path)
+    qrcode.make(code).resize(qrcode_size).save(qrimg_path)
     return send_file(qrimg_path,as_attachment=True)
 
 
@@ -54,7 +52,7 @@ def handle_query_qrcode_lost():
     if r==0:
         print('bad update')
     code='fetc'+itemuuid
-    qrcode.make(code).save(qrimg_path)
+    qrcode.make(code).resize(qrcode_size).save(qrimg_path)
     return send_file(qrimg_path,as_attachment=True)
 # fetc user mark
 
@@ -66,7 +64,8 @@ def handle_query_qrcode_anti():
     if not mc.is_password_right(username,passwd):
         return send_file(blank_img,as_attachment=True)
     print(username+'gets a qrcode with description: '+dscpt)
-    code='mark'+username +'*'+ dscpt+'*'+(uuid.uuid1().__str__().replace('-',''))
+    content=username +'*'+ dscpt+'*'+(uuid.uuid1().__str__().replace('-',''))
+    code='mark'+content
     mc.nofetchall_sql('insert into Anti_qrcode(username,qrcode) values(%s,%s)',(username,code))
-    qrcode.make(code).save(qrimg_path)
+    qrcode.make(code).resize(qrcode_size).save(qrimg_path)
     return send_file(qrimg_path,as_attachment=True)

@@ -1,9 +1,9 @@
 from Web_Server import app
-from flask import request, send_file, send_from_directory
-import crypt
-#from Crypto.L
-import uuid
-import qrcode
+from flask import request#, send_file, send_from_directory
+# import crypt
+# from Crypto.L
+# import uuid
+# import qrcode
 import json
 import Web_Server.db_op.mysql_connect as mc
 
@@ -11,19 +11,17 @@ import Web_Server.db_op.mysql_connect as mc
 def handle_upload_msg():
     jdata = json.loads(request.get_data().decode('utf-8'))
     username, objuuid, message, time = jdata['username'], jdata['targetuuid'], jdata['message'], jdata['time']
-    db,c=mc.cnnct()
-    sql='select distinct username, targetname from Messages where objuuid="'+objuuid+'";'
-    print(sql)
-    c.execute(sql)
-    r=c.fetchall()
+    r=mc.query_sql('select distinct username, targetname from Messages where objuuid=%s',(objuuid))
+    if len(r)==0:
+        r=mc.query_sql('select distinct findername from Lost where objuuid=%s',(objuuid))
+    if len(r)==0:
+        return 'True'
     if username==r[0][0]:
         targetname=r[0][1]
     else:
         targetname=r[0][0]
     print(username+' sent '+message+' to '+targetname+' about '+objuuid+'at time:',time)
-    sql='insert into Messages(username, targetname, message,time, objuuid) values(%s,%s,%s,%s,%s);'
-    c.execute(sql, (username,targetname,message,str(time),objuuid))
-    db.close()
+    mc.nofetchall_sql('insert into Messages(username, targetname, message,time, objuuid) values(%s,%s,%s,%s,%s)',(username,targetname,message,str(time),objuuid))
     return 'True'
 
 

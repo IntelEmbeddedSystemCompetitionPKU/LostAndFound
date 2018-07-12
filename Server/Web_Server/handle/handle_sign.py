@@ -22,7 +22,7 @@ import uuid
 import os
 import hashlib
 import Web_Server.db_op.mysql_connect as mc
-import hashlib
+
 
 @app.route('/sign/signup', methods=['POST'])
 # 注册（密码MD5加密）

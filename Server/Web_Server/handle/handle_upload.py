@@ -14,20 +14,22 @@ from flask import request
 import json
 import os
 import Web_Server.db_op.mysql_connect as mc
+from Web_Server.settings import basepath
 
-# basepath = '/home/ykx/Server_File/'
-basepath = '/home/lily/Server_File/'
-
-##################
-## Insert MySQL ##
-##################
 
 # used to insert information of lost property into database
 def insert_mysql(uuid, path):
     fr = open(path + '/data.txt', 'r')
     item_info = json.loads(fr.read())
     print(item_info)
-    mc.nofetchall_sql('insert into Lost(objuuid, lostdate, description) values(%s,%s,%s)',(uuid,item_info['time'],item_info['description']))
+    hiddeninfo=' '
+    mask_num=item_info['mask_num']
+    for i in range(0, int(mask_num)):
+        mask = item_info['mask' + str(i)]
+        block_num = mask['block_num']
+        for j in range(0, int(block_num)):
+            hiddeninfo += ' '+mask['blank' + str(j)]
+    mc.nofetchall_sql('insert into Lost(objuuid, lostdate, description, hiddeninfo) values(%s,%s,%s,%s)',(uuid,item_info['time'],item_info['description'],hiddeninfo))
 
 # json.loads(): transfer str to json
 # json.dumps(): transfer json to str
