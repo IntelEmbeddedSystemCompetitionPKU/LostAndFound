@@ -1,5 +1,5 @@
 import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.4
 import QtQuick.Window 2.0
 import QtQuick.Controls.Styles 1.4
 import QtMultimedia 5.8
@@ -14,11 +14,16 @@ Item{
     property int stage: 0
    property int processCount: 0
     property string basestring: "处理中"
+    property real mx: -200
+    property real my: -200
     MyThread {
         id: myThread
     }
     Camera {
+        deviceId: "/dev/video0"
         id: camera
+        digitalZoom: 1.0
+        viewfinder.resolution: Qt.size(1280, 720)
         focus {
             focusMode: CameraFocus.FocusContinuous
             focusPointMode: CameraFocus.FocusPointAuto
@@ -31,13 +36,23 @@ Item{
                     myThread.setArgs(String(count))
                     myThread.startProcess()
                  }
-                 else if(activityState == "shotShape"){
-                     shotGroup.visible = true
-                     processGroup.visible = false
-                 }
                  else {
                      myThread.setCommand("face")
                      myThread.startProcess()
+                 }
+             }
+        }
+    }
+    Camera {
+        deviceId: "/dev/video1"
+        id: faceCamera
+        digitalZoom: 1.0
+        viewfinder.resolution: Qt.size(1280, 720)
+          imageCapture {
+             onImageSaved: {
+                 if(activityState == "shotShape"){
+                     shotGroup.visible = true
+                     processGroup.visible = false
                  }
 
              }
@@ -58,6 +73,13 @@ Item{
             anchors.fill: parent
             focus: visible
             filters:[zxingFilter]
+        }
+        VideoOutput {
+            id: faceOutput
+            source: faceCamera
+            anchors.fill: parent
+            focus: visible
+            visible: false
         }
     }
 
@@ -92,6 +114,8 @@ Item{
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
+                var contents = processCanvas.getContext("2d")
+                contents.clearRect(0,0,processCanvas.width,processCanvas.height)
                 if(camera.imageCapture.ready) {
                     var savepath = ""
                     if(activityState == "shotInfo") {
@@ -212,9 +236,33 @@ Item{
         Image {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            height: parent.height / 2
             width: parent.width / 2
+            height: width / 16 * 9
             id: processImage
+
+            Canvas{
+                id: processCanvas
+                anchors.fill: parent
+                contextType: "2d"
+                visible: true
+                onPaint: {//绘图事件的响应
+                    context.beginPath()
+                    context.arc(mx,my,35,0,Math.PI*2);//一定要注意画图的区域不能超过画布的大小，不然会看不到或者只看到一部分
+                    context.stroke();
+                    context.fill();
+                }
+            }
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    print("onPress")
+                    print(mouseX)
+                    print(mouseY)
+                    mx = mouseX
+                    my = mouseY
+                    processCanvas.requestPaint()
+                }
+            }
         }
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
@@ -227,7 +275,7 @@ Item{
                 anchors.margins: 5
                 id: showEdit
                 anchors.fill: parent
-                font.pixelSize: 30
+                font.pixelSize: 20
             }
         }
         Button {
@@ -238,13 +286,14 @@ Item{
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.margins: 15
             onClicked: {
-                    myThread.setCommand("refresh")
-                    myThread.setArgs(count)
-                    myThread.addDesc(showEdit.text)
-                    myThread.startProcess()
-                    showGroup.visible = false
-                    shotGroup.visible = true
-                    liveGroup.visible = true
+                myThread.setCommand("refresh")
+                myThread.setArgs(count)
+                myThread.addDesc(showEdit.text)
+                myThread.startProcess()
+                showGroup.visible = false
+                shotGroup.visible = true
+                liveGroup.visible = true
+                processCanvas.save(myThread.getDir() + '/mask/mask.png')
             }
             style: ButtonStyle {
                 background: Rectangle {
@@ -262,9 +311,7 @@ Item{
                 anchors.centerIn: parent
             }
         }
-    }
-
-
+        }
 
     Text {
         id: title
@@ -420,6 +467,8 @@ Item{
             processGroup.visible = false
         }
         else if(activityState === "shotFace"){
+            videoOutput.visible = false
+            faceOutput.visible = true
             scanGroup.visible = false
             shotGroup.visible = true
             showGroup.visible = false
@@ -439,6 +488,7 @@ Item{
 
 
     Component.onCompleted: {
+        videoOutput.source = camera
         activityState =  manager.getIntent()
         if(activityState === "shotInfo") {
             myThread.getNewUUID()
