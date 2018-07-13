@@ -49,7 +49,8 @@ def handle_query_lostlist():
     keyword, date = json_data['description'], json_data['date']
     print('query lost about '+keyword+' after '+date)
     lostlist = mc.query_sql('select objuuid,description from Lost where ownername=%s and lostdate>=%s',(' ',date))
-    lostlist=sort_lost(lostlist,keyword)
+    if keyword!='':
+        lostlist=sort_lost(lostlist,keyword)
     print(lostlist)
     return lostlist2json(lostlist)
 
@@ -116,20 +117,24 @@ def handle_query_maskcheck(username,objuuid):
         return 'There is no such thing!'
     fr = open(path + '/data.txt', 'rb')
     answer = json.loads(fr.read())
-    # cnt_right = 0
-    # cnt_all = 0
     len_sum,dis_sum = 0,0
     for item in json_data:
         itemjson = json.loads(json_data[item])
         for jtem in itemjson:
-            dis_sum+=dist(answer[item][jtem],itemjson[jtem])
-            # cnt_all = cnt_all + 1
-            # print('compare real answer '+answer[item][jtem] + ' with user answer '+itemjson[jtem])
-            len_sum+=len(answer[item][jtem])+len(itemjson[jtem])
-            # if answer[item][jtem] == itemjson[jtem]:
-            #     cnt_right = cnt_right + 1
+            # dis_sum+=dist(answer[item][jtem],itemjson[jtem])
+            # len_sum+=len(answer[item][jtem])+len(itemjson[jtem])
+            best_dis, best_len, high = 0, 0, 0
+            for item_ans in answer:
+                for jtem_ans in answer[item]:
+                    dis = dist(answer[item_ans][jtem_ans],itemjson[jtem])
+                    lth = len(answer[item_ans][jtem_ans])+len(itemjson[jtem])
+                    rate = (dis+1)/(lth+1)
+                    if rate > high:
+                        best_dis, best_len, high =dis,lth,rate
+            dis_sum+=best_dis
+            len_sum+=best_len
+
     if (dis_sum+1)/(len_sum+1)<0.8:
-    # if cnt_right > cnt_all * 0.6:
         r=mc.nofetchall_sql('UPDATE Lost SET ownername=%s WHERE objuuid=%s',(username,objuuid))
         if r==0:
             print('oops! no such obj')

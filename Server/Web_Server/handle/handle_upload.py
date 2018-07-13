@@ -73,6 +73,8 @@ def handle_upload_labelinfo():
     # get username and information of qrcode
     objuuid,anti_code = json_data['uuid'],json_data['value']
     db,c = mc.cnnct()
+    anti_code=mc.decrypt(anti_code)
+    print(anti_code)
     l = anti_code.split('*')
     username=l[0]
     dscr=l[1]
@@ -86,6 +88,6 @@ def handle_upload_labelinfo():
 def handle_upload_finderinfo():
     json_data = json.loads(request.get_data().decode('utf-8'))
     username,objuuid = json_data['username'],json_data['uuid']
+    username=mc.decrypt(username)
     mc.nofetchall_sql('update Lost set findername=%s where objuuid=%s',(username,objuuid))
     return 'True'
-

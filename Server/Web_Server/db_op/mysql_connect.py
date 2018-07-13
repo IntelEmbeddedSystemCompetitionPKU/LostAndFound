@@ -1,7 +1,8 @@
 import pymysql
 import hashlib
+import base64
 from Crypto.Cipher import AES
-
+from Web_Server.settings import aes_key
 host = 'localhost'
 # host = '10.128.171.97'
 dba, password='LostFoundDba','123'
@@ -14,9 +15,20 @@ def get_md5(s):
     return md5
 
 def encrypt(plaintext):
-    obj = AES.new('lostfound', AES.MODE_CFB, 'This is an IV456')
-    return obj.encrypt(plaintext)
+    obj = AES.new(aes_key, AES.MODE_CFB, 'This is an IV456')
+    pb=plaintext.encode()
+    c=obj.encrypt(pb)
+    b=base64.b64encode(c)
+    s=b.decode()
+    return s
 
+def decrypt(cyphertext):
+    obj = AES.new(aes_key, AES.MODE_CFB, 'This is an IV456')
+    b=cyphertext.encode()
+    c=base64.b64decode(b)
+    pb=obj.decrypt(c)
+    p=pb.decode()
+    return p
 
 def cnnct():
     db = pymysql.connect(
